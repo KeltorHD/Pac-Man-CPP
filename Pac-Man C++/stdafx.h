@@ -6,6 +6,7 @@
 #define GAME_HEIGHT 576
 #define GAME_COL 28
 #define GAME_ROW 36
+#define TILE_WIDTH 16
 #define GAME_TITLE "Pac-Man C++"
 
 /*Core*/

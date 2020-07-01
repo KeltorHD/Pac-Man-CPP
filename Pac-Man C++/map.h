@@ -20,7 +20,7 @@ public:
 private:
 	/*map*/
 	sf::Texture mapTexture;
-	tileType tiles[GAME_COL][GAME_ROW];
+	tileType tiles[GAME_ROW][GAME_COL];
 	sf::Sprite map;
 
 	/*food, ener*/
@@ -28,8 +28,10 @@ private:
 	sf::Sprite food;
 	sf::Sprite energizere;
 
+	/*func*/
 	void initTiles();
 	void initSprites();
+	void renderFood(sf::RenderTarget* target);
 };
 
 

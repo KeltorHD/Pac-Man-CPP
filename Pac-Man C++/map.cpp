@@ -15,8 +15,7 @@ void Map::render(sf::RenderTarget* target)
 {
 	target->draw(map);
 
-	target->draw(food);
-	target->draw(energizere);
+	renderFood(target);
 }
 
 void Map::initTiles()
@@ -25,15 +24,16 @@ void Map::initTiles()
 	if (!ifs.is_open())
 		throw "NOT COULD OPEN FILE TILE.MAP";
 
-	for (size_t i = 0; i < GAME_COL; i++)
+	for (size_t i = 0; i < GAME_ROW; i++)
 	{
-		for (size_t j = 0; j < GAME_ROW; j++)
+		for (size_t j = 0; j < GAME_COL; j++)
 		{
 			int tmp;
 			ifs >> tmp;
-			this->tiles[i][j] = tileType(tmp);
+			this->tiles[i][j] = static_cast<tileType>(tmp);
 		}
 	}
+	ifs.close();
 }
 
 void Map::initSprites()
@@ -46,9 +46,32 @@ void Map::initSprites()
 		throw "NOT COULD LOAD FOOD IMAGE";
 	food.setTexture(food_ener);
 	food.setTextureRect(sf::IntRect(sf::Vector2i(16, 0), sf::Vector2i(16, 16)));
+
 	energizere.setTexture(food_ener);
 	energizere.setTextureRect(sf::IntRect(sf::Vector2i(0, 0), sf::Vector2i(16, 16)));
+}
 
-	food.setPosition(0, 0);
-	energizere.setPosition(16, 0);
+void Map::renderFood(sf::RenderTarget* target)
+{
+	for (size_t i = 0; i < GAME_ROW; i++)
+	{
+		for (size_t j = 0; j < GAME_COL; j++)
+		{
+			switch (this->tiles[i][j])
+			{
+			case tileType::food:
+				food.setPosition(float(j) * 16, float(i) * 16);
+				target->draw(food);
+				break;
+			case tileType::energizere:
+				energizere.setPosition(float(j) * 16, float(i) * 16);
+				target->draw(energizere);
+				break;
+			case tileType::wall:
+				break;
+			case tileType::free:
+				break;
+			}
+		}
+	}
 }
