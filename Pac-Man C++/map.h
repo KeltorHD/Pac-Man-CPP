@@ -8,14 +8,18 @@ public:
 		free,       /*свободная клетка*/
 		food,       /*еда*/
 		energizere, /*энерджайзер*/
-		wall_l,     /*стена левая*/
-		wall_r,     /*стена правая*/
-		wall_u,     /*стена верхняя*/
-		wall_d,     /*стена нижняя*/
-		wall_
-	};
-private:
 
+		wall        /*стена*/
+	};
+
+	Map();
+	~Map();
+
+	/*func*/
+	void render(sf::RenderTarget* target);
+private:
+	sf::Texture mapTexture;
+	sf::Sprite mapSprite;
 };
 
 

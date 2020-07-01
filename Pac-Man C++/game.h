@@ -1,8 +1,11 @@
 #ifndef GAME_H
 
+#include "Map.h"
+
 class Game
 {
 private:
+	/*window*/
 	sf::RenderWindow* window;
 	sf::Event sfEvent;
 
@@ -11,10 +14,14 @@ private:
 
 	std::map<std::string, int> supportedKeys;
 
+	/*map, player, enemy*/
+	Map* map;
+
 	/*Initialization*/
 	void initVariables();
 	void initWindow();
 	void initKeys();
+	void initEssence();
 
 public:
 	Game();

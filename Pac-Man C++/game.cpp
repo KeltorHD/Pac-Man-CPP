@@ -39,16 +39,23 @@ void Game::initKeys()
 	}
 }
 
+void Game::initEssence()
+{
+	this->map = new Map();
+}
+
 /*Constructor*/
 Game::Game()
 {
 	this->initVariables();
 	this->initWindow();
 	this->initKeys();
+	this->initEssence();
 }
 
 Game::~Game()
 {
+	delete this->map;
 	delete this->window;
 }
 
@@ -78,8 +85,8 @@ void Game::render()
 {
 	this->window->clear();
 
-	//render items
-	
+	/*render items*/
+	this->map->render(window);
 
 	this->window->display();
 }
