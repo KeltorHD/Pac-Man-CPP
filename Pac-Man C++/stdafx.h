@@ -4,6 +4,8 @@
 /*defines*/
 #define GAME_WIDTH 448
 #define GAME_HEIGHT 576
+#define GAME_COL 28
+#define GAME_ROW 36
 #define GAME_TITLE "Pac-Man C++"
 
 /*Core*/

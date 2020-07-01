@@ -5,11 +5,11 @@ class Map
 public:
 	enum class tileType
 	{
-		free,       /*свободная клетка*/
-		food,       /*еда*/
-		energizere, /*энерджайзер*/
+		free = 1,       /*свободная клетка*/
+		food = 2,       /*еда*/
+		energizere = 3, /*энерджайзер*/
 
-		wall        /*стена*/
+		wall = 0        /*стена*/
 	};
 
 	Map();
@@ -18,8 +18,18 @@ public:
 	/*func*/
 	void render(sf::RenderTarget* target);
 private:
+	/*map*/
 	sf::Texture mapTexture;
-	sf::Sprite mapSprite;
+	tileType tiles[GAME_COL][GAME_ROW];
+	sf::Sprite map;
+
+	/*food, ener*/
+	sf::Texture food_ener;
+	sf::Sprite food;
+	sf::Sprite energizere;
+
+	void initTiles();
+	void initSprites();
 };
 
 
