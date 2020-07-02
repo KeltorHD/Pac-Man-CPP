@@ -1,5 +1,7 @@
 #ifndef MAP_H
 
+#include "enemy.h"
+
 class Map
 {
 public:
@@ -16,6 +18,7 @@ public:
 	~Map();
 
 	/*func*/
+	void update(const float& dt);
 	void render(sf::RenderTarget* target);
 private:
 	/*map*/
@@ -31,6 +34,7 @@ private:
 	/*func*/
 	void initTiles();
 	void initSprites();
+	void updateCollision(Enemy* enemy, const float& dt);
 	void renderFood(sf::RenderTarget* target);
 };
 

@@ -7,6 +7,8 @@
 #define GAME_COL 28
 #define GAME_ROW 36
 #define TILE_WIDTH 16
+#define START_POS_X 212
+#define START_POS_Y 412
 #define GAME_TITLE "Pac-Man C++"
 
 /*Core*/
@@ -32,5 +34,15 @@
 #include <SFML\Graphics.hpp>
 #include <SFML\Audio.hpp>
 #include <SFML\Network.hpp>
+
+/*enum*/
+enum class dirType
+{
+	left,
+	right,
+	up,
+	down,
+	none
+};
 
 #endif // !HEADER_H

@@ -1,6 +1,7 @@
 #ifndef GAME_H
 
 #include "Map.h"
+#include "player.h"
 
 class Game
 {
@@ -16,6 +17,7 @@ private:
 
 	/*map, player, enemy*/
 	Map* map;
+	Player* player;
 
 	/*Initialization*/
 	void initVariables();
@@ -30,6 +32,7 @@ public:
 	/*update*/
 	void updateDt();
 	void updateSFMLEvents();
+	void updatePlayerInput();
 	void update();
 
 	/*render*/

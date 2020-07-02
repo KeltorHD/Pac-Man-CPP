@@ -19,6 +19,21 @@
     <Filter Include="PCH">
       <UniqueIdentifier>{ad8183d2-7d38-467c-a303-f9a462b42a83}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HitBoxComponent">
+      <UniqueIdentifier>{9c05cd44-5d2b-4bcb-9385-1620e7fd524a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AnimationComponent">
+      <UniqueIdentifier>{324605c1-e450-48f5-b078-d235c4dafe6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemies">
+      <UniqueIdentifier>{e5e9ddb9-3153-454c-966d-9ca50e990a5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{03e5b9e8-24ff-45e5-ac2c-8bfd99224fb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{c0407589-003d-4597-a452-8595b312c823}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -27,22 +42,46 @@
     <ClCompile Include="game.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="map.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="HitboxComponent.cpp">
+      <Filter>HitBoxComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationComponent.cpp">
+      <Filter>AnimationComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="map.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="map.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="HitboxComponent.h">
+      <Filter>HitBoxComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationComponent.h">
+      <Filter>AnimationComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="map.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

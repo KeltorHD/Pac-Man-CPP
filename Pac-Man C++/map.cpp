@@ -51,6 +51,10 @@ void Map::initSprites()
 	energizere.setTextureRect(sf::IntRect(sf::Vector2i(0, 0), sf::Vector2i(16, 16)));
 }
 
+void Map::updateCollision(Enemy* enemy, const float& dt)
+{
+}
+
 void Map::renderFood(sf::RenderTarget* target)
 {
 	for (size_t i = 0; i < GAME_ROW; i++)
