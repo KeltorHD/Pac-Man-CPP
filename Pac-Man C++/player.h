@@ -1,5 +1,7 @@
-#pragma once
+#ifndef PLAYER_H
+
 #include "enemy.h"
+
 class Player :
 	public Enemy
 {
@@ -28,3 +30,4 @@ public:
 	virtual void render(sf::RenderTarget* target);
 };
 
+#endif // !PLAYER_H

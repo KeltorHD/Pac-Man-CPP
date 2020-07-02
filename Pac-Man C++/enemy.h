@@ -1,4 +1,5 @@
 #ifndef ENEMY_H
+#define ENEMY_H
 
 #include "AnimationComponent.h"
 #include "HitboxComponent.h"
