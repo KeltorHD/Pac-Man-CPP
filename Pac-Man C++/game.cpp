@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "game.h"
 
-//Static func
-
 void Game::initVariables()
 {
 	this->window = NULL;
@@ -78,21 +76,120 @@ void Game::updateSFMLEvents()
 
 void Game::updatePlayerInput()
 {
+	dirType dir = dirType::none;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->supportedKeys.at("W"))))
 	{
-		this->player->setDir(dirType::up);
+		dir = dirType::up;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->supportedKeys.at("S"))))
 	{
-		this->player->setDir(dirType::down);
+		dir = dirType::down;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->supportedKeys.at("A"))))
 	{
-		this->player->setDir(dirType::left);
+		dir = dirType::left;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->supportedKeys.at("D"))))
 	{
-		this->player->setDir(dirType::right);
+		dir = dirType::right;
+	}
+	
+	if (dir != dirType::none && dir != player->getCurDir())
+	{
+		/*нужно ли изменять направления прямо сейчас?*/
+		if (!this->map->isWall /*не в стену ли идем?*/
+		(
+			this->player->getNextPosition(dir, this->dt).x / TILE_WIDTH,
+			this->player->getNextPosition(dir, this->dt).y / TILE_WIDTH
+		))
+		{
+			bool isChange = false;
+			switch (dir)
+			{
+			case dirType::left:
+			case dirType::right:
+				if (int(this->player->getPosition().y) % TILE_WIDTH == 0)
+					isChange = true;
+				break;
+			case dirType::up:
+			case dirType::down:
+				if (int(this->player->getPosition().x) % TILE_WIDTH == 0)
+					isChange = true;
+				break;
+			}
+			if (isChange) /*меняем направление, так как положение совпадает с клетками*/
+			{
+				if (isPerpendicular(dir, this->player->getCurDir()))
+					this->player->moveToBorder();
+				this->player->clearDir(dir);
+			}
+			else /*запоминаем позицию, так как положение не совпадает с клетками*/
+			{
+				this->player->setDir(dir);
+			}
+		}
+		else /*запоминаем направление*/
+		{
+			this->player->setDir(dir);
+		}
+	}
+}
+
+void Game::updatePlayerMove()
+{
+	int next_x = this->player->getNextPosition(this->player->getNextDir(), this->dt).x;
+	int next_y = this->player->getNextPosition(this->player->getNextDir(), this->dt).y;
+
+	/*проверка: можно ли изменить направление движения*/
+	if (this->player->getNextDir() != dirType::none)
+	{
+		/*проверка: следующая позиция - не стена?*/
+		if (!this->map->isWall
+		(
+			next_x / TILE_WIDTH,
+			next_y / TILE_WIDTH
+		))
+		{
+			/*проверяем, достаточно ли мы близко к повороту*/
+			bool isChange = false;
+			switch (this->player->getNextDir())
+			{
+			case dirType::left:
+			case dirType::right:
+				if (int(this->player->getPosition().y) % TILE_WIDTH == 0)
+					isChange = true;
+				break;
+			case dirType::up:
+			case dirType::down:
+				if (int(this->player->getPosition().x) % TILE_WIDTH == 0)
+					isChange = true;
+				break;
+			}
+			if (isChange)
+			{
+				this->player->moveToBorder(); /*сдвигаемся к границе плитки*/
+				this->player->clearDir();
+			}
+		}
+	}
+
+	/*проверка: можно ли продолжать движение в текущую сторону*/
+	if (this->player->getCurDir() != dirType::none)
+	{
+		/*если следующая позиция игрока находится в стене*/
+		if (this->map->isWall
+		(
+			this->player->getNextPosition(this->dt).x / TILE_WIDTH,
+			this->player->getNextPosition(this->dt).y / TILE_WIDTH
+		))
+		{
+			this->player->moveToBorder(); /*сдвигаемся к границе плитки*/
+			this->player->clearDir();
+		}
+		else
+		{
+			this->player->move(dt);
+		}
 	}
 }
 
@@ -100,6 +197,7 @@ void Game::update()
 {
 	this->updateSFMLEvents();
 	this->updatePlayerInput();
+	this->updatePlayerMove();
 	this->player->update(this->dt);
 }
 

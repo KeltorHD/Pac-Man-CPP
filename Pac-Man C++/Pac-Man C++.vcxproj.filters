@@ -51,14 +51,14 @@
     <ClCompile Include="AnimationComponent.cpp">
       <Filter>AnimationComponent</Filter>
     </ClCompile>
-    <ClCompile Include="enemy.cpp">
-      <Filter>Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="map.cpp">
       <Filter>Map</Filter>
     </ClCompile>
     <ClCompile Include="player.cpp">
       <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="entity.cpp">
+      <Filter>Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -74,14 +74,14 @@
     <ClInclude Include="AnimationComponent.h">
       <Filter>AnimationComponent</Filter>
     </ClInclude>
-    <ClInclude Include="enemy.h">
-      <Filter>Enemies</Filter>
-    </ClInclude>
     <ClInclude Include="map.h">
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="player.h">
       <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="entity.h">
+      <Filter>Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

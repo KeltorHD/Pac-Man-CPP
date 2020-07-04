@@ -11,9 +11,67 @@ Map::~Map()
 {
 }
 
+bool Map::isMove(const dirType& dir, const int& x, const int& y)
+{
+	if (x < GAME_COL && x > 0 && y < GAME_ROW)
+	{
+		if (dir == dirType::none)
+			return false;
+
+		int move_x = x, move_y = y;
+		switch (dir)
+		{
+		case dirType::left:
+			move_x--;
+			break;
+		case dirType::right:
+			move_x++;
+			break;
+		case dirType::up:
+			move_y--;
+			break;
+		case dirType::down:
+			move_y++;
+			break;
+		}
+
+		if (this->tiles[move_y][move_x] != tileType::wall)
+			return true;
+		return false;
+	}
+	return false;
+}
+
+bool Map::isWall(const int& x, const int& y)
+{
+	if (x < GAME_COL && x > 0 && y < GAME_ROW)
+	{
+		if (this->tiles[y][x] == tileType::wall)
+			return true;
+		return false;
+	}
+	return true;
+}
+
 void Map::render(sf::RenderTarget* target)
 {
 	target->draw(map);
+
+	/*sf::RectangleShape shape;
+	shape.setSize(sf::Vector2f(16, 16));
+	shape.setFillColor(sf::Color::Magenta);
+
+	for (size_t i = 0; i < GAME_ROW; i++)
+	{
+		for (size_t j = 0; j < GAME_COL; j++)
+		{
+			if (this->tiles[i][j] == tileType::wall)
+			{
+				shape.setPosition(j * 16, i * 16);
+				target->draw(shape);
+			}
+		}
+	}*/
 
 	renderFood(target);
 }
@@ -51,7 +109,7 @@ void Map::initSprites()
 	energizere.setTextureRect(sf::IntRect(sf::Vector2i(0, 0), sf::Vector2i(16, 16)));
 }
 
-void Map::updateCollision(Enemy* enemy, const float& dt)
+void Map::updateCollision(Entity* entity, const float& dt)
 {
 }
 

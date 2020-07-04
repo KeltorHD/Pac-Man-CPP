@@ -1,9 +1,9 @@
 #ifndef PLAYER_H
 
-#include "enemy.h"
+#include "entity.h"
 
 class Player :
-	public Enemy
+	public Entity
 {
 private:
 	/*var*/
@@ -17,15 +17,30 @@ private:
 	virtual void initSprite();
 
 	/*func*/
-	void updateMove(const float& dt);
+
 public:
 	Player();
 	virtual ~Player();
 
 	/*modifier*/
 	void setDir(dirType dir);
+	void setPosition(float x, float y);
+	void clearDir(); /*перенос следующего направления в текущее*/
+	void clearDir(dirType dir); /*очищение направлений, добавление в текущее dir*/
+
+	/*get*/
+	const dirType& getCurDir();
+	const dirType& getNextDir();
+	const sf::Vector2f& getPosition();
+	const sf::Vector2f& getPosition(const dirType& dir); /*получение позиции ближайшей стороны по направлению передаваемого движения*/
+	const sf::Vector2f getNextPosition(const float& dt);
+	const sf::Vector2f getNextPosition(const dirType& dir, const float& dt); /*с учетом передаваемого направления*/
+	const float getMovingRange(const float& dt);
 
 	/*func*/
+	void move(const float& dt);
+	void moveToBorder(); /*подойти к границе кубика*/
+
 	virtual void update(const float& dt);
 	virtual void render(sf::RenderTarget* target);
 };

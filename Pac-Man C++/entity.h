@@ -4,7 +4,7 @@
 #include "AnimationComponent.h"
 #include "HitboxComponent.h"
 
-class Enemy
+class Entity
 {
 protected:
 	/*variable*/
@@ -16,8 +16,8 @@ protected:
 
 	virtual void initSprite() = 0;
 public:
-	Enemy();
-	virtual ~Enemy();
+	Entity();
+	virtual ~Entity();
 
 	virtual void update(const float& dt) = 0;
 	virtual void render(sf::RenderTarget* target) = 0;

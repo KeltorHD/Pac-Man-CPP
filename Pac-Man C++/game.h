@@ -33,6 +33,7 @@ public:
 	void updateDt();
 	void updateSFMLEvents();
 	void updatePlayerInput();
+	void updatePlayerMove();
 	void update();
 
 	/*render*/

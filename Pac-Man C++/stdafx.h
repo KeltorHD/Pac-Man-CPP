@@ -45,4 +45,9 @@ enum class dirType
 	none
 };
 
+/*перпендикул€рны ли направлени€*/
+bool isPerpendicular(const dirType& d1, const dirType& d2);
+
+std::ostream& operator<<(std::ostream& os, dirType& dir);
+
 #endif // !HEADER_H
