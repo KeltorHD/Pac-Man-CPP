@@ -34,6 +34,9 @@
     <Filter Include="Map">
       <UniqueIdentifier>{c0407589-003d-4597-a452-8595b312c823}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Ghosts">
+      <UniqueIdentifier>{f56a256d-1a80-4e21-95f8-7dd9bb3fd8fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -60,6 +63,12 @@
     <ClCompile Include="entity.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="ghost.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="blinky.cpp">
+      <Filter>Ghosts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -82,6 +91,12 @@
     </ClInclude>
     <ClInclude Include="entity.h">
       <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="ghost.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="blinky.h">
+      <Filter>Ghosts</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-#ifndef PLAYER_H
+#pragma once
 
 #include "entity.h"
 
@@ -7,9 +7,9 @@ class Player :
 {
 private:
 	/*var*/
-	float speed;
-	dirType current;
-	dirType next;
+	size_t eat; /*количество съеденной пищи*/
+	size_t ener; /*количество съеденных энерджайзеров*/
+	int lifes; /*жизни игрока*/
 
 	/*init*/
 	void initVar();
@@ -17,32 +17,22 @@ private:
 	virtual void initSprite();
 
 	/*func*/
-
+	void renderLifes(sf::RenderTarget* target);
 public:
 	Player();
 	virtual ~Player();
 
 	/*modifier*/
-	void setDir(dirType dir);
-	void setPosition(float x, float y);
-	void clearDir(); /*перенос следующего направления в текущее*/
-	void clearDir(dirType dir); /*очищение направлений, добавление в текущее dir*/
+	void incEat(); /*увеличение числа съеденной пищи*/
+	void incEner(); /*увеличение числа съеденных энерджайзеров*/
+	void decLifes(); /*уменьшение числа жизней*/
 
-	/*get*/
-	const dirType& getCurDir();
-	const dirType& getNextDir();
-	const sf::Vector2f& getPosition();
-	const sf::Vector2f& getPosition(const dirType& dir); /*получение позиции ближайшей стороны по направлению передаваемого движения*/
-	const sf::Vector2f getNextPosition(const float& dt);
-	const sf::Vector2f getNextPosition(const dirType& dir, const float& dt); /*с учетом передаваемого направления*/
-	const float getMovingRange(const float& dt);
+	/*accessors*/
+	const size_t& getCountEat(); /*количество съеденной пищи*/
 
 	/*func*/
-	void move(const float& dt);
-	void moveToBorder(); /*подойти к границе кубика*/
+	void reload(); /*сброс героя после прохождения уровня*/
 
-	virtual void update(const float& dt);
+	virtual void update(const Map* map, const float& dt);
 	virtual void render(sf::RenderTarget* target);
 };
-
-#endif // !PLAYER_H

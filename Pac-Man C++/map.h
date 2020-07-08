@@ -1,27 +1,31 @@
-#ifndef MAP_H
-
-#include "entity.h"
+#pragma once
 
 class Map
 {
 public:
 	enum class tileType
 	{
+		wall = 0,       /*стена*/
 		free = 1,       /*свободная клетка*/
 		food = 2,       /*еда*/
-		energizere = 3, /*энерджайзер*/
-
-		wall = 0        /*стена*/
+		energizere = 3  /*энерджайзер*/
 	};
 
 	Map();
 	~Map();
 
-	/*func*/
-	bool isMove(const dirType& dir, const int& x, const int& y);
-	bool isWall(const int& x, const int& y);
+	/*accessors*/
+	const size_t& getCountEat() const;
 
-	void update(const float& dt);
+	/*func*/
+	bool isGhostUp(const int& cell_x, const int& cell_y) const; /*может ли привидения в этой клетке пойти вверх*/
+	bool isMove(const dirType& dir, const int& x, const int& y) const;
+	bool isWall(const int& x, const int& y) const;
+	bool isEqual(const sf::Vector2f& one, const sf::Vector2f& two);
+	void reload(); /*сброс карты после прохождения уровня*/
+	float distance(const sf::Vector2f& p1, const sf::Vector2f& p2) const; /*получение расстояния между двумя точками*/
+
+	int updateFood(const sf::Vector2f& playerPos); /*обновление пищи, 1 - точка, 2 - энерджайзер, 0 - ничего*/
 	void render(sf::RenderTarget* target);
 private:
 	/*map*/
@@ -31,15 +35,16 @@ private:
 
 	/*food, ener*/
 	sf::Texture food_ener;
-	sf::Sprite food;
-	sf::Sprite energizere;
+	sf::Sprite foodSprite;
+	size_t eat;
+	size_t ener;
+	sf::Sprite energizereSprite;
 
-	/*func*/
+	/*init*/
+	void initVar();
 	void initTiles();
 	void initSprites();
-	void updateCollision(Entity* entity, const float& dt);
+
+	/*func*/
 	void renderFood(sf::RenderTarget* target);
 };
-
-
-#endif // ! MAP_H

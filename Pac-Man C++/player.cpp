@@ -3,9 +3,9 @@
 
 void Player::initVar()
 {
-	this->speed = 75.f;
-	this->current = dirType::none;
-	this->next = dirType::none;
+	this->lifes = 2;
+	this->eat = 0;
+	this->ener = 0;
 }
 
 void Player::initComponents()
@@ -22,8 +22,21 @@ void Player::initSprite()
 	this->sprite.setPosition(START_POS_X, START_POS_Y);
 }
 
+void Player::renderLifes(sf::RenderTarget* target)
+{
+	sf::Sprite l;
+	l.setTexture(this->animTexture);
+	l.setTextureRect(sf::IntRect(72, 0, -24, 24));
+	/*render sprite*/
+	for (int i = 0; i < this->lifes; i++)
+	{
+		l.setPosition(float(LIFES_POS_X + 36 * i), LIFES_POS_Y);
+		target->draw(l);
+	}
+}
+
 Player::Player()
-	: Entity()
+	: Entity(100.f, dirType::none, dirType::none)
 {
 	this->initVar();
 	this->initSprite();
@@ -38,202 +51,43 @@ Player::~Player()
 	delete this->hitboxComponent;
 }
 
-void Player::setDir(dirType dir)
+void Player::incEat()
 {
-	if (this->current == dirType::none)
-		this->current = dir;
-	else if (this->current != dir) 
-		this->next = dir;
+	this->eat++;
 }
 
-void Player::setPosition(float x, float y)
+void Player::incEner()
 {
-	this->sprite.setPosition(x, y);
+	this->ener++;
+	/*начало таймера уничтожения*/
 }
 
-void Player::clearDir()
+void Player::decLifes()
 {
-	this->current = this->next;
-	this->next = dirType::none;
+	this->lifes--;
 }
 
-void Player::clearDir(dirType dir)
+const size_t& Player::getCountEat()
 {
-	this->current = dir;
-	this->next = dirType::none;
+	return this->eat;
 }
 
-const dirType& Player::getCurDir()
+void Player::reload()
 {
-	return this->current;
+	this->hitboxComponent->setPosition(START_POS_X + 4, START_POS_Y + 4);
+	this->clearDir(dirType::none);
 }
 
-const dirType& Player::getNextDir()
+void Player::update(const Map* map, const float& dt)
 {
-	return this->next;
-}
-
-const sf::Vector2f& Player::getPosition()
-{
-	return this->hitboxComponent->getPosition();
-}
-
-const sf::Vector2f& Player::getPosition(const dirType& dir)
-{
-	switch (dir)
-	{
-	case dirType::left:
-		return sf::Vector2f(
-			this->hitboxComponent->getPosition().x,
-			this->hitboxComponent->getPosition().y );
-	case dirType::right:
-		return sf::Vector2f(
-			this->hitboxComponent->getPosition().x + TILE_WIDTH,
-			this->hitboxComponent->getPosition().y);
-	case dirType::up:
-		return sf::Vector2f(
-			this->hitboxComponent->getPosition().x,
-			this->hitboxComponent->getPosition().y);
-	case dirType::down:
-		return sf::Vector2f(
-			this->hitboxComponent->getPosition().x,
-			this->hitboxComponent->getPosition().y + TILE_WIDTH);
-	case dirType::none:
-		return sf::Vector2f(
-			this->hitboxComponent->getPosition().x,
-			this->hitboxComponent->getPosition().y);
-	}
-}
-
-const sf::Vector2f Player::getNextPosition(const float& dt)
-{
-	switch (this->current)
-	{
-	case dirType::left:
-		return sf::Vector2f(
-			this->hitboxComponent->getPosition().x - dt * this->speed,
-			this->hitboxComponent->getPosition().y);
-	case dirType::right:
-		return sf::Vector2f(
-			this->hitboxComponent->getPosition().x + TILE_WIDTH + dt * this->speed,
-			this->hitboxComponent->getPosition().y);
-	case dirType::up:
-		return sf::Vector2f(
-			this->hitboxComponent->getPosition().x,
-			this->hitboxComponent->getPosition().y - dt * this->speed);
-	case dirType::down:
-		return sf::Vector2f(
-			this->hitboxComponent->getPosition().x,
-			this->hitboxComponent->getPosition().y + TILE_WIDTH + dt * this->speed);
-	case dirType::none:
-		return sf::Vector2f(
-			this->hitboxComponent->getPosition().x,
-			this->hitboxComponent->getPosition().y);
-	}
-}
-
-const sf::Vector2f Player::getNextPosition(const dirType& dir, const float& dt)
-{
-	switch (dir)
-	{
-	case dirType::left:
-		return sf::Vector2f(
-			this->hitboxComponent->getPosition().x - dt * this->speed,
-			this->hitboxComponent->getPosition().y + TILE_WIDTH / 2);
-	case dirType::right:
-		return sf::Vector2f(
-			this->hitboxComponent->getPosition().x + TILE_WIDTH + dt * this->speed,
-			this->hitboxComponent->getPosition().y + TILE_WIDTH / 2);
-	case dirType::up:
-		return sf::Vector2f(
-			this->hitboxComponent->getPosition().x + TILE_WIDTH / 2,
-			this->hitboxComponent->getPosition().y - dt * this->speed);
-	case dirType::down:
-		return sf::Vector2f(
-			this->hitboxComponent->getPosition().x + TILE_WIDTH / 2,
-			this->hitboxComponent->getPosition().y + TILE_WIDTH + dt * this->speed);
-	case dirType::none:
-		return sf::Vector2f(
-			this->hitboxComponent->getPosition().x,
-			this->hitboxComponent->getPosition().y);
-	}
-}
-
-const float Player::getMovingRange(const float& dt)
-{
-	return dt* this->speed;
-}
-
-void Player::move(const float& dt)
-{
-	if (this->current != dirType::none)
-	{
-		switch (this->current)
-		{
-		case dirType::left:
-			this->hitboxComponent->move(-dt * this->speed, 0);
-			break;
-		case dirType::right:
-			this->hitboxComponent->move(dt * this->speed, 0);
-			break;
-		case dirType::up:
-			this->hitboxComponent->move(0, -dt * this->speed);
-			break;
-		case dirType::down:
-			this->hitboxComponent->move(0, dt * this->speed);
-			break;
-		}
-	}
-}
-
-void Player::moveToBorder()
-{
-	switch (this->current)
-	{
-	case dirType::left:
-		this->hitboxComponent->setPosition
-		(
-			int(this->hitboxComponent->getPosition().x / TILE_WIDTH) * TILE_WIDTH,
-			this->hitboxComponent->getPosition().y
-		);
-		break;
-	case dirType::right:
-		this->hitboxComponent->setPosition
-		(
-			(int(this->hitboxComponent->getPosition().x) % TILE_WIDTH > 0) ? 
-			((int(this->hitboxComponent->getPosition().x / TILE_WIDTH) + 1) * TILE_WIDTH) : 
-			(int(this->hitboxComponent->getPosition().x / TILE_WIDTH) * TILE_WIDTH),
-			this->hitboxComponent->getPosition().y
-		);
-		break;
-	case dirType::up:
-		this->hitboxComponent->setPosition
-		(
-			int(this->hitboxComponent->getPosition().x / TILE_WIDTH) * TILE_WIDTH,
-			int(this->hitboxComponent->getPosition().y / TILE_WIDTH) * TILE_WIDTH
-		);
-		break;
-	case dirType::down:
-		this->hitboxComponent->setPosition
-		(
-			int(this->hitboxComponent->getPosition().x / TILE_WIDTH) * TILE_WIDTH,
-			(int(this->hitboxComponent->getPosition().y) % TILE_WIDTH > 0) ?
-			((int(this->hitboxComponent->getPosition().y / TILE_WIDTH) + 1) * TILE_WIDTH) :
-			(int(this->hitboxComponent->getPosition().y / TILE_WIDTH) * TILE_WIDTH)
-		);
-		break;
-	}
-}
-
-void Player::update(const float& dt)
-{
-	//this->updateMove(dt);
-	this->hitboxComponent->update();
-	//this->animationComponent->play("eat", dt);
+	this->updateMove(map, dt); /*обновление позиции хитбокса*/
+	this->hitboxComponent->update(); /*обновление позиции спрайта вслед за хитбоксом*/
+	this->animationComponent->play("eat", dt);
 }
 
 void Player::render(sf::RenderTarget* target)
 {
 	target->draw(this->sprite);
+	this->renderLifes(target);
 	this->hitboxComponent->render(*target);
 }

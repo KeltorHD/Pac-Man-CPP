@@ -1,7 +1,8 @@
-#ifndef GAME_H
+#pragma once
 
-#include "Map.h"
+#include "map.h"
 #include "player.h"
+#include "blinky.h"
 
 class Game
 {
@@ -18,12 +19,16 @@ private:
 	/*map, player, enemy*/
 	Map* map;
 	Player* player;
+	std::vector<Ghost*> enemy;
 
 	/*Initialization*/
 	void initVariables();
 	void initWindow();
 	void initKeys();
 	void initEssence();
+
+	/*func*/
+	void updateCollisionEnemies(); /*обновление коллизии*/
 
 public:
 	Game();
@@ -33,7 +38,6 @@ public:
 	void updateDt();
 	void updateSFMLEvents();
 	void updatePlayerInput();
-	void updatePlayerMove();
 	void update();
 
 	/*render*/
@@ -42,5 +46,3 @@ public:
 	/*core*/
 	void run();
 };
-
-#endif // !GAME_H

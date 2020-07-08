@@ -41,6 +41,26 @@ void Game::initEssence()
 {
 	this->map = new Map();
 	this->player = new Player();
+	this->enemy.push_back(new Blinky());
+}
+
+void Game::updateCollisionEnemies()
+{
+	for (auto& i : this->enemy)
+	{
+		
+		if (this->map->isEqual(i->getCenterPosition(), this->player->getCenterPosition()))
+		{
+			/*reload player, enemies, level--*/
+			this->player->reload();
+			for (auto& i : this->enemy)
+			{
+				//i.reload();
+			}
+			this->player->decLifes(); /*уменьшение жизней*/
+			break;
+		}
+	}
 }
 
 /*Constructor*/
@@ -55,7 +75,13 @@ Game::Game()
 Game::~Game()
 {
 	delete this->map;
+	delete this->player;
+	for (auto& i: this->enemy)
+	{
+		delete i;
+	}
 	delete this->window;
+
 }
 
 
@@ -99,8 +125,8 @@ void Game::updatePlayerInput()
 		/*нужно ли изменять направления прямо сейчас?*/
 		if (!this->map->isWall /*не в стену ли идем?*/
 		(
-			this->player->getNextPosition(dir, this->dt).x / TILE_WIDTH,
-			this->player->getNextPosition(dir, this->dt).y / TILE_WIDTH
+			int(this->player->getNextPosition(dir, this->dt).x / TILE_WIDTH),
+			int(this->player->getNextPosition(dir, this->dt).y / TILE_WIDTH)
 		))
 		{
 			bool isChange = false;
@@ -119,7 +145,7 @@ void Game::updatePlayerInput()
 			}
 			if (isChange) /*меняем направление, так как положение совпадает с клетками*/
 			{
-				if (isPerpendicular(dir, this->player->getCurDir()))
+				if (isPerpendicularDir(dir, this->player->getCurDir()))
 					this->player->moveToBorder();
 				this->player->clearDir(dir);
 			}
@@ -135,80 +161,56 @@ void Game::updatePlayerInput()
 	}
 }
 
-void Game::updatePlayerMove()
-{
-	int next_x = this->player->getNextPosition(this->player->getNextDir(), this->dt).x;
-	int next_y = this->player->getNextPosition(this->player->getNextDir(), this->dt).y;
-
-	/*проверка: можно ли изменить направление движения*/
-	if (this->player->getNextDir() != dirType::none)
-	{
-		/*проверка: следующая позиция - не стена?*/
-		if (!this->map->isWall
-		(
-			next_x / TILE_WIDTH,
-			next_y / TILE_WIDTH
-		))
-		{
-			/*проверяем, достаточно ли мы близко к повороту*/
-			bool isChange = false;
-			switch (this->player->getNextDir())
-			{
-			case dirType::left:
-			case dirType::right:
-				if (int(this->player->getPosition().y) % TILE_WIDTH == 0)
-					isChange = true;
-				break;
-			case dirType::up:
-			case dirType::down:
-				if (int(this->player->getPosition().x) % TILE_WIDTH == 0)
-					isChange = true;
-				break;
-			}
-			if (isChange)
-			{
-				this->player->moveToBorder(); /*сдвигаемся к границе плитки*/
-				this->player->clearDir();
-			}
-		}
-	}
-
-	/*проверка: можно ли продолжать движение в текущую сторону*/
-	if (this->player->getCurDir() != dirType::none)
-	{
-		/*если следующая позиция игрока находится в стене*/
-		if (this->map->isWall
-		(
-			this->player->getNextPosition(this->dt).x / TILE_WIDTH,
-			this->player->getNextPosition(this->dt).y / TILE_WIDTH
-		))
-		{
-			this->player->moveToBorder(); /*сдвигаемся к границе плитки*/
-			this->player->clearDir();
-		}
-		else
-		{
-			this->player->move(dt);
-		}
-	}
-}
-
 void Game::update()
 {
+	/*update engine*/
 	this->updateSFMLEvents();
 	this->updatePlayerInput();
-	this->updatePlayerMove();
-	this->player->update(this->dt);
+
+	/*update entity*/
+	this->player->update(this->map, this->dt);
+	for (auto& i : this->enemy)
+	{
+		i->update(this->map, this->player, this->dt);
+	}
+
+	/*обновление съеденной игроком еды*/
+	int swtch = this->map->updateFood(this->player->getPosition());
+	if (swtch == 1)
+	{
+		this->player->incEat();
+	}
+	else if (swtch == 2)
+	{
+		this->player->incEner();
+		/*выставление призракам режима разбегания*/
+	}
+
+	if (!this->map->getCountEat())
+	{
+		/*reload, level++*/
+		this->map->reload();
+		this->player->reload();
+	}
+
+	/*collision*/
+	this->updateCollisionEnemies();
 }
 
 void Game::render()
 {
+	/*clear window*/
 	this->window->clear();
 
 	/*render items*/
 	this->map->render(this->window);
 	this->player->render(this->window);
+	for (auto& i : this->enemy)
+	{
+		i->render(this->window);
+	}
 
+	/*present*/
 	this->window->display();
 }
 
