@@ -104,7 +104,7 @@ private:
 	};
 
 	sf::Sprite& sprite;
-	sf::Texture& textureSheet;
+	sf::Texture textureSheet;
 	std::map<std::string, Animation*> animations;
 	Animation* lastAnimation;
 	Animation* priorityAnimation;
@@ -112,6 +112,9 @@ public:
 
 	AnimationComponent(sf::Sprite& sprite, sf::Texture& texture_sheet);
 	virtual ~AnimationComponent();
+
+	/*modifier*/
+	void setTextureSheet(const sf::Texture& texture_sheet); /*задание другой текстуры для анимации*/
 
 	//accessors
 	const bool& isDone(const std::string key);

@@ -12,12 +12,10 @@ protected:
 	dirType current;
 	dirType next;
 	sf::Sprite sprite; /*спрайт сущности*/
-	sf::Texture animTexture; /*текстура для анимации*/
+	sf::Texture baseTexture; /*текстура для анимации*/
 
 	AnimationComponent* animationComponent;
 	HitboxComponent* hitboxComponent;
-
-	virtual void initSprite() = 0;
 
 	void updateMove(const Map* map, const float& dt); /*движение сущности по направлению*/
 public:
@@ -38,11 +36,10 @@ public:
 	const sf::Vector2f getPosition(const dirType& dir) const; /*получение позиции ближайшей стороны по направлению передаваемого движения*/
 	const sf::Vector2f getNextPosition(const float& dt) const; /*получение следующей позиции с учетом текущего направления движения*/
 	const sf::Vector2f getNextPosition(const dirType& dir, const float& dt) const; /*с учетом передаваемого направления*/
-	const float getMovingRange(const float& dt) const; /*расстояние, которое может пройти герой*/
 
 	/*func*/
 	void move(const float& dt); /*двигаться по текущему направлению*/
 	void moveToBorder(); /*подойти к границе кубика*/
 
-	virtual void render(sf::RenderTarget* target) = 0;
+	virtual void render(sf::RenderTarget* target); /*отрисовка сущности*/
 };

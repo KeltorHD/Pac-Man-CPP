@@ -10,14 +10,11 @@ public:
 	virtual ~Blinky();
 
 	/*func*/
-	virtual void update(const Map* map, const Player* player, const float& dt);
-	virtual void render(sf::RenderTarget* target);
+	virtual void reload();
 private:
 	/*var*/
 
 	/*init*/
-	virtual void initSprite();
-	virtual void initComponents();
 	virtual void initVar();
 	virtual void initTimers();
 

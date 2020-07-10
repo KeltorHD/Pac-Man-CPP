@@ -60,6 +60,12 @@ void Entity::updateMove(const Map* map, const float& dt)
 	}
 }
 
+void Entity::render(sf::RenderTarget* target)
+{
+	target->draw(this->sprite);
+	/*this->hitboxComponent->render(*target);*/
+}
+
 Entity::Entity(float speed, dirType current, dirType next)
 {
 	this->speed = speed;
@@ -181,11 +187,6 @@ const sf::Vector2f Entity::getNextPosition(const dirType& dir, const float& dt) 
 			this->hitboxComponent->getPosition().y);
 	}
 	return sf::Vector2f();
-}
-
-const float Entity::getMovingRange(const float& dt) const
-{
-	return dt * this->speed;
 }
 
 void Entity::move(const float& dt)

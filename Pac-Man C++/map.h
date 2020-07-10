@@ -15,7 +15,7 @@ public:
 	~Map();
 
 	/*accessors*/
-	const size_t& getCountEat() const;
+	const size_t& getCountEat() const; /*количество оставшихся точек с едой*/
 
 	/*func*/
 	bool isGhostUp(const int& cell_x, const int& cell_y) const; /*может ли привидения в этой клетке пойти вверх*/

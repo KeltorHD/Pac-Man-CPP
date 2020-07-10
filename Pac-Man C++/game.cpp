@@ -41,6 +41,7 @@ void Game::initEssence()
 {
 	this->map = new Map();
 	this->player = new Player();
+	Ghost::loadStaticTexture(); /*загрузка статической текстуры*/
 	this->enemy.push_back(new Blinky());
 }
 
@@ -51,14 +52,39 @@ void Game::updateCollisionEnemies()
 		
 		if (this->map->isEqual(i->getCenterPosition(), this->player->getCenterPosition()))
 		{
-			/*reload player, enemies, level--*/
-			this->player->reload();
-			for (auto& i : this->enemy)
+			if (i->getMode() == Ghost::modeType::frightened)
 			{
-				//i.reload();
+				i->setMode(Ghost::modeType::toHome);
 			}
-			this->player->decLifes(); /*уменьшение жизней*/
-			break;
+			else if (i->getMode() == Ghost::modeType::toHome)
+			{
+				continue;
+			}
+			else
+			{
+				/*reload player, enemies, level--*/
+				this->player->reload();
+				for (auto& i : this->enemy)
+				{
+					i->reload();
+				}
+				this->player->decLifes(); /*уменьшение жизней*/
+				break;
+			}
+		}
+	}
+}
+
+void Game::updateLevel()
+{
+	if (!this->map->getCountEat())
+	{
+		/*reload, level++*/
+		this->map->reload();
+		this->player->reload();
+		for (auto& i : this->enemy)
+		{
+			i->reload();
 		}
 	}
 }
@@ -161,6 +187,25 @@ void Game::updatePlayerInput()
 	}
 }
 
+void Game::updateFood()
+{
+	/*обновление съеденной игроком еды*/
+	int swtch = this->map->updateFood(this->player->getPosition());
+	if (swtch == 1)
+	{
+		this->player->incEat();
+	}
+	else if (swtch == 2)
+	{
+		this->player->incEner();
+		/*выставление призракам режима разбегания*/
+		for (auto& i : this->enemy)
+		{
+			i->setMode(Ghost::modeType::frightened);
+		}
+	}
+}
+
 void Game::update()
 {
 	/*update engine*/
@@ -174,27 +219,11 @@ void Game::update()
 		i->update(this->map, this->player, this->dt);
 	}
 
-	/*обновление съеденной игроком еды*/
-	int swtch = this->map->updateFood(this->player->getPosition());
-	if (swtch == 1)
-	{
-		this->player->incEat();
-	}
-	else if (swtch == 2)
-	{
-		this->player->incEner();
-		/*выставление призракам режима разбегания*/
-	}
-
-	if (!this->map->getCountEat())
-	{
-		/*reload, level++*/
-		this->map->reload();
-		this->player->reload();
-	}
-
 	/*collision*/
 	this->updateCollisionEnemies();
+	
+	this->updateFood();
+	this->updateLevel();
 }
 
 void Game::render()

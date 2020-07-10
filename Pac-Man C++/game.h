@@ -27,21 +27,21 @@ private:
 	void initKeys();
 	void initEssence();
 
-	/*func*/
-	void updateCollisionEnemies(); /*обновление коллизии*/
-
-public:
-	Game();
-	~Game();
-
 	/*update*/
 	void updateDt();
 	void updateSFMLEvents();
-	void updatePlayerInput();
+	void updatePlayerInput(); /*обвновление пользовательского ввода*/
+	void updateFood(); /*обновление съеденной игроком пищи*/
+	void updateCollisionEnemies(); /*обновление коллизии*/
+	void updateLevel(); /*обновление уровня*/
 	void update();
 
 	/*render*/
 	void render();
+
+public:
+	Game();
+	~Game();
 
 	/*core*/
 	void run();

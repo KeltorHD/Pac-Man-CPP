@@ -14,6 +14,11 @@ AnimationComponent::~AnimationComponent()
 	}
 }
 
+void AnimationComponent::setTextureSheet(const sf::Texture& texture_sheet)
+{
+	this->textureSheet = texture_sheet;
+}
+
 //accessors
 const bool& AnimationComponent::isDone(const std::string key)
 {

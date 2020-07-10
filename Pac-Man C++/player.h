@@ -7,6 +7,7 @@ class Player :
 {
 private:
 	/*var*/
+	sf::Sprite lifeSprite; /*спрайт отрисовки жизней*/
 	size_t eat; /*количество съеденной пищи*/
 	size_t ener; /*количество съеденных энерджайзеров*/
 	int lifes; /*жизни игрока*/
@@ -14,9 +15,10 @@ private:
 	/*init*/
 	void initVar();
 	void initComponents();
-	virtual void initSprite();
+	void initSprite();
 
 	/*func*/
+	void updateAnimation(const float& dt);
 	void renderLifes(sf::RenderTarget* target);
 public:
 	Player();
