@@ -16,7 +16,6 @@ private:
 
 	/*init*/
 	virtual void initVar();
-	virtual void initTimers();
 
 	/*func*/
 	virtual void updateTargetcell(const Player* player, const Map* map);

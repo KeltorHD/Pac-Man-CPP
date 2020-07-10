@@ -41,7 +41,7 @@ void Game::initEssence()
 {
 	this->map = new Map();
 	this->player = new Player();
-	Ghost::loadStaticTexture(); /*загрузка статической текстуры*/
+	Ghost::loadStaticVar(); /*загрузка статической текстуры*/
 	this->enemy.push_back(new Blinky());
 }
 

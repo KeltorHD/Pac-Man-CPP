@@ -3,6 +3,7 @@
 
 sf::Texture Ghost::frightenedTexture; /*инициализация статической текстуры*/
 sf::Texture Ghost::toHomeTexture; /*инициализация статической текстуры*/
+Ghost::patternMode Ghost::pattern; /*инициализация статического вектора*/
 
 Ghost::Ghost(const sf::Color& color, const float pos_x, const float pos_y)
 	: Entity(75.f, dirType::left, dirType::none)
@@ -10,6 +11,7 @@ Ghost::Ghost(const sf::Color& color, const float pos_x, const float pos_y)
 	this->targetCell = sf::Vector2f(0.f, 0.f);
 	this->mode = modeType::chase;
 
+	this->initTimers();
 	this->initSprite(color, pos_x, pos_y);
 	this->initComponents();
 	this->animationComponent->setTextureSheet(this->baseTexture);
@@ -17,6 +19,8 @@ Ghost::Ghost(const sf::Color& color, const float pos_x, const float pos_y)
 
 Ghost::~Ghost()
 {
+	delete this->hitboxComponent;
+	delete this->animationComponent;
 }
 
 const Ghost::modeType& Ghost::getMode()
@@ -43,6 +47,10 @@ void Ghost::setMode(modeType mode)
 	}
 	else
 	{
+		if (mode == modeType::frightened)
+		{
+			this->frigthetenedTimer = 0.f;
+		}
 		if (this->mode != mode)
 		{
 			/*изменяем направление на противоположное*/
@@ -50,6 +58,7 @@ void Ghost::setMode(modeType mode)
 			/*сменяем текстуру для анимации*/
 			if (mode == modeType::frightened)
 			{
+				this->frigthetenedTimer = 0.f;
 				this->animationComponent->setTextureSheet(this->frightenedTexture);
 			}
 			else if (mode == modeType::toHome)
@@ -66,16 +75,36 @@ void Ghost::setMode(modeType mode)
 	}
 }
 
-void Ghost::loadStaticTexture()
+void Ghost::loadStaticVar()
 {
 	if (!Ghost::frightenedTexture.loadFromFile("Images/frightened.png"))
 		throw "NOT COULD LOAD FRIGHTENED IMAGE";
 	if (!Ghost::toHomeTexture.loadFromFile("Images/to_home.png"))
 		throw "NOT COULD LOAD TOHOME IMAGE";
+
+	std::ifstream ifs;
+	ifs.open("Config/patternMode.ini");
+	if (!ifs.is_open())
+		throw "NOT COULD LOAD PATTERNMODE.ini";
+
+	for (size_t i = 0; i < 4; i++)
+	{
+		int tmp;
+		Ghost::pattern.push_back(std::vector<std::pair<modeType, float>>());
+		for (size_t j = 0; j < 2; j++)
+		{
+			Ghost::pattern[i].push_back(std::pair<modeType, float>());
+			ifs >> tmp;
+			Ghost::pattern[i][j].first = modeType(tmp);
+			ifs >> Ghost::pattern[i][j].second;
+		}
+	}
+	ifs.close();
 }
 
 void Ghost::update(const Map* map, const Player* player, const float& dt)
 {
+	this->updateTimers(dt);
 	this->updateTargetcell(player, map);
 	this->updateMoveGhost(map, dt);
 	this->hitboxComponent->update();
@@ -114,6 +143,11 @@ void Ghost::initComponents()
 	this->animationComponent->addAnimation("horizontal", 15.f, 0, 0, 1, 0, 28, 28);
 	this->animationComponent->addAnimation("down", 15.f, 0, 1, 1, 1, 28, 28);
 	this->animationComponent->addAnimation("up", 15.f, 0, 2, 1, 2, 28, 28);
+}
+
+void Ghost::initTimers()
+{
+	this->frigthetenedTimer = 0.f;
 }
 
 void Ghost::updateDirBase(distanceType& distance, const Map* map, const float& dt)
@@ -180,6 +214,20 @@ void Ghost::updateDirBase(distanceType& distance, const Map* map, const float& d
 			distance.push_back({ cur, map->distance(conversion(tmpPos), this->targetCell) });
 		}
 
+	}
+}
+
+void Ghost::updateTimers(const float& dt)
+{
+	this->frigthetenedTimer += dt;
+
+	/*проверки по таймерам*/
+	if (this->mode == modeType::frightened)
+	{
+		if (this->frigthetenedTimer >= FRIGHTENED_TIME)
+		{
+			this->setMode(modeType::chase);
+		}
 	}
 }
 

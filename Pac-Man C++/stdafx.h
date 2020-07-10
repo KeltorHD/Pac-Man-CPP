@@ -30,23 +30,15 @@
 #define BLINKY_POS_X 210.f /*начальная позиция блинки*/
 #define BLINKY_POS_Y 218.f
 
-#define FRIGHTENED_TIME 5000.f /*пять секунд*/
+/*время действия страха*/
+#define FRIGHTENED_TIME 5.f /*пять секунд*/
 
 #define GAME_TITLE "Pac-Man C++"
 
 /*Core*/
-#include <algorithm>
-#include <deque>
 #include <iostream>
-#include <map>
-#include <memory>
-#include <set>
-#include <utility>
 #include <vector>
-#include <list>
-#include <stack>
 #include <string>
-#include <sstream>
 #include <fstream>
 #include <cmath>
 #include <ctime>

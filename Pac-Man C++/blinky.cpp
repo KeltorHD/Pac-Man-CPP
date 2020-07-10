@@ -5,13 +5,10 @@ Blinky::Blinky()
 	: Ghost(sf::Color::Red, BLINKY_POS_X, BLINKY_POS_Y)
 {
 	this->initVar();
-	this->initTimers();
 }
 
 Blinky::~Blinky()
 {
-	delete this->hitboxComponent;
-	delete this->animationComponent;
 }
 
 void Blinky::reload()
@@ -25,10 +22,6 @@ void Blinky::initVar()
 {
 	this->mode = modeType::chase; /*начинаем в режиме преследования*/
 	this->current = dirType::left;
-}
-
-void Blinky::initTimers()
-{
 }
 
 void Blinky::updateTargetcell(const Player* player, const Map* map)

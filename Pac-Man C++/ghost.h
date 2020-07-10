@@ -3,13 +3,11 @@
 #include "entity.h"
 #include "player.h"
 
-/*функция базового поиска пути возвращает данный тип*/
-typedef std::vector<std::pair<dirType, float>> distanceType;
-
 class Ghost :
 	public Entity
 {
 public:
+	/*types*/
 	enum class modeType
 	{
 		chase,      /*преследование*/
@@ -19,6 +17,13 @@ public:
 		inHome      /*сидит в домике*/
 	};
 
+	/*тип для паттеров поведения (волны): тип поведения, время поведения*/
+	typedef std::vector<std::vector<std::pair<Ghost::modeType, float>>> patternMode;
+
+	/*функция базового поиска пути возвращает данный тип*/
+	typedef std::vector<std::pair<dirType, float>> distanceType;
+
+	/*constructor / destructor */
 	Ghost(const sf::Color& color, const float pos_x, const float pos_y);
 	virtual ~Ghost();
 
@@ -30,7 +35,7 @@ public:
 	void setMode(modeType mode);
 
 	/*func*/
-	static void loadStaticTexture(); /*загрузка текстуры страха*/
+	static void loadStaticVar(); /*загрузка текстуры страха*/
 	virtual void reload() = 0; /*обновление привидения после прохождения уровня*/
 	void update(const Map* map, const Player* player, const float& dt);
 protected:
@@ -39,26 +44,30 @@ protected:
 	modeType mode; /*тип текущего поведения*/
 
 	/*init*/
-	void initSprite(const sf::Color& color, const float pos_x, const float pos_y);
-	void initComponents(); /*инициализация хитбокса и анимаций*/
 	virtual void initVar() = 0;
-	virtual void initTimers() = 0;
 
 	/*func*/
 	virtual void updateTargetcell(const Player* player, const Map* map) = 0;
 
+private:
+	/*var*/
+	static patternMode pattern; /*паттерны поведения привидений*/
+	float frigthetenedTimer; /*таймер для режима страха*/
+	static sf::Texture frightenedTexture; /*текстура для отображания состояния страха*/
+	static sf::Texture toHomeTexture; /*текстура для отображания состояния движения в домик*/
+
+	/*init*/
+	void initSprite(const sf::Color& color, const float pos_x, const float pos_y);
+	void initComponents(); /*инициализация хитбокса и анимаций*/
+	void initTimers(); /*инициализация таймеров*/
+
+	/*func*/
+	void updateTimers(const float& dt); /*обновление таймеров*/
+	void updateDirBase(distanceType& distance, const Map* map, const float& dt); /*определяются доступные направления для движения*/
 	void updateDirRand(const Map* map, const float& dt); /*обновление направления, выбирается рандомное*/
 	void updateDirMin(const Map* map, const float& dt); /*обновление направления, выбирается минимальное*/
 	void updateMoveGhost(const Map* map, const float& dt);
 	void updateAnimation(const float& dt); /*обновление анимации привидения*/
-
-private:
-	/*var*/
-	static sf::Texture frightenedTexture; /*текстура для отображания состояния страха*/
-	static sf::Texture toHomeTexture; /*текстура для отображания состояния движения в домик*/
-
-	/*func*/
-	void updateDirBase(distanceType& distance, const Map* map, const float& dt); /*определяются доступные направления для движения*/
 
 };
 
