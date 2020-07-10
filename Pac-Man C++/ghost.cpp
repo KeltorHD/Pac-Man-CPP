@@ -8,13 +8,13 @@ Ghost::patternMode Ghost::pattern; /*инициализация статического вектора*/
 Ghost::Ghost(const sf::Color& color, const float pos_x, const float pos_y)
 	: Entity(75.f, dirType::left, dirType::none)
 {
-	this->targetCell = sf::Vector2f(0.f, 0.f);
-	this->mode = modeType::chase;
-
 	this->initTimers();
 	this->initSprite(color, pos_x, pos_y);
 	this->initComponents();
 	this->animationComponent->setTextureSheet(this->baseTexture);
+
+	this->targetCell = sf::Vector2f(0.f, 0.f);
+	this->mode = this->pattern[this->patternCounter].first;
 }
 
 Ghost::~Ghost()
@@ -87,17 +87,13 @@ void Ghost::loadStaticVar()
 	if (!ifs.is_open())
 		throw "NOT COULD LOAD PATTERNMODE.ini";
 
-	for (size_t i = 0; i < 4; i++)
+	for (size_t i = 0; i < 8; i++)
 	{
 		int tmp;
-		Ghost::pattern.push_back(std::vector<std::pair<modeType, float>>());
-		for (size_t j = 0; j < 2; j++)
-		{
-			Ghost::pattern[i].push_back(std::pair<modeType, float>());
-			ifs >> tmp;
-			Ghost::pattern[i][j].first = modeType(tmp);
-			ifs >> Ghost::pattern[i][j].second;
-		}
+		Ghost::pattern.push_back(std::pair<modeType, float>());
+		ifs >> tmp;
+		Ghost::pattern[i].first = modeType(tmp);
+		ifs >> Ghost::pattern[i].second;
 	}
 	ifs.close();
 }
@@ -109,7 +105,6 @@ void Ghost::update(const Map* map, const Player* player, const float& dt)
 	this->updateMoveGhost(map, dt);
 	this->hitboxComponent->update();
 	this->updateAnimation(dt);
-	std::cout << this->mode << std::endl;
 }
 
 void Ghost::initSprite(const sf::Color& color, const float pos_x, const float pos_y)
@@ -148,6 +143,7 @@ void Ghost::initComponents()
 void Ghost::initTimers()
 {
 	this->frigthetenedTimer = 0.f;
+	this->patternTimer = 0.f;
 }
 
 void Ghost::updateDirBase(distanceType& distance, const Map* map, const float& dt)
@@ -219,14 +215,24 @@ void Ghost::updateDirBase(distanceType& distance, const Map* map, const float& d
 
 void Ghost::updateTimers(const float& dt)
 {
-	this->frigthetenedTimer += dt;
-
-	/*проверки по таймерам*/
+	/*проверки по таймеру страха*/
 	if (this->mode == modeType::frightened)
 	{
+		this->frigthetenedTimer += dt;
+
 		if (this->frigthetenedTimer >= FRIGHTENED_TIME)
 		{
 			this->setMode(modeType::chase);
+		}
+	}
+	else if (this->mode != modeType::inHome && this->mode != modeType::toHome)
+	{
+		this->patternTimer += dt;
+
+		if (this->patternTimer >= this->pattern[this->patternCounter].second)
+		{
+			this->patternTimer = 0.f;
+			this->setMode(this->pattern[++this->patternCounter].first);
 		}
 	}
 }

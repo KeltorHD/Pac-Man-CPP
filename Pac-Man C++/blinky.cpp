@@ -15,12 +15,14 @@ void Blinky::reload()
 {
 	this->hitboxComponent->setPosition(BLINKY_POS_X + 6, BLINKY_POS_Y + 6);
 	this->setDir(dirType::left);
-	this->setMode(modeType::chase);
+	this->mode = this->pattern[0].first;
+	this->patternCounter = 0;
+	this->patternTimer = 0.f;
 }
 
 void Blinky::initVar()
 {
-	this->mode = modeType::chase; /*начинаем в режиме преследования*/
+	/*начинаем в режиме преследования*/
 	this->current = dirType::left;
 }
 

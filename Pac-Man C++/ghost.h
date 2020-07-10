@@ -18,7 +18,7 @@ public:
 	};
 
 	/*тип для паттеров поведения (волны): тип поведения, время поведения*/
-	typedef std::vector<std::vector<std::pair<Ghost::modeType, float>>> patternMode;
+	typedef std::vector<std::pair<Ghost::modeType, float>> patternMode;
 
 	/*функция базового поиска пути возвращает данный тип*/
 	typedef std::vector<std::pair<dirType, float>> distanceType;
@@ -40,6 +40,9 @@ public:
 	void update(const Map* map, const Player* player, const float& dt);
 protected:
 	/*var*/
+	static patternMode pattern; /*паттерны поведения привидений*/
+	int patternCounter; /*для индексации поведения привидений*/
+	float patternTimer; /*таймер для типов поведения*/
 	sf::Vector2f targetCell; /*координаты центра целевой клетки*/
 	modeType mode; /*тип текущего поведения*/
 
@@ -51,7 +54,6 @@ protected:
 
 private:
 	/*var*/
-	static patternMode pattern; /*паттерны поведения привидений*/
 	float frigthetenedTimer; /*таймер для режима страха*/
 	static sf::Texture frightenedTexture; /*текстура для отображания состояния страха*/
 	static sf::Texture toHomeTexture; /*текстура для отображания состояния движения в домик*/
