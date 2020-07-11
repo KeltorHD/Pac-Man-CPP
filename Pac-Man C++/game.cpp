@@ -44,6 +44,7 @@ void Game::initEssence()
 	Ghost::loadStaticVar(); /*загрузка статической текстуры*/
 	this->enemy.push_back(new Blinky());
 	this->enemy.push_back(new Pinky());
+	this->enemy.push_back(new Clyde());
 }
 
 void Game::updateCollisionEnemies()

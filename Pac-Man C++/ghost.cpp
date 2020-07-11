@@ -30,8 +30,8 @@ const Ghost::modeType& Ghost::getMode()
 
 const bool Ghost::isMoveDone()
 {
-	return int(this->getPosition().x + TILE_WIDTH / 2) == int(this->targetCell.x)
-		&& int(this->getPosition().y + TILE_WIDTH / 2) == int(this->targetCell.y);
+	return int(this->getCenterPosition().x) == int(this->targetCell.x)
+		&& int(this->getCenterPosition().y) == int(this->targetCell.y);
 
 }
 

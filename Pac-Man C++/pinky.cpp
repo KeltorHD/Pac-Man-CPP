@@ -17,6 +17,7 @@ void Pinky::reload()
 	this->current = dirType::none;
 	this->next = dirType::none;
 	this->mode = modeType::inHome;
+	this->animationComponent->setTextureSheet(this->baseTexture);
 	this->patternCounter = 0;
 	this->patternTimer = 0.f;
 }
@@ -47,11 +48,6 @@ void Pinky::updateTargetcell(const Player* player, const Map* map)
 	{
 		this->targetCell.x = 14 * TILE_WIDTH + TILE_WIDTH /2;
 		this->targetCell.y = 14 * TILE_WIDTH + TILE_WIDTH / 2;
-	}
-	else if (this->mode == modeType::outHome)
-	{
-		this->targetCell.x = OUT_HOME_POS_X + TILE_WIDTH / 2;
-		this->targetCell.y = OUT_HOME_POS_Y + TILE_WIDTH / 2;
 	}
 }
 

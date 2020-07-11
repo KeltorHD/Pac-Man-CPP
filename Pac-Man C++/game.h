@@ -4,6 +4,7 @@
 #include "player.h"
 #include "blinky.h"
 #include "pinky.h"
+#include "clyde.h"
 
 class Game
 {

@@ -31,12 +31,15 @@
 #define OUT_HOME_POS_Y 224.f
 
 #define BLINKY_SPEED 75.f /*скорость блинки*/
-#define PINKY_SPEED 75.f /*скорость пинки*/
+#define PINKY_SPEED 65.f /*скорость пинки*/
+#define CLYDE_SPEED 65.f /*скорость клайда*/
 
 #define BLINKY_POS_X 210.f /*начальная позиция блинки*/
 #define BLINKY_POS_Y 218.f
 #define PINKY_POS_X 210.f /*начальная позиция пинки*/
 #define PINKY_POS_Y 266.f
+#define CLYDE_POS_X 242.f /*начальная позиция клайда*/
+#define CLYDE_POS_Y 266.f
 
 /*время действия страха*/
 #define FRIGHTENED_TIME 5.f /*пять секунд*/

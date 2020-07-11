@@ -72,6 +72,9 @@
     <ClCompile Include="pinky.cpp">
       <Filter>Ghosts</Filter>
     </ClCompile>
+    <ClCompile Include="clyde.cpp">
+      <Filter>Ghosts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -102,6 +105,9 @@
       <Filter>Ghosts</Filter>
     </ClInclude>
     <ClInclude Include="pinky.h">
+      <Filter>Ghosts</Filter>
+    </ClInclude>
+    <ClInclude Include="clyde.h">
       <Filter>Ghosts</Filter>
     </ClInclude>
   </ItemGroup>
