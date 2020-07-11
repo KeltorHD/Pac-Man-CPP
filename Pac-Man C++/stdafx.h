@@ -27,8 +27,16 @@
 #define NOT_UP_CELL_Y1 14
 #define NOT_UP_CELL_Y2 26
 
+#define OUT_HOME_POS_X 216.f
+#define OUT_HOME_POS_Y 224.f
+
+#define BLINKY_SPEED 75.f /*скорость блинки*/
+#define PINKY_SPEED 75.f /*скорость пинки*/
+
 #define BLINKY_POS_X 210.f /*начальная позиция блинки*/
 #define BLINKY_POS_Y 218.f
+#define PINKY_POS_X 210.f /*начальная позиция пинки*/
+#define PINKY_POS_Y 266.f
 
 /*время действия страха*/
 #define FRIGHTENED_TIME 5.f /*пять секунд*/

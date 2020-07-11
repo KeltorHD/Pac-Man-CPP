@@ -69,6 +69,9 @@
     <ClCompile Include="blinky.cpp">
       <Filter>Ghosts</Filter>
     </ClCompile>
+    <ClCompile Include="pinky.cpp">
+      <Filter>Ghosts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -96,6 +99,9 @@
       <Filter>Enemies</Filter>
     </ClInclude>
     <ClInclude Include="blinky.h">
+      <Filter>Ghosts</Filter>
+    </ClInclude>
+    <ClInclude Include="pinky.h">
       <Filter>Ghosts</Filter>
     </ClInclude>
   </ItemGroup>

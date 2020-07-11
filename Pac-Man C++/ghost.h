@@ -14,7 +14,8 @@ public:
 		scatter,    /*разбегание*/
 		frightened, /*страх*/
 		toHome,     /*на пути к дому*/
-		inHome      /*сидит в домике*/
+		inHome,     /*сидит в домике*/
+		outHome     /*выход из домика*/
 	};
 
 	/*тип для паттеров поведения (волны): тип поведения, время поведения*/
@@ -24,7 +25,7 @@ public:
 	typedef std::vector<std::pair<dirType, float>> distanceType;
 
 	/*constructor / destructor */
-	Ghost(const sf::Color& color, const float pos_x, const float pos_y);
+	Ghost(const sf::Color& color, const float pos_x, const float pos_y, const float speed);
 	virtual ~Ghost();
 
 	/*accessors*/
@@ -32,7 +33,8 @@ public:
 	const bool isMoveDone(); /*дошло ли привидение до целевой точки?*/
 
 	/*modifier*/
-	void setMode(modeType mode);
+	void setModeFrightened(); /*установить состояние страха*/
+	void setModeToHome(); /*установить состояние идти домой*/
 
 	/*func*/
 	static void loadStaticVar(); /*загрузка текстуры страха*/
@@ -50,8 +52,10 @@ protected:
 	virtual void initVar() = 0;
 
 	/*func*/
-	virtual void updateTargetcell(const Player* player, const Map* map) = 0;
+	void setMode(modeType mode); /*обновление режима с проверками*/
 
+	virtual void updateTargetcell(const Player* player, const Map* map) = 0;
+	virtual void updateHouse(const Map* map); /*можно ли выходить из домика*/
 private:
 	/*var*/
 	float frigthetenedTimer; /*таймер для режима страха*/
@@ -64,13 +68,13 @@ private:
 	void initTimers(); /*инициализация таймеров*/
 
 	/*func*/
+	void updateHouseMove(const Map* map, const float& dt); /*обновление выхода из домика*/
 	void updateTimers(const float& dt); /*обновление таймеров*/
 	void updateDirBase(distanceType& distance, const Map* map, const float& dt); /*определяются доступные направления для движения*/
 	void updateDirRand(const Map* map, const float& dt); /*обновление направления, выбирается рандомное*/
 	void updateDirMin(const Map* map, const float& dt); /*обновление направления, выбирается минимальное*/
 	void updateMoveGhost(const Map* map, const float& dt);
 	void updateAnimation(const float& dt); /*обновление анимации привидения*/
-
 };
 
 /*debug output*/

@@ -17,7 +17,6 @@ protected:
 	AnimationComponent* animationComponent;
 	HitboxComponent* hitboxComponent;
 
-	void updateMove(const Map* map, const float& dt); /*движение сущности по направлению*/
 public:
 	Entity(float speed, dirType current, dirType next);
 	virtual ~Entity();
@@ -38,6 +37,7 @@ public:
 	const sf::Vector2f getNextPosition(const dirType& dir, const float& dt) const; /*с учетом передаваемого направления*/
 
 	/*func*/
+	void updateMove(const Map* map, const float& dt); /*движение сущности по направлению*/
 	void move(const float& dt); /*двигаться по текущему направлению*/
 	void moveToBorder(); /*подойти к границе кубика*/
 

@@ -2,7 +2,7 @@
 #include "blinky.h"
 
 Blinky::Blinky()
-	: Ghost(sf::Color::Red, BLINKY_POS_X, BLINKY_POS_Y)
+	: Ghost(sf::Color::Red, BLINKY_POS_X, BLINKY_POS_Y, BLINKY_SPEED)
 {
 	this->initVar();
 }
@@ -50,7 +50,7 @@ void Blinky::updateTargetcell(const Player* player, const Map* map)
 	}
 	else if (this->mode == modeType::toHome)
 	{
-		this->targetCell.x = 14 * TILE_WIDTH;
-		this->targetCell.y = 14 * TILE_WIDTH;
+		this->targetCell.x = 14 * TILE_WIDTH + TILE_WIDTH / 2;
+		this->targetCell.y = 14 * TILE_WIDTH + TILE_WIDTH / 2;
 	}
 }

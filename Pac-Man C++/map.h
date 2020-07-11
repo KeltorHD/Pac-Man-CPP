@@ -8,7 +8,7 @@ public:
 		wall = 0,       /*стена*/
 		free = 1,       /*свободная клетка*/
 		food = 2,       /*еда*/
-		energizere = 3  /*энерджайзер*/
+		energizere = 3, /*энерджайзер*/
 	};
 
 	Map();
@@ -20,7 +20,7 @@ public:
 	/*func*/
 	bool isGhostUp(const int& cell_x, const int& cell_y) const; /*может ли привидения в этой клетке пойти вверх*/
 	bool isMove(const dirType& dir, const int& x, const int& y) const;
-	bool isWall(const int& x, const int& y) const;
+	bool isWall(const int& x, const int& y) const; /*стена ли*/
 	bool isEqual(const sf::Vector2f& one, const sf::Vector2f& two);
 	void reload(); /*сброс карты после прохождения уровня*/
 	float distance(const sf::Vector2f& p1, const sf::Vector2f& p2) const; /*получение расстояния между двумя точками*/

@@ -1,69 +1,10 @@
 #include "stdafx.h"
 #include "entity.h"
 
-void Entity::updateMove(const Map* map, const float& dt)
-{
-
-	int next_x = int(this->getNextPosition(this->next, dt).x);
-	int next_y = int(this->getNextPosition(this->next, dt).y);
-
-	/*проверка: можно ли изменить направление движения*/
-	if (this->next != dirType::none)
-	{
-		/*проверка: следующая позиция - не стена?*/
-		if (!map->isWall
-		(
-			next_x / TILE_WIDTH,
-			next_y / TILE_WIDTH
-		))
-		{
-			/*проверяем, достаточно ли мы близко к повороту*/
-			bool isChange = false;
-			switch (this->next)
-			{
-			case dirType::left:
-			case dirType::right:
-				if (int(this->getPosition().y) % TILE_WIDTH == 0)
-					isChange = true;
-				break;
-			case dirType::up:
-			case dirType::down:
-				if (int(this->getPosition().x) % TILE_WIDTH == 0)
-					isChange = true;
-				break;
-			}
-			if (isChange)
-			{
-				this->moveToBorder(); /*сдвигаемся к границе плитки*/
-				this->clearDir();
-			}
-		}
-	}
-
-	/*проверка: можно ли продолжать движение в текущую сторону*/
-	if (this->current != dirType::none)
-	{
-		/*если следующая позиция игрока находится в стене*/
-		if (map->isWall
-		(
-			int(this->getNextPosition(dt).x / TILE_WIDTH),
-			int(this->getNextPosition(dt).y / TILE_WIDTH)
-		))
-		{
-			this->moveToBorder(); /*сдвигаемся к границе плитки*/
-			this->clearDir();
-		}
-		else
-		{
-			this->move(dt);
-		}
-	}
-}
-
 void Entity::render(sf::RenderTarget* target)
 {
 	target->draw(this->sprite);
-	/*this->hitboxComponent->render(*target);*/
+	this->hitboxComponent->render(*target);
 }
 
 Entity::Entity(float speed, dirType current, dirType next)
@@ -187,6 +128,64 @@ const sf::Vector2f Entity::getNextPosition(const dirType& dir, const float& dt) 
 			this->hitboxComponent->getPosition().y);
 	}
 	return sf::Vector2f();
+}
+
+void Entity::updateMove(const Map* map, const float& dt)
+{
+	int next_x = int(this->getNextPosition(this->next, dt).x);
+	int next_y = int(this->getNextPosition(this->next, dt).y);
+
+	/*проверка: можно ли изменить направление движения*/
+	if (this->next != dirType::none)
+	{
+		/*проверка: следующая позиция - не стена?*/
+		if (!map->isWall
+		(
+			next_x / TILE_WIDTH,
+			next_y / TILE_WIDTH
+		))
+		{
+			/*проверяем, достаточно ли мы близко к повороту*/
+			bool isChange = false;
+			switch (this->next)
+			{
+			case dirType::left:
+			case dirType::right:
+				if (int(this->getPosition().y) % TILE_WIDTH == 0)
+					isChange = true;
+				break;
+			case dirType::up:
+			case dirType::down:
+				if (int(this->getPosition().x) % TILE_WIDTH == 0)
+					isChange = true;
+				break;
+			}
+			if (isChange)
+			{
+				this->moveToBorder(); /*сдвигаемся к границе плитки*/
+				this->clearDir();
+			}
+		}
+	}
+
+	/*проверка: можно ли продолжать движение в текущую сторону*/
+	if (this->current != dirType::none)
+	{
+		/*если следующая позиция игрока находится в стене*/
+		if (map->isWall
+		(
+			int(this->getNextPosition(dt).x / TILE_WIDTH),
+			int(this->getNextPosition(dt).y / TILE_WIDTH)
+		))
+		{
+			this->moveToBorder(); /*сдвигаемся к границе плитки*/
+			this->clearDir();
+		}
+		else
+		{
+			this->move(dt);
+		}
+	}
 }
 
 void Entity::move(const float& dt)

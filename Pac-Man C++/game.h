@@ -3,6 +3,7 @@
 #include "map.h"
 #include "player.h"
 #include "blinky.h"
+#include "pinky.h"
 
 class Game
 {

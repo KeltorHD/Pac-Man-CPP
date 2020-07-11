@@ -43,6 +43,7 @@ void Game::initEssence()
 	this->player = new Player();
 	Ghost::loadStaticVar(); /*загрузка статической текстуры*/
 	this->enemy.push_back(new Blinky());
+	this->enemy.push_back(new Pinky());
 }
 
 void Game::updateCollisionEnemies()
@@ -54,7 +55,7 @@ void Game::updateCollisionEnemies()
 		{
 			if (i->getMode() == Ghost::modeType::frightened)
 			{
-				i->setMode(Ghost::modeType::toHome);
+				i->setModeToHome();
 			}
 			else if (i->getMode() == Ghost::modeType::toHome)
 			{
@@ -201,7 +202,7 @@ void Game::updateFood()
 		/*выставление призракам режима разбегания*/
 		for (auto& i : this->enemy)
 		{
-			i->setMode(Ghost::modeType::frightened);
+			i->setModeFrightened();
 		}
 	}
 }

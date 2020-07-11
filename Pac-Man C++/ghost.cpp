@@ -5,8 +5,8 @@ sf::Texture Ghost::frightenedTexture; /*инициализация статической текстуры*/
 sf::Texture Ghost::toHomeTexture; /*инициализация статической текстуры*/
 Ghost::patternMode Ghost::pattern; /*инициализация статического вектора*/
 
-Ghost::Ghost(const sf::Color& color, const float pos_x, const float pos_y)
-	: Entity(75.f, dirType::left, dirType::none)
+Ghost::Ghost(const sf::Color& color, const float pos_x, const float pos_y, const float speed)
+	: Entity(speed, dirType::left, dirType::none)
 {
 	this->initTimers();
 	this->initSprite(color, pos_x, pos_y);
@@ -30,8 +30,36 @@ const Ghost::modeType& Ghost::getMode()
 
 const bool Ghost::isMoveDone()
 {
-	return int(this->getPosition().x) == int(this->targetCell.x)
-		&& int(this->getPosition().y) == int(this->targetCell.y);
+	return int(this->getPosition().x + TILE_WIDTH / 2) == int(this->targetCell.x)
+		&& int(this->getPosition().y + TILE_WIDTH / 2) == int(this->targetCell.y);
+
+}
+
+void Ghost::setModeFrightened()
+{
+	if (this->mode != modeType::frightened && this->mode != modeType::toHome
+		&& this->mode != modeType::inHome && this->mode != modeType::outHome)
+	{
+		/*изменяем направление на противоположное*/
+		this->current = getOppositeDir(this->current);
+
+		this->animationComponent->setTextureSheet(this->frightenedTexture);
+		this->mode = modeType::frightened;
+
+		/*обнуляем таймер*/
+		this->frigthetenedTimer = 0.f;
+	}
+}
+
+void Ghost::setModeToHome() 
+{
+	if (this->mode != modeType::toHome)
+	{
+		/*изменяем направление на противоположное*/
+		this->current = getOppositeDir(this->current);
+		this->animationComponent->setTextureSheet(this->toHomeTexture);
+		this->mode = modeType::toHome;
+	}
 }
 
 void Ghost::setMode(modeType mode)
@@ -47,32 +75,21 @@ void Ghost::setMode(modeType mode)
 	}
 	else
 	{
-		if (mode == modeType::frightened)
-		{
-			this->frigthetenedTimer = 0.f;
-		}
 		if (this->mode != mode)
 		{
-			/*изменяем направление на противоположное*/
+			/*меняем направление на противоположное*/
 			this->current = getOppositeDir(this->current);
-			/*сменяем текстуру для анимации*/
-			if (mode == modeType::frightened)
-			{
-				this->frigthetenedTimer = 0.f;
-				this->animationComponent->setTextureSheet(this->frightenedTexture);
-			}
-			else if (mode == modeType::toHome)
-			{
-				this->animationComponent->setTextureSheet(this->toHomeTexture);
-			}
-			else
-			{
-				this->animationComponent->setTextureSheet(this->baseTexture);
-			}
-		}
 
-		this->mode = mode;
+			/*выставляем обычную текстуру*/
+			this->animationComponent->setTextureSheet(this->baseTexture);
+
+			this->mode = mode;
+		}
 	}
+}
+
+void Ghost::updateHouse(const Map* map)
+{
 }
 
 void Ghost::loadStaticVar()
@@ -100,11 +117,67 @@ void Ghost::loadStaticVar()
 
 void Ghost::update(const Map* map, const Player* player, const float& dt)
 {
-	this->updateTimers(dt);
-	this->updateTargetcell(player, map);
-	this->updateMoveGhost(map, dt);
-	this->hitboxComponent->update();
-	this->updateAnimation(dt);
+	this->updateTimers(dt); /*обновление таймеров*/
+	this->updateTargetcell(player, map); /*обновление целевой точки*/
+	this->updateMoveGhost(map, dt); /*обновление движения*/
+	this->updateHouseMove(map, dt); /*обновление движения выход из домика*/
+	this->hitboxComponent->update(); /*перемещение спрайта вслед за хитбоксом*/
+	this->updateAnimation(dt); /*обновление анимации*/
+}
+
+void Ghost::updateHouseMove(const Map* map, const float& dt)
+{
+	this->updateHouse(map);
+
+	if (this->mode == modeType::outHome)
+	{
+		/*сначала выравниваем привидение по x*/
+		if (this->getPosition().x != OUT_HOME_POS_X)
+		{
+			/*если привидение левее*/
+			if (this->getPosition().x < OUT_HOME_POS_X)
+			{
+				this->current = dirType::right;
+				if (this->getNextPosition(dt).x < OUT_HOME_POS_X + TILE_WIDTH)
+				{
+					this->move(dt);
+				}
+				else
+				{
+					this->hitboxComponent->setPosition(OUT_HOME_POS_X, this->getPosition().y);
+				}
+			}
+			else
+			{
+				this->current = dirType::left;
+				if (this->getNextPosition(dt).x > OUT_HOME_POS_X - TILE_WIDTH)
+				{
+					this->move(dt);
+				}
+				else
+				{
+					this->hitboxComponent->setPosition(OUT_HOME_POS_X, this->getPosition().y);
+				}
+			}
+		}
+		else if (this->getPosition().y != OUT_HOME_POS_Y) /*выравниваем по y*/
+		{
+			this->current = dirType::up;
+			if (this->getNextPosition(dt).y > OUT_HOME_POS_Y)
+			{
+				this->move(dt);
+			}
+			else
+			{
+				this->hitboxComponent->setPosition(OUT_HOME_POS_X, OUT_HOME_POS_Y);
+			}
+		}
+		else
+		{
+			this->setMode(this->pattern[this->patternCounter].first);
+			this->current = dirType::left;
+		}
+	}
 }
 
 void Ghost::initSprite(const sf::Color& color, const float pos_x, const float pos_y)
@@ -225,7 +298,10 @@ void Ghost::updateTimers(const float& dt)
 			this->setMode(modeType::chase);
 		}
 	}
-	else if (this->mode != modeType::inHome && this->mode != modeType::toHome)
+	else if (
+		this->mode != modeType::inHome 
+		&& this->mode != modeType::toHome
+		&& this->mode != modeType::outHome)
 	{
 		this->patternTimer += dt;
 
@@ -246,10 +322,6 @@ void Ghost::updateDirRand(const Map* map, const float& dt)
 	if (distance.size())
 	{
 		this->setDir(distance[rand() % distance.size()].first);
-	}
-	else if (this->current == dirType::none) /*если привидение немного встряло*/
-	{
-		this->setDir(dirType(rand() % 5));
 	}
 }
 
@@ -285,6 +357,11 @@ void Ghost::updateDirMin(const Map* map, const float& dt)
 
 void Ghost::updateMoveGhost(const Map* map, const float& dt)
 {
+	if (this->mode == modeType::inHome)
+		return;
+	if (this->mode == modeType::outHome)
+		return;
+
 	if (this->mode == modeType::frightened)
 	{
 		/*обновление движения в рандомную сторону*/
@@ -296,19 +373,32 @@ void Ghost::updateMoveGhost(const Map* map, const float& dt)
 		this->updateDirMin(map, dt);
 	}
 
+	if (this->current == dirType::none) /*если привидение немного встряло*/
+	{
+		this->setDir(dirType(rand() % 5));
+	}
+
 	/*движение*/
 	this->updateMove(map, dt);
 
 	/*если дошли до домика*/
 	if (this->mode == modeType::toHome && this->isMoveDone())
 	{
-		this->setMode(modeType::chase);
-		this->setDir(dirType::left);
+		this->setMode(this->pattern[this->patternCounter].first);
+		this->current = dirType::left;
 	}
+	/*else if (this->mode == modeType::outHome && this->isMoveDone())
+	{
+		this->setMode(this->pattern[this->patternCounter].first);
+		this->current = dirType::left;
+	}*/
 }
 
 void Ghost::updateAnimation(const float& dt)
 {
+	if (this->mode == modeType::inHome)
+		return;
+
 	switch (this->current)
 	{
 	case dirType::left:
@@ -356,6 +446,9 @@ std::ostream& operator<<(std::ostream& os, const Ghost::modeType& mode)
 		break; 
 	case Ghost::modeType::scatter:
 		os << "scatter";
+		break;
+	case Ghost::modeType::outHome:
+		os << "outHome";
 		break;
 	}
 	return os;
