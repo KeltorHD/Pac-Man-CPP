@@ -60,7 +60,7 @@ void Clyde::updateTargetcell(const Player* player, const Map* map)
 
 void Clyde::updateHouse(const Map* map)
 {
-	if (map->getCountEat() <= COUNT_EAT - 30 && this->mode == modeType::inHome)
+	if (map->getCountEat() <= 2 * COUNT_EAT / 3 && this->mode == modeType::inHome)
 	{
 		this->setMode(modeType::outHome);
 	}

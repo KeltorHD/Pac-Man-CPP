@@ -23,16 +23,28 @@ Ghost::~Ghost()
 	delete this->animationComponent;
 }
 
-const Ghost::modeType& Ghost::getMode()
+const Ghost::modeType& Ghost::getMode() const
 {
 	return this->mode;
 }
 
-const bool Ghost::isMoveDone()
+const bool Ghost::isMoveDone() const
 {
 	return int(this->getCenterPosition().x) == int(this->targetCell.x)
 		&& int(this->getCenterPosition().y) == int(this->targetCell.y);
 
+}
+
+const bool Ghost::isFrightened() const
+{
+	return this->mode == modeType::frightened;
+}
+
+const bool Ghost::isNotMatherial() const
+{
+	return (this->mode == modeType::inHome 
+		|| this->mode == modeType::toHome 
+		|| this->mode == modeType::outHome);
 }
 
 void Ghost::setModeFrightened()

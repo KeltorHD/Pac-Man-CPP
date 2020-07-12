@@ -8,8 +8,6 @@ class Player :
 private:
 	/*var*/
 	sf::Sprite lifeSprite; /*спрайт отрисовки жизней*/
-	size_t eat; /*количество съеденной пищи*/
-	size_t ener; /*количество съеденных энерджайзеров*/
 	int lifes; /*жизни игрока*/
 
 	/*init*/
@@ -25,12 +23,9 @@ public:
 	virtual ~Player();
 
 	/*modifier*/
-	void incEat(); /*увеличение числа съеденной пищи*/
-	void incEner(); /*увеличение числа съеденных энерджайзеров*/
 	void decLifes(); /*уменьшение числа жизней*/
 
 	/*accessors*/
-	const size_t& getCountEat(); /*количество съеденной пищи*/
 
 	/*func*/
 	void reload(); /*сброс героя после прохождения уровня*/

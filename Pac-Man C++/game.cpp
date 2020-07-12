@@ -8,6 +8,35 @@ void Game::initVariables()
 	this->dt = 0;
 }
 
+void Game::initFont()
+{
+	if (!this->font.loadFromFile("Font/atari.ttf"))
+		throw "NOT COULD LOAD FONT";
+}
+
+void Game::initScore()
+{
+	this->score = 0;
+	this->maxScore = 0;
+
+	std::ifstream ifs;
+	ifs.open("Config/statistics.st");
+	if (!ifs.is_open())
+		throw "COULD NOT LOAD STATISTICS";
+	ifs >> this->maxScore;
+	ifs.close();
+}
+
+void Game::initText()
+{
+	this->scoreText = new sf::Text(std::to_string(this->score), font, 16);
+	this->scoreText->setFillColor(sf::Color(222, 222, 255));
+	this->scoreText->setPosition(112, 24);
+	this->maxScoreText = new sf::Text(std::to_string(this->maxScore), font, 16);
+	this->maxScoreText->setFillColor(sf::Color(222, 222, 255));
+	this->maxScoreText->setPosition(336, 24);
+}
+
 /*Initializer func*/
 void Game::initWindow()
 {
@@ -51,14 +80,16 @@ void Game::updateCollisionEnemies()
 {
 	for (auto& i : this->enemy)
 	{
-		
 		if (this->map->isEqual(i->getCenterPosition(), this->player->getCenterPosition()))
 		{
-			if (i->getMode() == Ghost::modeType::frightened)
+			if (i->isFrightened())
 			{
+				/*добавление очков за съеденное привидение*/
+				this->score += this->ghostScore;
+				this->ghostScore *= 2;
 				i->setModeToHome();
 			}
-			else if (i->getMode() == Ghost::modeType::toHome)
+			else if (i->isNotMatherial())
 			{
 				continue;
 			}
@@ -91,10 +122,30 @@ void Game::updateLevel()
 	}
 }
 
+void Game::updateText()
+{
+	this->scoreText->setString(std::to_string(this->score));
+	this->maxScoreText->setString(std::to_string((this->score>this->maxScore) ? this->score : this->maxScore));
+
+	this->scoreText->setOrigin
+	(
+		this->scoreText->getLocalBounds().left + this->scoreText->getLocalBounds().width / 2.f,
+		this->scoreText->getLocalBounds().top
+	);
+	this->maxScoreText->setOrigin
+	(
+		this->maxScoreText->getLocalBounds().left + this->maxScoreText->getLocalBounds().width / 2.f,
+		this->maxScoreText->getLocalBounds().top
+	);
+}
+
 /*Constructor*/
 Game::Game()
 {
 	this->initVariables();
+	this->initFont();
+	this->initScore();
+	this->initText();
 	this->initWindow();
 	this->initKeys();
 	this->initEssence();
@@ -102,14 +153,16 @@ Game::Game()
 
 Game::~Game()
 {
+	this->saveStats();
 	delete this->map;
 	delete this->player;
 	for (auto& i: this->enemy)
 	{
 		delete i;
 	}
+	delete this->scoreText;
+	delete this->maxScoreText;
 	delete this->window;
-
 }
 
 
@@ -189,22 +242,43 @@ void Game::updatePlayerInput()
 	}
 }
 
+void Game::updateFrightened()
+{
+	bool tmp = false;
+	for (auto& i : this->enemy)
+	{
+		if (i->isFrightened())
+		{
+			tmp = true;
+			break;
+		}
+	}
+
+	if (!tmp)
+	{
+		this->ghostScore = POINT_GHOST;
+	}
+}
+
 void Game::updateFood()
 {
 	/*обновление съеденной игроком еды*/
 	int swtch = this->map->updateFood(this->player->getPosition());
 	if (swtch == 1)
 	{
-		this->player->incEat();
+		/*добавление очков*/
+		this->score += POINT_EAT;
 	}
 	else if (swtch == 2)
 	{
-		this->player->incEner();
+		/*добавление очков*/
+		this->score += POINT_ENER;
 		/*выставление призракам режима разбегания*/
 		for (auto& i : this->enemy)
 		{
 			i->setModeFrightened();
 		}
+		this->ghostScore = POINT_GHOST;
 	}
 }
 
@@ -223,9 +297,17 @@ void Game::update()
 
 	/*collision*/
 	this->updateCollisionEnemies();
+	this->updateFrightened();
 	
 	this->updateFood();
 	this->updateLevel();
+	this->updateText();
+}
+
+void Game::renderText()
+{
+	this->window->draw(*this->scoreText);
+	this->window->draw(*this->maxScoreText);
 }
 
 void Game::render()
@@ -235,6 +317,7 @@ void Game::render()
 
 	/*render items*/
 	this->map->render(this->window);
+	this->renderText();
 	this->player->render(this->window);
 	for (auto& i : this->enemy)
 	{
@@ -243,6 +326,16 @@ void Game::render()
 
 	/*present*/
 	this->window->display();
+}
+
+void Game::saveStats()
+{
+	std::ofstream ofs;
+	ofs.open("Config/statistics.st");
+	if (!ofs.is_open())
+		throw "COULD NOT SAVE STATISTICS";
+	ofs << ((this->score > this->maxScore) ? this->score : this->maxScore);
+	ofs.close();
 }
 
 void Game::run()

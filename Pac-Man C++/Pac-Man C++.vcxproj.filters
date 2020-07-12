@@ -25,9 +25,6 @@
     <Filter Include="AnimationComponent">
       <UniqueIdentifier>{324605c1-e450-48f5-b078-d235c4dafe6f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Enemies">
-      <UniqueIdentifier>{e5e9ddb9-3153-454c-966d-9ca50e990a5a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Player">
       <UniqueIdentifier>{03e5b9e8-24ff-45e5-ac2c-8bfd99224fb1}</UniqueIdentifier>
     </Filter>
@@ -36,6 +33,21 @@
     </Filter>
     <Filter Include="Ghosts">
       <UniqueIdentifier>{f56a256d-1a80-4e21-95f8-7dd9bb3fd8fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ghosts\Blinky">
+      <UniqueIdentifier>{3d2507a9-2d11-4242-9342-14820f751067}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ghosts\Clyde">
+      <UniqueIdentifier>{ba284ea2-0dcb-45d6-9352-822cfdf377c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ghosts\Pinky">
+      <UniqueIdentifier>{e227363a-91cd-4029-9752-6fade47e1823}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ghosts\Inky">
+      <UniqueIdentifier>{93bac898-6ee3-4baa-9b62-767dcf228cc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity">
+      <UniqueIdentifier>{e5e9ddb9-3153-454c-966d-9ca50e990a5a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -61,18 +73,18 @@
       <Filter>Player</Filter>
     </ClCompile>
     <ClCompile Include="entity.cpp">
-      <Filter>Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="ghost.cpp">
-      <Filter>Enemies</Filter>
+      <Filter>Entity</Filter>
     </ClCompile>
     <ClCompile Include="blinky.cpp">
-      <Filter>Ghosts</Filter>
-    </ClCompile>
-    <ClCompile Include="pinky.cpp">
-      <Filter>Ghosts</Filter>
+      <Filter>Ghosts\Blinky</Filter>
     </ClCompile>
     <ClCompile Include="clyde.cpp">
+      <Filter>Ghosts\Clyde</Filter>
+    </ClCompile>
+    <ClCompile Include="pinky.cpp">
+      <Filter>Ghosts\Pinky</Filter>
+    </ClCompile>
+    <ClCompile Include="ghost.cpp">
       <Filter>Ghosts</Filter>
     </ClCompile>
   </ItemGroup>
@@ -96,18 +108,18 @@
       <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="entity.h">
-      <Filter>Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="ghost.h">
-      <Filter>Enemies</Filter>
+      <Filter>Entity</Filter>
     </ClInclude>
     <ClInclude Include="blinky.h">
-      <Filter>Ghosts</Filter>
-    </ClInclude>
-    <ClInclude Include="pinky.h">
-      <Filter>Ghosts</Filter>
+      <Filter>Ghosts\Blinky</Filter>
     </ClInclude>
     <ClInclude Include="clyde.h">
+      <Filter>Ghosts\Clyde</Filter>
+    </ClInclude>
+    <ClInclude Include="pinky.h">
+      <Filter>Ghosts\Pinky</Filter>
+    </ClInclude>
+    <ClInclude Include="ghost.h">
       <Filter>Ghosts</Filter>
     </ClInclude>
   </ItemGroup>

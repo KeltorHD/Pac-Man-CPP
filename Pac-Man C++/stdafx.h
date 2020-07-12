@@ -44,6 +44,13 @@
 /*время действия страха*/
 #define FRIGHTENED_TIME 5.f /*пять секунд*/
 
+/*Очков за еду*/
+#define POINT_EAT 10
+/*Очков за энержайзер*/
+#define POINT_ENER 50
+/*Очков за привидение*/
+#define POINT_GHOST 200
+
 #define GAME_TITLE "Pac-Man C++"
 
 /*Core*/

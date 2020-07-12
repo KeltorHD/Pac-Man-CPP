@@ -4,8 +4,6 @@
 void Player::initVar()
 {
 	this->lifes = 2;
-	this->eat = 0;
-	this->ener = 0;
 }
 
 void Player::initComponents()
@@ -94,25 +92,9 @@ Player::~Player()
 	delete this->hitboxComponent;
 }
 
-void Player::incEat()
-{
-	this->eat++;
-}
-
-void Player::incEner()
-{
-	this->ener++;
-	/*начало таймера уничтожения*/
-}
-
 void Player::decLifes()
 {
 	this->lifes--;
-}
-
-const size_t& Player::getCountEat()
-{
-	return this->eat;
 }
 
 void Player::reload()

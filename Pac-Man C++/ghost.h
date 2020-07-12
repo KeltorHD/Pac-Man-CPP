@@ -29,8 +29,10 @@ public:
 	virtual ~Ghost();
 
 	/*accessors*/
-	const modeType& getMode();
-	const bool isMoveDone(); /*дошло ли привидение до целевой точки?*/
+	const modeType& getMode() const;
+	const bool isMoveDone() const; /*дошло ли привидение до целевой точки?*/
+	const bool isFrightened() const; /*в состоянии страха ли призрак*/
+	const bool isNotMatherial() const; /*если с привидением нельзя стоклнуться*/
 
 	/*modifier*/
 	void setModeFrightened(); /*установить состояние страха*/
