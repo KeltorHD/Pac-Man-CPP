@@ -22,7 +22,7 @@
 #define PLAYER_WIDTH 24
 #define GHOST_WIDTH 28
 
-#define NOT_UP_CELL_X1 12 /*позиции, в которых привидение не может пойти вверх*/
+#define NOT_UP_CELL_X1 12 /*РїРѕР·РёС†РёРё, РІ РєРѕС‚РѕСЂС‹С… РїСЂРёРІРёРґРµРЅРёРµ РЅРµ РјРѕР¶РµС‚ РїРѕР№С‚Рё РІРІРµСЂС…*/
 #define NOT_UP_CELL_X2 15
 #define NOT_UP_CELL_Y1 14
 #define NOT_UP_CELL_Y2 26
@@ -30,28 +30,28 @@
 #define OUT_HOME_POS_X 216.f
 #define OUT_HOME_POS_Y 224.f
 
-#define BLINKY_SPEED 75.f /*скорость блинки*/
-#define PINKY_SPEED 65.f /*скорость пинки*/
-#define CLYDE_SPEED 75.f /*скорость клайда*/
-#define INKY_SPEED 75.f /*скорость инки*/
+#define BLINKY_SPEED 75.f /*СЃРєРѕСЂРѕСЃС‚СЊ Р±Р»РёРЅРєРё*/
+#define PINKY_SPEED 65.f /*СЃРєРѕСЂРѕСЃС‚СЊ РїРёРЅРєРё*/
+#define CLYDE_SPEED 75.f /*СЃРєРѕСЂРѕСЃС‚СЊ РєР»Р°Р№РґР°*/
+#define INKY_SPEED 75.f /*СЃРєРѕСЂРѕСЃС‚СЊ РёРЅРєРё*/
 
-#define BLINKY_POS_X 210.f /*начальная позиция блинки*/
+#define BLINKY_POS_X 210.f /*РЅР°С‡Р°Р»СЊРЅР°СЏ РїРѕР·РёС†РёСЏ Р±Р»РёРЅРєРё*/
 #define BLINKY_POS_Y 218.f
-#define PINKY_POS_X 210.f /*начальная позиция пинки*/
+#define PINKY_POS_X 210.f /*РЅР°С‡Р°Р»СЊРЅР°СЏ РїРѕР·РёС†РёСЏ РїРёРЅРєРё*/
 #define PINKY_POS_Y 266.f
-#define CLYDE_POS_X 242.f /*начальная позиция клайда*/
+#define CLYDE_POS_X 242.f /*РЅР°С‡Р°Р»СЊРЅР°СЏ РїРѕР·РёС†РёСЏ РєР»Р°Р№РґР°*/
 #define CLYDE_POS_Y 266.f
-#define INKY_POS_X 178.f /*начальная позиция инки*/
+#define INKY_POS_X 178.f /*РЅР°С‡Р°Р»СЊРЅР°СЏ РїРѕР·РёС†РёСЏ РёРЅРєРё*/
 #define INKY_POS_Y 266.f
 
-/*время действия страха*/
-#define FRIGHTENED_TIME 5.f /*пять секунд*/
+/*РІСЂРµРјСЏ РґРµР№СЃС‚РІРёСЏ СЃС‚СЂР°С…Р°*/
+#define FRIGHTENED_TIME 5.f /*РїСЏС‚СЊ СЃРµРєСѓРЅРґ*/
 
-/*Очков за еду*/
+/*РћС‡РєРѕРІ Р·Р° РµРґСѓ*/
 #define POINT_EAT 10
-/*Очков за энержайзер*/
+/*РћС‡РєРѕРІ Р·Р° СЌРЅРµСЂР¶Р°Р№Р·РµСЂ*/
 #define POINT_ENER 50
-/*Очков за привидение*/
+/*РћС‡РєРѕРІ Р·Р° РїСЂРёРІРёРґРµРЅРёРµ*/
 #define POINT_GHOST 200
 
 #define GAME_TITLE "Pac-Man C++"
@@ -82,22 +82,22 @@ enum class dirType
 	none
 };
 
-/*перпендикулярны ли направления*/
+/*РїРµСЂРїРµРЅРґРёРєСѓР»СЏСЂРЅС‹ Р»Рё РЅР°РїСЂР°РІР»РµРЅРёСЏ*/
 bool isPerpendicularDir(const dirType& d1, const dirType& d2);
 
-/*получение перпендикулярного направления*/
+/*РїРѕР»СѓС‡РµРЅРёРµ РїРµСЂРїРµРЅРґРёРєСѓР»СЏСЂРЅРѕРіРѕ РЅР°РїСЂР°РІР»РµРЅРёСЏ*/
 dirType getPerpendicularDir(const dirType& dir);
 
-/*получение противоположного направления*/
+/*РїРѕР»СѓС‡РµРЅРёРµ РїСЂРѕС‚РёРІРѕРїРѕР»РѕР¶РЅРѕРіРѕ РЅР°РїСЂР°РІР»РµРЅРёСЏ*/
 dirType getOppositeDir(const dirType& dir);
 
-/*получение координаты ячейки по направлению. Влево x-TILE_WIDTH, вверх y-TILE_WIDTH*/
+/*РїРѕР»СѓС‡РµРЅРёРµ РєРѕРѕСЂРґРёРЅР°С‚С‹ СЏС‡РµР№РєРё РїРѕ РЅР°РїСЂР°РІР»РµРЅРёСЋ. Р’Р»РµРІРѕ x-TILE_WIDTH, РІРІРµСЂС… y-TILE_WIDTH*/
 sf::Vector2i getNextCoordWidthDir(const sf::Vector2i& point, const dirType& dir, const int i = 1);
 
-/*получение координаты ячейки по направлению. Влево x-TILE_WIDTH, вверх y-TILE_WIDTH*/
+/*РїРѕР»СѓС‡РµРЅРёРµ РєРѕРѕСЂРґРёРЅР°С‚С‹ СЏС‡РµР№РєРё РїРѕ РЅР°РїСЂР°РІР»РµРЅРёСЋ. Р’Р»РµРІРѕ x-TILE_WIDTH, РІРІРµСЂС… y-TILE_WIDTH*/
 sf::Vector2f getNextCoordWidthDir(const sf::Vector2f& point, const dirType& dir, const int i = 1);
 
-/*преобразование sf::Vector2i к sf::Vector2f*/
+/*РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ sf::Vector2i Рє sf::Vector2f*/
 sf::Vector2f conversion(const sf::Vector2i& point);
 
 /*Debug output*/

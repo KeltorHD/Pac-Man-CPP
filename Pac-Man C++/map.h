@@ -5,27 +5,27 @@ class Map
 public:
 	enum class tileType
 	{
-		wall = 0,       /*стена*/
-		free = 1,       /*свободная клетка*/
-		food = 2,       /*еда*/
-		energizere = 3, /*энерджайзер*/
+		wall = 0,       /*СЃС‚РµРЅР°*/
+		free = 1,       /*СЃРІРѕР±РѕРґРЅР°СЏ РєР»РµС‚РєР°*/
+		food = 2,       /*РµРґР°*/
+		energizere = 3, /*СЌРЅРµСЂРґР¶Р°Р№Р·РµСЂ*/
 	};
 
 	Map();
 	~Map();
 
 	/*accessors*/
-	const size_t& getCountEat() const; /*количество оставшихся точек с едой*/
+	const size_t& getCountEat() const; /*РєРѕР»РёС‡РµСЃС‚РІРѕ РѕСЃС‚Р°РІС€РёС…СЃСЏ С‚РѕС‡РµРє СЃ РµРґРѕР№*/
 
 	/*func*/
-	bool isGhostUp(const int& cell_x, const int& cell_y) const; /*может ли привидения в этой клетке пойти вверх*/
+	bool isGhostUp(const int& cell_x, const int& cell_y) const; /*РјРѕР¶РµС‚ Р»Рё РїСЂРёРІРёРґРµРЅРёСЏ РІ СЌС‚РѕР№ РєР»РµС‚РєРµ РїРѕР№С‚Рё РІРІРµСЂС…*/
 	bool isMove(const dirType& dir, const int& x, const int& y) const;
-	bool isWall(const int& x, const int& y) const; /*стена ли*/
+	bool isWall(const int& x, const int& y) const; /*СЃС‚РµРЅР° Р»Рё*/
 	bool isEqual(const sf::Vector2f& one, const sf::Vector2f& two);
-	void reload(); /*сброс карты после прохождения уровня*/
-	float distance(const sf::Vector2f& p1, const sf::Vector2f& p2) const; /*получение расстояния между двумя точками*/
+	void reload(); /*СЃР±СЂРѕСЃ РєР°СЂС‚С‹ РїРѕСЃР»Рµ РїСЂРѕС…РѕР¶РґРµРЅРёСЏ СѓСЂРѕРІРЅСЏ*/
+	float distance(const sf::Vector2f& p1, const sf::Vector2f& p2) const; /*РїРѕР»СѓС‡РµРЅРёРµ СЂР°СЃСЃС‚РѕСЏРЅРёСЏ РјРµР¶РґСѓ РґРІСѓРјСЏ С‚РѕС‡РєР°РјРё*/
 
-	int updateFood(const sf::Vector2f& playerPos); /*обновление пищи, 1 - точка, 2 - энерджайзер, 0 - ничего*/
+	int updateFood(const sf::Vector2f& playerPos); /*РѕР±РЅРѕРІР»РµРЅРёРµ РїРёС‰Рё, 1 - С‚РѕС‡РєР°, 2 - СЌРЅРµСЂРґР¶Р°Р№Р·РµСЂ, 0 - РЅРёС‡РµРіРѕ*/
 	void render(sf::RenderTarget* target);
 private:
 	/*map*/

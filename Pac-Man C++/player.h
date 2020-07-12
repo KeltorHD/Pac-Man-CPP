@@ -7,8 +7,8 @@ class Player :
 {
 private:
 	/*var*/
-	sf::Sprite lifeSprite; /*спрайт отрисовки жизней*/
-	int lifes; /*жизни игрока*/
+	sf::Sprite lifeSprite; /*СЃРїСЂР°Р№С‚ РѕС‚СЂРёСЃРѕРІРєРё Р¶РёР·РЅРµР№*/
+	int lifes; /*Р¶РёР·РЅРё РёРіСЂРѕРєР°*/
 
 	/*init*/
 	void initVar();
@@ -23,13 +23,13 @@ public:
 	virtual ~Player();
 
 	/*modifier*/
-	void decLifes(); /*уменьшение числа жизней*/
+	void decLifes(); /*СѓРјРµРЅСЊС€РµРЅРёРµ С‡РёСЃР»Р° Р¶РёР·РЅРµР№*/
 
 	/*accessors*/
-	const int& getLives() const; /*количество жизней*/
+	const int& getLives() const; /*РєРѕР»РёС‡РµСЃС‚РІРѕ Р¶РёР·РЅРµР№*/
 
 	/*func*/
-	void reload(); /*сброс героя после прохождения уровня*/
+	void reload(); /*СЃР±СЂРѕСЃ РіРµСЂРѕСЏ РїРѕСЃР»Рµ РїСЂРѕС…РѕР¶РґРµРЅРёСЏ СѓСЂРѕРІРЅСЏ*/
 
 	virtual void update(const Map* map, const float& dt);
 	virtual void render(sf::RenderTarget* target);

@@ -135,17 +135,17 @@ void Entity::updateMove(const Map* map, const float& dt)
 	int next_x = int(this->getNextPosition(this->next, dt).x);
 	int next_y = int(this->getNextPosition(this->next, dt).y);
 
-	/*ïðîâåðêà: ìîæíî ëè èçìåíèòü íàïðàâëåíèå äâèæåíèÿ*/
+	/*Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ°: Ð¼Ð¾Ð¶Ð½Ð¾ Ð»Ð¸ Ð¸Ð·Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð´Ð²Ð¸Ð¶ÐµÐ½Ð¸Ñ*/
 	if (this->next != dirType::none)
 	{
-		/*ïðîâåðêà: ñëåäóþùàÿ ïîçèöèÿ - íå ñòåíà?*/
+		/*Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ°: ÑÐ»ÐµÐ´ÑƒÑŽÑ‰Ð°Ñ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸Ñ - Ð½Ðµ ÑÑ‚ÐµÐ½Ð°?*/
 		if (!map->isWall
 		(
 			next_x / TILE_WIDTH,
 			next_y / TILE_WIDTH
 		))
 		{
-			/*ïðîâåðÿåì, äîñòàòî÷íî ëè ìû áëèçêî ê ïîâîðîòó*/
+			/*Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼, Ð´Ð¾ÑÑ‚Ð°Ñ‚Ð¾Ñ‡Ð½Ð¾ Ð»Ð¸ Ð¼Ñ‹ Ð±Ð»Ð¸Ð·ÐºÐ¾ Ðº Ð¿Ð¾Ð²Ð¾Ñ€Ð¾Ñ‚Ñƒ*/
 			bool isChange = false;
 			switch (this->next)
 			{
@@ -162,23 +162,23 @@ void Entity::updateMove(const Map* map, const float& dt)
 			}
 			if (isChange)
 			{
-				this->moveToBorder(); /*ñäâèãàåìñÿ ê ãðàíèöå ïëèòêè*/
+				this->moveToBorder(); /*ÑÐ´Ð²Ð¸Ð³Ð°ÐµÐ¼ÑÑ Ðº Ð³Ñ€Ð°Ð½Ð¸Ñ†Ðµ Ð¿Ð»Ð¸Ñ‚ÐºÐ¸*/
 				this->clearDir();
 			}
 		}
 	}
 
-	/*ïðîâåðêà: ìîæíî ëè ïðîäîëæàòü äâèæåíèå â òåêóùóþ ñòîðîíó*/
+	/*Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ°: Ð¼Ð¾Ð¶Ð½Ð¾ Ð»Ð¸ Ð¿Ñ€Ð¾Ð´Ð¾Ð»Ð¶Ð°Ñ‚ÑŒ Ð´Ð²Ð¸Ð¶ÐµÐ½Ð¸Ðµ Ð² Ñ‚ÐµÐºÑƒÑ‰ÑƒÑŽ ÑÑ‚Ð¾Ñ€Ð¾Ð½Ñƒ*/
 	if (this->current != dirType::none)
 	{
-		/*åñëè ñëåäóþùàÿ ïîçèöèÿ èãðîêà íàõîäèòñÿ â ñòåíå*/
+		/*ÐµÑÐ»Ð¸ ÑÐ»ÐµÐ´ÑƒÑŽÑ‰Ð°Ñ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸Ñ Ð¸Ð³Ñ€Ð¾ÐºÐ° Ð½Ð°Ñ…Ð¾Ð´Ð¸Ñ‚ÑÑ Ð² ÑÑ‚ÐµÐ½Ðµ*/
 		if (map->isWall
 		(
 			int(this->getNextPosition(dt).x / TILE_WIDTH),
 			int(this->getNextPosition(dt).y / TILE_WIDTH)
 		))
 		{
-			this->moveToBorder(); /*ñäâèãàåìñÿ ê ãðàíèöå ïëèòêè*/
+			this->moveToBorder(); /*ÑÐ´Ð²Ð¸Ð³Ð°ÐµÐ¼ÑÑ Ðº Ð³Ñ€Ð°Ð½Ð¸Ñ†Ðµ Ð¿Ð»Ð¸Ñ‚ÐºÐ¸*/
 			this->clearDir();
 		}
 		else

@@ -8,11 +8,11 @@ class Entity
 {
 protected:
 	/*variable*/
-	float speed; /*скорость передвижения*/
+	float speed; /*СЃРєРѕСЂРѕСЃС‚СЊ РїРµСЂРµРґРІРёР¶РµРЅРёСЏ*/
 	dirType current;
 	dirType next;
-	sf::Sprite sprite; /*спрайт сущности*/
-	sf::Texture baseTexture; /*текстура для анимации*/
+	sf::Sprite sprite; /*СЃРїСЂР°Р№С‚ СЃСѓС‰РЅРѕСЃС‚Рё*/
+	sf::Texture baseTexture; /*С‚РµРєСЃС‚СѓСЂР° РґР»СЏ Р°РЅРёРјР°С†РёРё*/
 
 	AnimationComponent* animationComponent;
 	HitboxComponent* hitboxComponent;
@@ -22,24 +22,24 @@ public:
 	virtual ~Entity();
 
 	/*modefier*/
-	void setDir(dirType dir); /*запоминание направления движения*/
-	void setPosition(float x, float y); /*установить позицию хитбокса*/
-	void clearDir(); /*перенос следующего направления в текущее*/
-	void clearDir(dirType dir); /*очищение направлений, добавление в текущее dir*/
+	void setDir(dirType dir); /*Р·Р°РїРѕРјРёРЅР°РЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ РґРІРёР¶РµРЅРёСЏ*/
+	void setPosition(float x, float y); /*СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РїРѕР·РёС†РёСЋ С…РёС‚Р±РѕРєСЃР°*/
+	void clearDir(); /*РїРµСЂРµРЅРѕСЃ СЃР»РµРґСѓСЋС‰РµРіРѕ РЅР°РїСЂР°РІР»РµРЅРёСЏ РІ С‚РµРєСѓС‰РµРµ*/
+	void clearDir(dirType dir); /*РѕС‡РёС‰РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёР№, РґРѕР±Р°РІР»РµРЅРёРµ РІ С‚РµРєСѓС‰РµРµ dir*/
 
 	/*accessors*/
-	const dirType& getCurDir() const; /*направление текущего движения*/
-	const dirType& getNextDir() const; /*направление следующего движения*/
-	const sf::Vector2f getCenterPosition() const; /*получение центра хитбокса*/
-	const sf::Vector2f& getPosition() const; /*получение позиции левого верхнего пикселя хитбокса*/
-	const sf::Vector2f getPosition(const dirType& dir) const; /*получение позиции ближайшей стороны по направлению передаваемого движения*/
-	const sf::Vector2f getNextPosition(const float& dt) const; /*получение следующей позиции с учетом текущего направления движения*/
-	const sf::Vector2f getNextPosition(const dirType& dir, const float& dt) const; /*с учетом передаваемого направления*/
+	const dirType& getCurDir() const; /*РЅР°РїСЂР°РІР»РµРЅРёРµ С‚РµРєСѓС‰РµРіРѕ РґРІРёР¶РµРЅРёСЏ*/
+	const dirType& getNextDir() const; /*РЅР°РїСЂР°РІР»РµРЅРёРµ СЃР»РµРґСѓСЋС‰РµРіРѕ РґРІРёР¶РµРЅРёСЏ*/
+	const sf::Vector2f getCenterPosition() const; /*РїРѕР»СѓС‡РµРЅРёРµ С†РµРЅС‚СЂР° С…РёС‚Р±РѕРєСЃР°*/
+	const sf::Vector2f& getPosition() const; /*РїРѕР»СѓС‡РµРЅРёРµ РїРѕР·РёС†РёРё Р»РµРІРѕРіРѕ РІРµСЂС…РЅРµРіРѕ РїРёРєСЃРµР»СЏ С…РёС‚Р±РѕРєСЃР°*/
+	const sf::Vector2f getPosition(const dirType& dir) const; /*РїРѕР»СѓС‡РµРЅРёРµ РїРѕР·РёС†РёРё Р±Р»РёР¶Р°Р№С€РµР№ СЃС‚РѕСЂРѕРЅС‹ РїРѕ РЅР°РїСЂР°РІР»РµРЅРёСЋ РїРµСЂРµРґР°РІР°РµРјРѕРіРѕ РґРІРёР¶РµРЅРёСЏ*/
+	const sf::Vector2f getNextPosition(const float& dt) const; /*РїРѕР»СѓС‡РµРЅРёРµ СЃР»РµРґСѓСЋС‰РµР№ РїРѕР·РёС†РёРё СЃ СѓС‡РµС‚РѕРј С‚РµРєСѓС‰РµРіРѕ РЅР°РїСЂР°РІР»РµРЅРёСЏ РґРІРёР¶РµРЅРёСЏ*/
+	const sf::Vector2f getNextPosition(const dirType& dir, const float& dt) const; /*СЃ СѓС‡РµС‚РѕРј РїРµСЂРµРґР°РІР°РµРјРѕРіРѕ РЅР°РїСЂР°РІР»РµРЅРёСЏ*/
 
 	/*func*/
-	void updateMove(const Map* map, const float& dt); /*движение сущности по направлению*/
-	void move(const float& dt); /*двигаться по текущему направлению*/
-	void moveToBorder(); /*подойти к границе кубика*/
+	void updateMove(const Map* map, const float& dt); /*РґРІРёР¶РµРЅРёРµ СЃСѓС‰РЅРѕСЃС‚Рё РїРѕ РЅР°РїСЂР°РІР»РµРЅРёСЋ*/
+	void move(const float& dt); /*РґРІРёРіР°С‚СЊСЃСЏ РїРѕ С‚РµРєСѓС‰РµРјСѓ РЅР°РїСЂР°РІР»РµРЅРёСЋ*/
+	void moveToBorder(); /*РїРѕРґРѕР№С‚Рё Рє РіСЂР°РЅРёС†Рµ РєСѓР±РёРєР°*/
 
-	virtual void render(sf::RenderTarget* target); /*отрисовка сущности*/
+	virtual void render(sf::RenderTarget* target); /*РѕС‚СЂРёСЃРѕРІРєР° СЃСѓС‰РЅРѕСЃС‚Рё*/
 };

@@ -19,5 +19,5 @@ private:
 
 	/*func*/
 	virtual void updateTargetcell(const Player* player, const Map* map);
-	void updateHouse(const Map* map); /*не нужно ли выходить из домика*/
+	void updateHouse(const Map* map); /*РЅРµ РЅСѓР¶РЅРѕ Р»Рё РІС‹С…РѕРґРёС‚СЊ РёР· РґРѕРјРёРєР°*/
 };

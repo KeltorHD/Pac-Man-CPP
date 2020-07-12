@@ -110,8 +110,8 @@ void Player::reload()
 
 void Player::update(const Map* map, const float& dt)
 {
-	this->updateMove(map, dt); /*îáíîâëåíèå ïîçèöèè õèòáîêñà*/
-	this->hitboxComponent->update(); /*îáíîâëåíèå ïîçèöèè ñïðàéòà âñëåä çà õèòáîêñîì*/
+	this->updateMove(map, dt); /*Ð¾Ð±Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ðµ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸Ð¸ Ñ…Ð¸Ñ‚Ð±Ð¾ÐºÑÐ°*/
+	this->hitboxComponent->update(); /*Ð¾Ð±Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ðµ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸Ð¸ ÑÐ¿Ñ€Ð°Ð¹Ñ‚Ð° Ð²ÑÐ»ÐµÐ´ Ð·Ð° Ñ…Ð¸Ñ‚Ð±Ð¾ÐºÑÐ¾Ð¼*/
 	this->updateAnimation(dt);
 }
 

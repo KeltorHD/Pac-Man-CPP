@@ -35,7 +35,7 @@ void GameState::initEssence()
 {
 	this->map = new Map();
 	this->player = new Player();
-	Ghost::loadStaticVar(); /*çàãðóçêà ñòàòè÷åñêîé òåêñòóðû*/
+	Ghost::loadStaticVar(); /*Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ° ÑÑ‚Ð°Ñ‚Ð¸Ñ‡ÐµÑÐºÐ¾Ð¹ Ñ‚ÐµÐºÑÑ‚ÑƒÑ€Ñ‹*/
 	this->enemy.push_back(new Blinky());
 	this->enemy.push_back(new Pinky());
 	this->enemy.push_back(new Inky());
@@ -50,7 +50,7 @@ void GameState::updateCollisionEnemies()
 		{
 			if (i->isFrightened())
 			{
-				/*äîáàâëåíèå î÷êîâ çà ñúåäåííîå ïðèâèäåíèå*/
+				/*Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð¾Ñ‡ÐºÐ¾Ð² Ð·Ð° ÑÑŠÐµÐ´ÐµÐ½Ð½Ð¾Ðµ Ð¿Ñ€Ð¸Ð²Ð¸Ð´ÐµÐ½Ð¸Ðµ*/
 				this->score += this->ghostScore;
 				this->ghostScore *= 2;
 				i->setModeToHome();
@@ -67,7 +67,7 @@ void GameState::updateCollisionEnemies()
 				{
 					i->reload();
 				}
-				this->player->decLifes(); /*óìåíüøåíèå æèçíåé*/
+				this->player->decLifes(); /*ÑƒÐ¼ÐµÐ½ÑŒÑˆÐµÐ½Ð¸Ðµ Ð¶Ð¸Ð·Ð½ÐµÐ¹*/
 				break;
 			}
 		}
@@ -150,8 +150,8 @@ void GameState::updatePlayerInput(const float& dt)
 
 	if (dir != dirType::none && dir != player->getCurDir())
 	{
-		/*íóæíî ëè èçìåíÿòü íàïðàâëåíèÿ ïðÿìî ñåé÷àñ?*/
-		if (!this->map->isWall /*íå â ñòåíó ëè èäåì?*/
+		/*Ð½ÑƒÐ¶Ð½Ð¾ Ð»Ð¸ Ð¸Ð·Ð¼ÐµÐ½ÑÑ‚ÑŒ Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ñ Ð¿Ñ€ÑÐ¼Ð¾ ÑÐµÐ¹Ñ‡Ð°Ñ?*/
+		if (!this->map->isWall /*Ð½Ðµ Ð² ÑÑ‚ÐµÐ½Ñƒ Ð»Ð¸ Ð¸Ð´ÐµÐ¼?*/
 		(
 			int(this->player->getNextPosition(dir, dt).x / TILE_WIDTH),
 			int(this->player->getNextPosition(dir, dt).y / TILE_WIDTH)
@@ -171,18 +171,18 @@ void GameState::updatePlayerInput(const float& dt)
 					isChange = true;
 				break;
 			}
-			if (isChange) /*ìåíÿåì íàïðàâëåíèå, òàê êàê ïîëîæåíèå ñîâïàäàåò ñ êëåòêàìè*/
+			if (isChange) /*Ð¼ÐµÐ½ÑÐµÐ¼ Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ, Ñ‚Ð°Ðº ÐºÐ°Ðº Ð¿Ð¾Ð»Ð¾Ð¶ÐµÐ½Ð¸Ðµ ÑÐ¾Ð²Ð¿Ð°Ð´Ð°ÐµÑ‚ Ñ ÐºÐ»ÐµÑ‚ÐºÐ°Ð¼Ð¸*/
 			{
 				if (isPerpendicularDir(dir, this->player->getCurDir()))
 					this->player->moveToBorder();
 				this->player->clearDir(dir);
 			}
-			else /*çàïîìèíàåì ïîçèöèþ, òàê êàê ïîëîæåíèå íå ñîâïàäàåò ñ êëåòêàìè*/
+			else /*Ð·Ð°Ð¿Ð¾Ð¼Ð¸Ð½Ð°ÐµÐ¼ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸ÑŽ, Ñ‚Ð°Ðº ÐºÐ°Ðº Ð¿Ð¾Ð»Ð¾Ð¶ÐµÐ½Ð¸Ðµ Ð½Ðµ ÑÐ¾Ð²Ð¿Ð°Ð´Ð°ÐµÑ‚ Ñ ÐºÐ»ÐµÑ‚ÐºÐ°Ð¼Ð¸*/
 			{
 				this->player->setDir(dir);
 			}
 		}
-		else /*çàïîìèíàåì íàïðàâëåíèå*/
+		else /*Ð·Ð°Ð¿Ð¾Ð¼Ð¸Ð½Ð°ÐµÐ¼ Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ*/
 		{
 			this->player->setDir(dir);
 		}
@@ -220,18 +220,18 @@ void GameState::updateFrightened()
 
 void GameState::updateFood()
 {
-	/*îáíîâëåíèå ñúåäåííîé èãðîêîì åäû*/
+	/*Ð¾Ð±Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ðµ ÑÑŠÐµÐ´ÐµÐ½Ð½Ð¾Ð¹ Ð¸Ð³Ñ€Ð¾ÐºÐ¾Ð¼ ÐµÐ´Ñ‹*/
 	int swtch = this->map->updateFood(this->player->getPosition());
 	if (swtch == 1)
 	{
-		/*äîáàâëåíèå î÷êîâ*/
+		/*Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð¾Ñ‡ÐºÐ¾Ð²*/
 		this->score += POINT_EAT;
 	}
 	else if (swtch == 2)
 	{
-		/*äîáàâëåíèå î÷êîâ*/
+		/*Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð¾Ñ‡ÐºÐ¾Ð²*/
 		this->score += POINT_ENER;
-		/*âûñòàâëåíèå ïðèçðàêàì ðåæèìà ðàçáåãàíèÿ*/
+		/*Ð²Ñ‹ÑÑ‚Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð¿Ñ€Ð¸Ð·Ñ€Ð°ÐºÐ°Ð¼ Ñ€ÐµÐ¶Ð¸Ð¼Ð° Ñ€Ð°Ð·Ð±ÐµÐ³Ð°Ð½Ð¸Ñ*/
 		for (auto& i : this->enemy)
 		{
 			i->setModeFrightened();

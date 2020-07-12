@@ -15,7 +15,7 @@ void Inky::updateTargetCell(const Player* player, const Ghost* ghost)
 {
 	if (this->mode == modeType::chase)
 	{
-		/*âûáèðàåì êëåòêó çà èãðîêîì +2*/
+		/*Ð²Ñ‹Ð±Ð¸Ñ€Ð°ÐµÐ¼ ÐºÐ»ÐµÑ‚ÐºÑƒ Ð·Ð° Ð¸Ð³Ñ€Ð¾ÐºÐ¾Ð¼ +2*/
 		sf::Vector2f tmp = getNextCoordWidthDir(player->getCenterPosition(), player->getCurDir(), 2);
 		this->targetCell.x = 2 * ghost->getCenterPosition().x - tmp.x;
 		this->targetCell.y = 2 * ghost->getCenterPosition().y - tmp.y;
@@ -35,7 +35,7 @@ void Inky::reload()
 
 void Inky::initVar()
 {
-	/*íà÷èíàåì â äîìèêå*/
+	/*Ð½Ð°Ñ‡Ð¸Ð½Ð°ÐµÐ¼ Ð² Ð´Ð¾Ð¼Ð¸ÐºÐµ*/
 	this->current = dirType::none;
 	this->next = dirType::none;
 	this->mode = modeType::inHome;
@@ -45,7 +45,7 @@ void Inky::updateTargetcell(const Player* player, const Map* map)
 {
 	if (this->mode == modeType::scatter)
 	{
-		/*ëåâûé âåðõíèé óãîë*/
+		/*Ð»ÐµÐ²Ñ‹Ð¹ Ð²ÐµÑ€Ñ…Ð½Ð¸Ð¹ ÑƒÐ³Ð¾Ð»*/
 		this->targetCell.x = GAME_COL * TILE_WIDTH;
 		this->targetCell.y = GAME_ROW * TILE_WIDTH;
 	}

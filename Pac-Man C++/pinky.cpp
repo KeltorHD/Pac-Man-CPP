@@ -24,7 +24,7 @@ void Pinky::reload()
 
 void Pinky::initVar()
 {
-	/*íà÷èíàåì â äîìèêå*/
+	/*Ð½Ð°Ñ‡Ð¸Ð½Ð°ÐµÐ¼ Ð² Ð´Ð¾Ð¼Ð¸ÐºÐµ*/
 	this->current = dirType::none;
 	this->next = dirType::none;
 	this->mode = modeType::inHome;
@@ -34,14 +34,14 @@ void Pinky::updateTargetcell(const Player* player, const Map* map)
 {
 	if (this->mode == modeType::chase)
 	{
-		/*âûáèðàåì êëåòêó çà èãðîêîì +4*/
+		/*Ð²Ñ‹Ð±Ð¸Ñ€Ð°ÐµÐ¼ ÐºÐ»ÐµÑ‚ÐºÑƒ Ð·Ð° Ð¸Ð³Ñ€Ð¾ÐºÐ¾Ð¼ +4*/
 		sf::Vector2f tmp = getNextCoordWidthDir(player->getCenterPosition(), player->getCurDir(), 4);
 		this->targetCell.x = tmp.x;
 		this->targetCell.y = tmp.y;
 	}
 	else if (this->mode == modeType::scatter)
 	{
-		/*ëåâûé âåðõíèé óãîë*/
+		/*Ð»ÐµÐ²Ñ‹Ð¹ Ð²ÐµÑ€Ñ…Ð½Ð¸Ð¹ ÑƒÐ³Ð¾Ð»*/
 		this->targetCell.x = 0;
 		this->targetCell.y = 0;
 	}

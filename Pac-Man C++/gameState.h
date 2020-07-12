@@ -12,15 +12,15 @@ class GameState :
 	public State
 {
 private:
-	sf::Font font; /*шрифт для вывода счета*/
+	sf::Font font; /*С€СЂРёС„С‚ РґР»СЏ РІС‹РІРѕРґР° СЃС‡РµС‚Р°*/
 
 	/*map, player, enemy*/
 	Map* map;
 	Player* player;
 	std::vector<Ghost*> enemy;
-	long long score; /*общий счет*/
-	long long maxScore; /*максимальный счет*/
-	int ghostScore = POINT_GHOST; /*счет за съедание призрака*/
+	long long score; /*РѕР±С‰РёР№ СЃС‡РµС‚*/
+	long long maxScore; /*РјР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЃС‡РµС‚*/
+	int ghostScore = POINT_GHOST; /*СЃС‡РµС‚ Р·Р° СЃСЉРµРґР°РЅРёРµ РїСЂРёР·СЂР°РєР°*/
 
 	/*text*/
 	sf::Text* scoreText;
@@ -33,12 +33,12 @@ private:
 	void initEssence();
 
 	/*update*/
-	void updatePlayerInput(const float& dt); /*обвновление пользовательского ввода*/
-	void updateEntity(const float& dt); /*обновление сущностей*/
-	void updateFrightened(); /*обновление таймеров*/
-	void updateFood(); /*обновление съеденной игроком пищи*/
-	void updateCollisionEnemies(); /*обновление коллизии*/
-	void updateLevel(); /*обновление уровня*/
+	void updatePlayerInput(const float& dt); /*РѕР±РІРЅРѕРІР»РµРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕРіРѕ РІРІРѕРґР°*/
+	void updateEntity(const float& dt); /*РѕР±РЅРѕРІР»РµРЅРёРµ СЃСѓС‰РЅРѕСЃС‚РµР№*/
+	void updateFrightened(); /*РѕР±РЅРѕРІР»РµРЅРёРµ С‚Р°Р№РјРµСЂРѕРІ*/
+	void updateFood(); /*РѕР±РЅРѕРІР»РµРЅРёРµ СЃСЉРµРґРµРЅРЅРѕР№ РёРіСЂРѕРєРѕРј РїРёС‰Рё*/
+	void updateCollisionEnemies(); /*РѕР±РЅРѕРІР»РµРЅРёРµ РєРѕР»Р»РёР·РёРё*/
+	void updateLevel(); /*РѕР±РЅРѕРІР»РµРЅРёРµ СѓСЂРѕРІРЅСЏ*/
 	void updateText();
 
 	/*render*/

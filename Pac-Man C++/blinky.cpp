@@ -23,7 +23,7 @@ void Blinky::reload()
 
 void Blinky::initVar()
 {
-	/*íà÷èíàåì â ðåæèìå ïðåñëåäîâàíèÿ*/
+	/*Ð½Ð°Ñ‡Ð¸Ð½Ð°ÐµÐ¼ Ð² Ñ€ÐµÐ¶Ð¸Ð¼Ðµ Ð¿Ñ€ÐµÑÐ»ÐµÐ´Ð¾Ð²Ð°Ð½Ð¸Ñ*/
 	this->current = dirType::left;
 }
 
@@ -31,7 +31,7 @@ void Blinky::updateTargetcell(const Player* player, const Map* map)
 {
 	if (this->mode == modeType::chase)
 	{
-		/*ñëåäóåì â êëåòêó çà èãðîêîì*/
+		/*ÑÐ»ÐµÐ´ÑƒÐµÐ¼ Ð² ÐºÐ»ÐµÑ‚ÐºÑƒ Ð·Ð° Ð¸Ð³Ñ€Ð¾ÐºÐ¾Ð¼*/
 		this->targetCell.x = player->getCenterPosition().x;
 		this->targetCell.y = player->getCenterPosition().y;
 	}
@@ -44,7 +44,7 @@ void Blinky::updateTargetcell(const Player* player, const Map* map)
 		}
 		else
 		{
-			/*ñëåäóåì â êëåòêó çà èãðîêîì*/
+			/*ÑÐ»ÐµÐ´ÑƒÐµÐ¼ Ð² ÐºÐ»ÐµÑ‚ÐºÑƒ Ð·Ð° Ð¸Ð³Ñ€Ð¾ÐºÐ¾Ð¼*/
 			this->targetCell.x = float((int(player->getPosition().x) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2);
 			this->targetCell.y = float((int(player->getPosition().y) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2);
 		}

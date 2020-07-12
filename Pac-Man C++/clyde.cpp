@@ -24,7 +24,7 @@ void Clyde::reload()
 
 void Clyde::initVar()
 {
-	/*начинаем в домике*/
+	/*РЅР°С‡РёРЅР°РµРј РІ РґРѕРјРёРєРµ*/
 	this->current = dirType::none;
 	this->next = dirType::none;
 	this->mode = modeType::inHome;
@@ -47,7 +47,7 @@ void Clyde::updateTargetcell(const Player* player, const Map* map)
 	}
 	else if (this->mode == modeType::scatter)
 	{
-		/*левый нижний угол*/
+		/*Р»РµРІС‹Р№ РЅРёР¶РЅРёР№ СѓРіРѕР»*/
 		this->targetCell.x = 0;
 		this->targetCell.y = GAME_ROW * TILE_WIDTH;
 	}

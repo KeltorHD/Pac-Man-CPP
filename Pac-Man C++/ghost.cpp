@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "ghost.h"
 
-sf::Texture Ghost::frightenedTexture; /*инициализация статической текстуры*/
-sf::Texture Ghost::toHomeTexture; /*инициализация статической текстуры*/
-Ghost::patternMode Ghost::pattern; /*инициализация статического вектора*/
+sf::Texture Ghost::frightenedTexture; /*РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ СЃС‚Р°С‚РёС‡РµСЃРєРѕР№ С‚РµРєСЃС‚СѓСЂС‹*/
+sf::Texture Ghost::toHomeTexture; /*РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ СЃС‚Р°С‚РёС‡РµСЃРєРѕР№ С‚РµРєСЃС‚СѓСЂС‹*/
+Ghost::patternMode Ghost::pattern; /*РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ СЃС‚Р°С‚РёС‡РµСЃРєРѕРіРѕ РІРµРєС‚РѕСЂР°*/
 
 Ghost::Ghost(const sf::Color& color, const float pos_x, const float pos_y, const float speed)
 	: Entity(speed, dirType::left, dirType::none)
@@ -52,13 +52,13 @@ void Ghost::setModeFrightened()
 	if (this->mode != modeType::frightened && this->mode != modeType::toHome
 		&& this->mode != modeType::inHome && this->mode != modeType::outHome)
 	{
-		/*изменяем направление на противоположное*/
+		/*РёР·РјРµРЅСЏРµРј РЅР°РїСЂР°РІР»РµРЅРёРµ РЅР° РїСЂРѕС‚РёРІРѕРїРѕР»РѕР¶РЅРѕРµ*/
 		this->current = getOppositeDir(this->current);
 
 		this->animationComponent->setTextureSheet(this->frightenedTexture);
 		this->mode = modeType::frightened;
 
-		/*обнуляем таймер*/
+		/*РѕР±РЅСѓР»СЏРµРј С‚Р°Р№РјРµСЂ*/
 		this->frigthetenedTimer = 0.f;
 	}
 }
@@ -67,7 +67,7 @@ void Ghost::setModeToHome()
 {
 	if (this->mode != modeType::toHome)
 	{
-		/*изменяем направление на противоположное*/
+		/*РёР·РјРµРЅСЏРµРј РЅР°РїСЂР°РІР»РµРЅРёРµ РЅР° РїСЂРѕС‚РёРІРѕРїРѕР»РѕР¶РЅРѕРµ*/
 		this->current = getOppositeDir(this->current);
 		this->animationComponent->setTextureSheet(this->toHomeTexture);
 		this->mode = modeType::toHome;
@@ -78,7 +78,7 @@ void Ghost::setMode(modeType mode)
 {
 	if (this->mode == modeType::toHome)
 	{
-		/*если дошли до домика*/
+		/*РµСЃР»Рё РґРѕС€Р»Рё РґРѕ РґРѕРјРёРєР°*/
 		if (this->isMoveDone() && mode != modeType::toHome)
 		{
 			this->animationComponent->setTextureSheet(this->baseTexture);
@@ -89,10 +89,10 @@ void Ghost::setMode(modeType mode)
 	{
 		if (this->mode != mode)
 		{
-			/*меняем направление на противоположное*/
+			/*РјРµРЅСЏРµРј РЅР°РїСЂР°РІР»РµРЅРёРµ РЅР° РїСЂРѕС‚РёРІРѕРїРѕР»РѕР¶РЅРѕРµ*/
 			this->current = getOppositeDir(this->current);
 
-			/*выставляем обычную текстуру*/
+			/*РІС‹СЃС‚Р°РІР»СЏРµРј РѕР±С‹С‡РЅСѓСЋ С‚РµРєСЃС‚СѓСЂСѓ*/
 			this->animationComponent->setTextureSheet(this->baseTexture);
 
 			this->mode = mode;
@@ -129,12 +129,12 @@ void Ghost::loadStaticVar()
 
 void Ghost::update(const Map* map, const Player* player, const float& dt)
 {
-	this->updateTimers(dt); /*обновление таймеров*/
-	this->updateTargetcell(player, map); /*обновление целевой точки*/
-	this->updateMoveGhost(map, dt); /*обновление движения*/
-	this->updateHouseMove(map, dt); /*обновление движения выход из домика*/
-	this->hitboxComponent->update(); /*перемещение спрайта вслед за хитбоксом*/
-	this->updateAnimation(dt); /*обновление анимации*/
+	this->updateTimers(dt); /*РѕР±РЅРѕРІР»РµРЅРёРµ С‚Р°Р№РјРµСЂРѕРІ*/
+	this->updateTargetcell(player, map); /*РѕР±РЅРѕРІР»РµРЅРёРµ С†РµР»РµРІРѕР№ С‚РѕС‡РєРё*/
+	this->updateMoveGhost(map, dt); /*РѕР±РЅРѕРІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ*/
+	this->updateHouseMove(map, dt); /*РѕР±РЅРѕРІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ РІС‹С…РѕРґ РёР· РґРѕРјРёРєР°*/
+	this->hitboxComponent->update(); /*РїРµСЂРµРјРµС‰РµРЅРёРµ СЃРїСЂР°Р№С‚Р° РІСЃР»РµРґ Р·Р° С…РёС‚Р±РѕРєСЃРѕРј*/
+	this->updateAnimation(dt); /*РѕР±РЅРѕРІР»РµРЅРёРµ Р°РЅРёРјР°С†РёРё*/
 }
 
 void Ghost::updateHouseMove(const Map* map, const float& dt)
@@ -143,10 +143,10 @@ void Ghost::updateHouseMove(const Map* map, const float& dt)
 
 	if (this->mode == modeType::outHome)
 	{
-		/*сначала выравниваем привидение по x*/
+		/*СЃРЅР°С‡Р°Р»Р° РІС‹СЂР°РІРЅРёРІР°РµРј РїСЂРёРІРёРґРµРЅРёРµ РїРѕ x*/
 		if (this->getPosition().x != OUT_HOME_POS_X)
 		{
-			/*если привидение левее*/
+			/*РµСЃР»Рё РїСЂРёРІРёРґРµРЅРёРµ Р»РµРІРµРµ*/
 			if (this->getPosition().x < OUT_HOME_POS_X)
 			{
 				this->current = dirType::right;
@@ -172,7 +172,7 @@ void Ghost::updateHouseMove(const Map* map, const float& dt)
 				}
 			}
 		}
-		else if (this->getPosition().y != OUT_HOME_POS_Y) /*выравниваем по y*/
+		else if (this->getPosition().y != OUT_HOME_POS_Y) /*РІС‹СЂР°РІРЅРёРІР°РµРј РїРѕ y*/
 		{
 			this->current = dirType::up;
 			if (this->getNextPosition(dt).y > OUT_HOME_POS_Y)
@@ -194,11 +194,11 @@ void Ghost::updateHouseMove(const Map* map, const float& dt)
 
 void Ghost::initSprite(const sf::Color& color, const float pos_x, const float pos_y)
 {
-	sf::Image imageGhost; /*изображение привидения*/
+	sf::Image imageGhost; /*РёР·РѕР±СЂР°Р¶РµРЅРёРµ РїСЂРёРІРёРґРµРЅРёСЏ*/
 	if (!imageGhost.loadFromFile("Images/ghost.png"))
 		throw "NOT COULD LOAD GHOST IMAGE";
 
-	/*перекрашивание общей текстуры*/
+	/*РїРµСЂРµРєСЂР°С€РёРІР°РЅРёРµ РѕР±С‰РµР№ С‚РµРєСЃС‚СѓСЂС‹*/
 	for (size_t i = 0; i < imageGhost.getSize().x; i++)
 	{
 		for (size_t j = 0; j < imageGhost.getSize().y; j++)
@@ -219,7 +219,7 @@ void Ghost::initComponents()
 	this->animationComponent = new AnimationComponent(this->sprite, this->baseTexture);
 	this->hitboxComponent = new HitboxComponent(this->sprite, 6, 6, 16, 16);
 
-	/*добавление анимаций*/
+	/*РґРѕР±Р°РІР»РµРЅРёРµ Р°РЅРёРјР°С†РёР№*/
 	this->animationComponent->addAnimation("horizontal", 15.f, 0, 0, 1, 0, 28, 28);
 	this->animationComponent->addAnimation("down", 15.f, 0, 1, 1, 1, 28, 28);
 	this->animationComponent->addAnimation("up", 15.f, 0, 2, 1, 2, 28, 28);
@@ -233,14 +233,14 @@ void Ghost::initTimers()
 
 void Ghost::updateDirBase(distanceType& distance, const Map* map, const float& dt)
 {
-	/*центр следующей позиции привидения по текущему направлению*/
+	/*С†РµРЅС‚СЂ СЃР»РµРґСѓСЋС‰РµР№ РїРѕР·РёС†РёРё РїСЂРёРІРёРґРµРЅРёСЏ РїРѕ С‚РµРєСѓС‰РµРјСѓ РЅР°РїСЂР°РІР»РµРЅРёСЋ*/
 	sf::Vector2i next = 
 	{
 		(int(this->getNextPosition(this->current, dt).x) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2,
 		(int(this->getNextPosition(this->current, dt).y) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH / 2
 	};
 
-	/*следующая позиция стена?*/
+	/*СЃР»РµРґСѓСЋС‰Р°СЏ РїРѕР·РёС†РёСЏ СЃС‚РµРЅР°?*/
 	if (!map->isWall
 	(
 		next.x / TILE_WIDTH,
@@ -248,18 +248,18 @@ void Ghost::updateDirBase(distanceType& distance, const Map* map, const float& d
 	))
 	{
 		/*
-		Находим из всех доступных сторон для движения ту, которая наиболее
-		близка к целевой точке и не обратна к текущей стороне движения.
-		Если число свободных путей равно 3-м, то не можем пойти наверх.
-		Если все доступные пути равнозначно близки к целевой точке, то
-		приоритеты располагаются таким образом:
-		верхняя > левая > нижняя
+		РќР°С…РѕРґРёРј РёР· РІСЃРµС… РґРѕСЃС‚СѓРїРЅС‹С… СЃС‚РѕСЂРѕРЅ РґР»СЏ РґРІРёР¶РµРЅРёСЏ С‚Сѓ, РєРѕС‚РѕСЂР°СЏ РЅР°РёР±РѕР»РµРµ
+		Р±Р»РёР·РєР° Рє С†РµР»РµРІРѕР№ С‚РѕС‡РєРµ Рё РЅРµ РѕР±СЂР°С‚РЅР° Рє С‚РµРєСѓС‰РµР№ СЃС‚РѕСЂРѕРЅРµ РґРІРёР¶РµРЅРёСЏ.
+		Р•СЃР»Рё С‡РёСЃР»Рѕ СЃРІРѕР±РѕРґРЅС‹С… РїСѓС‚РµР№ СЂР°РІРЅРѕ 3-Рј, С‚Рѕ РЅРµ РјРѕР¶РµРј РїРѕР№С‚Рё РЅР°РІРµСЂС….
+		Р•СЃР»Рё РІСЃРµ РґРѕСЃС‚СѓРїРЅС‹Рµ РїСѓС‚Рё СЂР°РІРЅРѕР·РЅР°С‡РЅРѕ Р±Р»РёР·РєРё Рє С†РµР»РµРІРѕР№ С‚РѕС‡РєРµ, С‚Рѕ
+		РїСЂРёРѕСЂРёС‚РµС‚С‹ СЂР°СЃРїРѕР»Р°РіР°СЋС‚СЃСЏ С‚Р°РєРёРј РѕР±СЂР°Р·РѕРј:
+		РІРµСЂС…РЅСЏСЏ > Р»РµРІР°СЏ > РЅРёР¶РЅСЏСЏ
 		*/
-		dirType cur = this->current; /*проверяемое направление*/
+		dirType cur = this->current; /*РїСЂРѕРІРµСЂСЏРµРјРѕРµ РЅР°РїСЂР°РІР»РµРЅРёРµ*/
 
-		/*Первое направление*/
+		/*РџРµСЂРІРѕРµ РЅР°РїСЂР°РІР»РµРЅРёРµ*/
 		sf::Vector2i tmpPos = getNextCoordWidthDir(next, cur);
-		/*если следующая позиция по этому направлению не стена*/
+		/*РµСЃР»Рё СЃР»РµРґСѓСЋС‰Р°СЏ РїРѕР·РёС†РёСЏ РїРѕ СЌС‚РѕРјСѓ РЅР°РїСЂР°РІР»РµРЅРёСЋ РЅРµ СЃС‚РµРЅР°*/
 		if (!map->isWall
 		(
 			tmpPos.x / TILE_WIDTH,
@@ -269,10 +269,10 @@ void Ghost::updateDirBase(distanceType& distance, const Map* map, const float& d
 			distance.push_back({ cur, map->distance(conversion(tmpPos), this->targetCell) });
 		}
 
-		/*второе направление*/
-		cur = getPerpendicularDir(cur); /*перпендикулярное направление*/
+		/*РІС‚РѕСЂРѕРµ РЅР°РїСЂР°РІР»РµРЅРёРµ*/
+		cur = getPerpendicularDir(cur); /*РїРµСЂРїРµРЅРґРёРєСѓР»СЏСЂРЅРѕРµ РЅР°РїСЂР°РІР»РµРЅРёРµ*/
 		tmpPos = getNextCoordWidthDir(next, cur);
-		/*если следующая позиция по этому направлению не стена*/
+		/*РµСЃР»Рё СЃР»РµРґСѓСЋС‰Р°СЏ РїРѕР·РёС†РёСЏ РїРѕ СЌС‚РѕРјСѓ РЅР°РїСЂР°РІР»РµРЅРёСЋ РЅРµ СЃС‚РµРЅР°*/
 		if (!map->isWall
 		(
 			tmpPos.x / TILE_WIDTH,
@@ -282,10 +282,10 @@ void Ghost::updateDirBase(distanceType& distance, const Map* map, const float& d
 			distance.push_back({ cur, map->distance(conversion(tmpPos), this->targetCell) });
 		}
 
-		/*третье направление*/
-		cur = getOppositeDir(cur); /*противоположное перпендикулярному направлению*/
+		/*С‚СЂРµС‚СЊРµ РЅР°РїСЂР°РІР»РµРЅРёРµ*/
+		cur = getOppositeDir(cur); /*РїСЂРѕС‚РёРІРѕРїРѕР»РѕР¶РЅРѕРµ РїРµСЂРїРµРЅРґРёРєСѓР»СЏСЂРЅРѕРјСѓ РЅР°РїСЂР°РІР»РµРЅРёСЋ*/
 		tmpPos = getNextCoordWidthDir(next, cur);
-		/*если следующая позиция по этому направлению не стена*/
+		/*РµСЃР»Рё СЃР»РµРґСѓСЋС‰Р°СЏ РїРѕР·РёС†РёСЏ РїРѕ СЌС‚РѕРјСѓ РЅР°РїСЂР°РІР»РµРЅРёСЋ РЅРµ СЃС‚РµРЅР°*/
 		if (!map->isWall
 		(
 			tmpPos.x / TILE_WIDTH,
@@ -300,7 +300,7 @@ void Ghost::updateDirBase(distanceType& distance, const Map* map, const float& d
 
 void Ghost::updateTimers(const float& dt)
 {
-	/*проверки по таймеру страха*/
+	/*РїСЂРѕРІРµСЂРєРё РїРѕ С‚Р°Р№РјРµСЂСѓ СЃС‚СЂР°С…Р°*/
 	if (this->mode == modeType::frightened)
 	{
 		this->frigthetenedTimer += dt;
@@ -330,7 +330,7 @@ void Ghost::updateDirRand(const Map* map, const float& dt)
 	distanceType distance;
 	this->updateDirBase(distance, map, dt);
 
-	/*выбор направления рандомно*/
+	/*РІС‹Р±РѕСЂ РЅР°РїСЂР°РІР»РµРЅРёСЏ СЂР°РЅРґРѕРјРЅРѕ*/
 	if (distance.size())
 	{
 		this->setDir(distance[rand() % distance.size()].first);
@@ -342,10 +342,10 @@ void Ghost::updateDirMin(const Map* map, const float& dt)
 	distanceType distance;
 	this->updateDirBase(distance, map, dt);
 
-	/*выбор направления по наименьшему расстоянию*/
+	/*РІС‹Р±РѕСЂ РЅР°РїСЂР°РІР»РµРЅРёСЏ РїРѕ РЅР°РёРјРµРЅСЊС€РµРјСѓ СЂР°СЃСЃС‚РѕСЏРЅРёСЋ*/
 	if (distance.size())
 	{
-		/*обработка особых клеток*/
+		/*РѕР±СЂР°Р±РѕС‚РєР° РѕСЃРѕР±С‹С… РєР»РµС‚РѕРє*/
 		if (!map->isGhostUp(int(this->getNextPosition(this->current, dt).x) / TILE_WIDTH, int(this->getNextPosition(this->current, dt).y) / TILE_WIDTH))
 		{
 			distance.erase(std::remove_if(distance.begin(), distance.end(),
@@ -376,24 +376,24 @@ void Ghost::updateMoveGhost(const Map* map, const float& dt)
 
 	if (this->mode == modeType::frightened)
 	{
-		/*обновление движения в рандомную сторону*/
+		/*РѕР±РЅРѕРІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ РІ СЂР°РЅРґРѕРјРЅСѓСЋ СЃС‚РѕСЂРѕРЅСѓ*/
 		this->updateDirRand(map, dt);
 	}
 	else
 	{
-		/*обновление направления движения по целевой точке*/
+		/*РѕР±РЅРѕРІР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ РґРІРёР¶РµРЅРёСЏ РїРѕ С†РµР»РµРІРѕР№ С‚РѕС‡РєРµ*/
 		this->updateDirMin(map, dt);
 	}
 
-	if (this->current == dirType::none) /*если привидение немного встряло*/
+	if (this->current == dirType::none) /*РµСЃР»Рё РїСЂРёРІРёРґРµРЅРёРµ РЅРµРјРЅРѕРіРѕ РІСЃС‚СЂСЏР»Рѕ*/
 	{
 		this->setDir(dirType(rand() % 5));
 	}
 
-	/*движение*/
+	/*РґРІРёР¶РµРЅРёРµ*/
 	this->updateMove(map, dt);
 
-	/*если дошли до домика*/
+	/*РµСЃР»Рё РґРѕС€Р»Рё РґРѕ РґРѕРјРёРєР°*/
 	if (this->mode == modeType::toHome && this->isMoveDone())
 	{
 		this->setMode(this->pattern[this->patternCounter].first);

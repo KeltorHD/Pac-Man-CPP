@@ -10,18 +10,18 @@ public:
 	/*types*/
 	enum class modeType
 	{
-		chase,      /*преследование*/
-		scatter,    /*разбегание*/
-		frightened, /*страх*/
-		toHome,     /*на пути к дому*/
-		inHome,     /*сидит в домике*/
-		outHome     /*выход из домика*/
+		chase,      /*РїСЂРµСЃР»РµРґРѕРІР°РЅРёРµ*/
+		scatter,    /*СЂР°Р·Р±РµРіР°РЅРёРµ*/
+		frightened, /*СЃС‚СЂР°С…*/
+		toHome,     /*РЅР° РїСѓС‚Рё Рє РґРѕРјСѓ*/
+		inHome,     /*СЃРёРґРёС‚ РІ РґРѕРјРёРєРµ*/
+		outHome     /*РІС‹С…РѕРґ РёР· РґРѕРјРёРєР°*/
 	};
 
-	/*тип для паттеров поведения (волны): тип поведения, время поведения*/
+	/*С‚РёРї РґР»СЏ РїР°С‚С‚РµСЂРѕРІ РїРѕРІРµРґРµРЅРёСЏ (РІРѕР»РЅС‹): С‚РёРї РїРѕРІРµРґРµРЅРёСЏ, РІСЂРµРјСЏ РїРѕРІРµРґРµРЅРёСЏ*/
 	typedef std::vector<std::pair<Ghost::modeType, float>> patternMode;
 
-	/*функция базового поиска пути возвращает данный тип*/
+	/*С„СѓРЅРєС†РёСЏ Р±Р°Р·РѕРІРѕРіРѕ РїРѕРёСЃРєР° РїСѓС‚Рё РІРѕР·РІСЂР°С‰Р°РµС‚ РґР°РЅРЅС‹Р№ С‚РёРї*/
 	typedef std::vector<std::pair<dirType, float>> distanceType;
 
 	/*constructor / destructor */
@@ -30,53 +30,53 @@ public:
 
 	/*accessors*/
 	const modeType& getMode() const;
-	const bool isMoveDone() const; /*дошло ли привидение до целевой точки?*/
-	const bool isFrightened() const; /*в состоянии страха ли призрак*/
-	const bool isNotMatherial() const; /*если с привидением нельзя стоклнуться*/
+	const bool isMoveDone() const; /*РґРѕС€Р»Рѕ Р»Рё РїСЂРёРІРёРґРµРЅРёРµ РґРѕ С†РµР»РµРІРѕР№ С‚РѕС‡РєРё?*/
+	const bool isFrightened() const; /*РІ СЃРѕСЃС‚РѕСЏРЅРёРё СЃС‚СЂР°С…Р° Р»Рё РїСЂРёР·СЂР°Рє*/
+	const bool isNotMatherial() const; /*РµСЃР»Рё СЃ РїСЂРёРІРёРґРµРЅРёРµРј РЅРµР»СЊР·СЏ СЃС‚РѕРєР»РЅСѓС‚СЊСЃСЏ*/
 
 	/*modifier*/
-	void setModeFrightened(); /*установить состояние страха*/
-	void setModeToHome(); /*установить состояние идти домой*/
+	void setModeFrightened(); /*СѓСЃС‚Р°РЅРѕРІРёС‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ СЃС‚СЂР°С…Р°*/
+	void setModeToHome(); /*СѓСЃС‚Р°РЅРѕРІРёС‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРґС‚Рё РґРѕРјРѕР№*/
 
 	/*func*/
-	static void loadStaticVar(); /*загрузка текстуры страха*/
-	virtual void reload() = 0; /*обновление привидения после прохождения уровня*/
+	static void loadStaticVar(); /*Р·Р°РіСЂСѓР·РєР° С‚РµРєСЃС‚СѓСЂС‹ СЃС‚СЂР°С…Р°*/
+	virtual void reload() = 0; /*РѕР±РЅРѕРІР»РµРЅРёРµ РїСЂРёРІРёРґРµРЅРёСЏ РїРѕСЃР»Рµ РїСЂРѕС…РѕР¶РґРµРЅРёСЏ СѓСЂРѕРІРЅСЏ*/
 	void update(const Map* map, const Player* player, const float& dt);
 protected:
 	/*var*/
-	static patternMode pattern; /*паттерны поведения привидений*/
-	int patternCounter; /*для индексации поведения привидений*/
-	float patternTimer; /*таймер для типов поведения*/
-	sf::Vector2f targetCell; /*координаты центра целевой клетки*/
-	modeType mode; /*тип текущего поведения*/
+	static patternMode pattern; /*РїР°С‚С‚РµСЂРЅС‹ РїРѕРІРµРґРµРЅРёСЏ РїСЂРёРІРёРґРµРЅРёР№*/
+	int patternCounter; /*РґР»СЏ РёРЅРґРµРєСЃР°С†РёРё РїРѕРІРµРґРµРЅРёСЏ РїСЂРёРІРёРґРµРЅРёР№*/
+	float patternTimer; /*С‚Р°Р№РјРµСЂ РґР»СЏ С‚РёРїРѕРІ РїРѕРІРµРґРµРЅРёСЏ*/
+	sf::Vector2f targetCell; /*РєРѕРѕСЂРґРёРЅР°С‚С‹ С†РµРЅС‚СЂР° С†РµР»РµРІРѕР№ РєР»РµС‚РєРё*/
+	modeType mode; /*С‚РёРї С‚РµРєСѓС‰РµРіРѕ РїРѕРІРµРґРµРЅРёСЏ*/
 
 	/*init*/
 	virtual void initVar() = 0;
 
 	/*func*/
-	void setMode(modeType mode); /*обновление режима с проверками*/
+	void setMode(modeType mode); /*РѕР±РЅРѕРІР»РµРЅРёРµ СЂРµР¶РёРјР° СЃ РїСЂРѕРІРµСЂРєР°РјРё*/
 
 	virtual void updateTargetcell(const Player* player, const Map* map) = 0;
-	virtual void updateHouse(const Map* map); /*можно ли выходить из домика*/
+	virtual void updateHouse(const Map* map); /*РјРѕР¶РЅРѕ Р»Рё РІС‹С…РѕРґРёС‚СЊ РёР· РґРѕРјРёРєР°*/
 private:
 	/*var*/
-	float frigthetenedTimer; /*таймер для режима страха*/
-	static sf::Texture frightenedTexture; /*текстура для отображания состояния страха*/
-	static sf::Texture toHomeTexture; /*текстура для отображания состояния движения в домик*/
+	float frigthetenedTimer; /*С‚Р°Р№РјРµСЂ РґР»СЏ СЂРµР¶РёРјР° СЃС‚СЂР°С…Р°*/
+	static sf::Texture frightenedTexture; /*С‚РµРєСЃС‚СѓСЂР° РґР»СЏ РѕС‚РѕР±СЂР°Р¶Р°РЅРёСЏ СЃРѕСЃС‚РѕСЏРЅРёСЏ СЃС‚СЂР°С…Р°*/
+	static sf::Texture toHomeTexture; /*С‚РµРєСЃС‚СѓСЂР° РґР»СЏ РѕС‚РѕР±СЂР°Р¶Р°РЅРёСЏ СЃРѕСЃС‚РѕСЏРЅРёСЏ РґРІРёР¶РµРЅРёСЏ РІ РґРѕРјРёРє*/
 
 	/*init*/
 	void initSprite(const sf::Color& color, const float pos_x, const float pos_y);
-	void initComponents(); /*инициализация хитбокса и анимаций*/
-	void initTimers(); /*инициализация таймеров*/
+	void initComponents(); /*РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ С…РёС‚Р±РѕРєСЃР° Рё Р°РЅРёРјР°С†РёР№*/
+	void initTimers(); /*РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ С‚Р°Р№РјРµСЂРѕРІ*/
 
 	/*func*/
-	void updateHouseMove(const Map* map, const float& dt); /*обновление выхода из домика*/
-	void updateTimers(const float& dt); /*обновление таймеров*/
-	void updateDirBase(distanceType& distance, const Map* map, const float& dt); /*определяются доступные направления для движения*/
-	void updateDirRand(const Map* map, const float& dt); /*обновление направления, выбирается рандомное*/
-	void updateDirMin(const Map* map, const float& dt); /*обновление направления, выбирается минимальное*/
+	void updateHouseMove(const Map* map, const float& dt); /*РѕР±РЅРѕРІР»РµРЅРёРµ РІС‹С…РѕРґР° РёР· РґРѕРјРёРєР°*/
+	void updateTimers(const float& dt); /*РѕР±РЅРѕРІР»РµРЅРёРµ С‚Р°Р№РјРµСЂРѕРІ*/
+	void updateDirBase(distanceType& distance, const Map* map, const float& dt); /*РѕРїСЂРµРґРµР»СЏСЋС‚СЃСЏ РґРѕСЃС‚СѓРїРЅС‹Рµ РЅР°РїСЂР°РІР»РµРЅРёСЏ РґР»СЏ РґРІРёР¶РµРЅРёСЏ*/
+	void updateDirRand(const Map* map, const float& dt); /*РѕР±РЅРѕРІР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ, РІС‹Р±РёСЂР°РµС‚СЃСЏ СЂР°РЅРґРѕРјРЅРѕРµ*/
+	void updateDirMin(const Map* map, const float& dt); /*РѕР±РЅРѕРІР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ, РІС‹Р±РёСЂР°РµС‚СЃСЏ РјРёРЅРёРјР°Р»СЊРЅРѕРµ*/
 	void updateMoveGhost(const Map* map, const float& dt);
-	void updateAnimation(const float& dt); /*обновление анимации привидения*/
+	void updateAnimation(const float& dt); /*РѕР±РЅРѕРІР»РµРЅРёРµ Р°РЅРёРјР°С†РёРё РїСЂРёРІРёРґРµРЅРёСЏ*/
 };
 
 /*debug output*/

@@ -114,7 +114,7 @@ public:
 	virtual ~AnimationComponent();
 
 	/*modifier*/
-	void setTextureSheet(const sf::Texture& texture_sheet); /*задание другой текстуры для анимации*/
+	void setTextureSheet(const sf::Texture& texture_sheet); /*Г§Г Г¤Г Г­ГЁГҐ Г¤Г°ГіГЈГ®Г© ГІГҐГЄГ±ГІГіГ°Г» Г¤Г«Гї Г Г­ГЁГ¬Г Г¶ГЁГЁ*/
 
 	//accessors
 	const bool& isDone(const std::string key);
