@@ -35,8 +35,9 @@ void Pinky::updateTargetcell(const Player* player, const Map* map)
 	if (this->mode == modeType::chase)
 	{
 		/*выбираем клетку за игроком +4*/
-		this->targetCell.x = float((int(player->getPosition().x) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH * 4 + TILE_WIDTH / 2);
-		this->targetCell.y = float((int(player->getPosition().y) / TILE_WIDTH) * TILE_WIDTH + TILE_WIDTH * 4 + TILE_WIDTH / 2);
+		sf::Vector2f tmp = getNextCoordWidthDir(player->getCenterPosition(), player->getCurDir(), 4);
+		this->targetCell.x = tmp.x;
+		this->targetCell.y = tmp.y;
 	}
 	else if (this->mode == modeType::scatter)
 	{

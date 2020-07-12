@@ -87,6 +87,9 @@
     <ClCompile Include="ghost.cpp">
       <Filter>Ghosts</Filter>
     </ClCompile>
+    <ClCompile Include="inky.cpp">
+      <Filter>Ghosts\Inky</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -121,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="ghost.h">
       <Filter>Ghosts</Filter>
+    </ClInclude>
+    <ClInclude Include="inky.h">
+      <Filter>Ghosts\Inky</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

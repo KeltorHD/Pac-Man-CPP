@@ -32,7 +32,8 @@
 
 #define BLINKY_SPEED 75.f /*скорость блинки*/
 #define PINKY_SPEED 65.f /*скорость пинки*/
-#define CLYDE_SPEED 65.f /*скорость клайда*/
+#define CLYDE_SPEED 75.f /*скорость клайда*/
+#define INKY_SPEED 75.f /*скорость инки*/
 
 #define BLINKY_POS_X 210.f /*начальна€ позици€ блинки*/
 #define BLINKY_POS_Y 218.f
@@ -40,6 +41,8 @@
 #define PINKY_POS_Y 266.f
 #define CLYDE_POS_X 242.f /*начальна€ позици€ клайда*/
 #define CLYDE_POS_Y 266.f
+#define INKY_POS_X 178.f /*начальна€ позици€ инки*/
+#define INKY_POS_Y 266.f
 
 /*врем€ действи€ страха*/
 #define FRIGHTENED_TIME 5.f /*п€ть секунд*/
@@ -87,8 +90,11 @@ dirType getPerpendicularDir(const dirType& dir);
 /*получение противоположного направлени€*/
 dirType getOppositeDir(const dirType& dir);
 
-/*получение координаты €чейки по направлению. ¬лево x-1, вверх y-1*/
-sf::Vector2i getNextCoordWidthDir(const sf::Vector2i& point, const dirType& dir);
+/*получение координаты €чейки по направлению. ¬лево x-TILE_WIDTH, вверх y-TILE_WIDTH*/
+sf::Vector2i getNextCoordWidthDir(const sf::Vector2i& point, const dirType& dir, const int i = 1);
+
+/*получение координаты €чейки по направлению. ¬лево x-TILE_WIDTH, вверх y-TILE_WIDTH*/
+sf::Vector2f getNextCoordWidthDir(const sf::Vector2f& point, const dirType& dir, const int i = 1);
 
 /*преобразование sf::Vector2i к sf::Vector2f*/
 sf::Vector2f conversion(const sf::Vector2i& point);

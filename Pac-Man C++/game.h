@@ -4,6 +4,7 @@
 #include "player.h"
 #include "blinky.h"
 #include "pinky.h"
+#include "inky.h"
 #include "clyde.h"
 
 class Game
@@ -44,6 +45,7 @@ private:
 	void updateDt();
 	void updateSFMLEvents();
 	void updatePlayerInput(); /*обвновление пользовательского ввода*/
+	void updateEntity(); /*обновление сущностей*/
 	void updateFrightened(); /*обновление таймеров*/
 	void updateFood(); /*обновление съеденной игроком пищи*/
 	void updateCollisionEnemies(); /*обновление коллизии*/

@@ -3,7 +3,7 @@
 
 void Game::initVariables()
 {
-	this->window = NULL;
+	this->window = nullptr;
 
 	this->dt = 0;
 }
@@ -73,6 +73,7 @@ void Game::initEssence()
 	Ghost::loadStaticVar(); /*загрузка статической текстуры*/
 	this->enemy.push_back(new Blinky());
 	this->enemy.push_back(new Pinky());
+	this->enemy.push_back(new Inky());
 	this->enemy.push_back(new Clyde());
 }
 
@@ -242,6 +243,17 @@ void Game::updatePlayerInput()
 	}
 }
 
+void Game::updateEntity()
+{
+	this->player->update(this->map, this->dt);
+	if (dynamic_cast<Inky*>(this->enemy[2]))
+		dynamic_cast<Inky*>(this->enemy[2])->updateTargetCell(this->player, this->enemy[0]);
+	for (auto& i : this->enemy)
+	{
+		i->update(this->map, this->player, this->dt);
+	}
+}
+
 void Game::updateFrightened()
 {
 	bool tmp = false;
@@ -289,11 +301,7 @@ void Game::update()
 	this->updatePlayerInput();
 
 	/*update entity*/
-	this->player->update(this->map, this->dt);
-	for (auto& i : this->enemy)
-	{
-		i->update(this->map, this->player, this->dt);
-	}
+	this->updateEntity();
 
 	/*collision*/
 	this->updateCollisionEnemies();

@@ -73,22 +73,40 @@ dirType getOppositeDir(const dirType& dir)
 	return dirType::none;
 }
 
-sf::Vector2i getNextCoordWidthDir(const sf::Vector2i& point, const dirType& dir)
+sf::Vector2i getNextCoordWidthDir(const sf::Vector2i& point, const dirType& dir, const int i)
 {
 	switch (dir)
 	{
 	case dirType::left:
-		return sf::Vector2i(point.x - TILE_WIDTH, point.y);
+		return sf::Vector2i(point.x - i * TILE_WIDTH, point.y);
 	case dirType::right:
-		return sf::Vector2i(point.x + TILE_WIDTH, point.y);
+		return sf::Vector2i(point.x + i * TILE_WIDTH, point.y);
 	case dirType::up:
-		return sf::Vector2i(point.x, point.y - TILE_WIDTH);
+		return sf::Vector2i(point.x, point.y - i * TILE_WIDTH);
 	case dirType::down:
-		return sf::Vector2i(point.x, point.y + TILE_WIDTH);
+		return sf::Vector2i(point.x, point.y + i * TILE_WIDTH);
 	case dirType::none:
 		return sf::Vector2i(point.x, point.y);
 	}
 	return sf::Vector2i(point.x, point.y);
+}
+
+sf::Vector2f getNextCoordWidthDir(const sf::Vector2f& point, const dirType& dir, const int i)
+{
+	switch (dir)
+	{
+	case dirType::left:
+		return sf::Vector2f(point.x - i * TILE_WIDTH, point.y);
+	case dirType::right:
+		return sf::Vector2f(point.x + i * TILE_WIDTH, point.y);
+	case dirType::up:
+		return sf::Vector2f(point.x, point.y - i * TILE_WIDTH);
+	case dirType::down:
+		return sf::Vector2f(point.x, point.y + i * TILE_WIDTH);
+	case dirType::none:
+		return sf::Vector2f(point.x, point.y);
+	}
+	return sf::Vector2f(point.x, point.y);
 }
 
 sf::Vector2f conversion(const sf::Vector2i& point)

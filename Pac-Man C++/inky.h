@@ -2,14 +2,15 @@
 
 #include "ghost.h"
 
-class Clyde :
+class Inky :
 	public Ghost
 {
 public:
-	Clyde();
-	virtual ~Clyde();
+	Inky();
+	virtual ~Inky();
 
 	/*func*/
+	void updateTargetCell(const Player* player, const Ghost* ghost);
 	virtual void reload();
 private:
 	/*var*/
@@ -21,3 +22,4 @@ private:
 	virtual void updateTargetcell(const Player* player, const Map* map);
 	void updateHouse(const Map* map); /*не нужно ли выходить из домика*/
 };
+
