@@ -49,6 +49,12 @@
     <Filter Include="Entity">
       <UniqueIdentifier>{e5e9ddb9-3153-454c-966d-9ca50e990a5a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="State">
+      <UniqueIdentifier>{1cb46ff1-c9e8-4967-a84c-111c360d2d6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\GameState">
+      <UniqueIdentifier>{c20c6458-11bd-46fc-a41e-d1664c6b49ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -90,6 +96,12 @@
     <ClCompile Include="inky.cpp">
       <Filter>Ghosts\Inky</Filter>
     </ClCompile>
+    <ClCompile Include="state.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="gameState.cpp">
+      <Filter>State\GameState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -127,6 +139,12 @@
     </ClInclude>
     <ClInclude Include="inky.h">
       <Filter>Ghosts\Inky</Filter>
+    </ClInclude>
+    <ClInclude Include="state.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="gameState.h">
+      <Filter>State\GameState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

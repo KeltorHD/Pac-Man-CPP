@@ -157,6 +157,7 @@
     <ClCompile Include="clyde.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="gameState.cpp" />
     <ClCompile Include="ghost.cpp" />
     <ClCompile Include="HitboxComponent.cpp" />
     <ClCompile Include="inky.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="map.cpp" />
     <ClCompile Include="pinky.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="state.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -175,12 +177,14 @@
     <ClInclude Include="clyde.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="gameState.h" />
     <ClInclude Include="ghost.h" />
     <ClInclude Include="HitboxComponent.h" />
     <ClInclude Include="inky.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="pinky.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="state.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

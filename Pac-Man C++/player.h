@@ -26,6 +26,7 @@ public:
 	void decLifes(); /*уменьшение числа жизней*/
 
 	/*accessors*/
+	const int& getLives() const; /*количество жизней*/
 
 	/*func*/
 	void reload(); /*сброс героя после прохождения уровня*/

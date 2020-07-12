@@ -97,6 +97,11 @@ void Player::decLifes()
 	this->lifes--;
 }
 
+const int& Player::getLives() const
+{
+	return this->lifes;
+}
+
 void Player::reload()
 {
 	this->hitboxComponent->setPosition(START_POS_X + 4, START_POS_Y + 4);
