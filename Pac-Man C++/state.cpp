@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "state.h"
 
-State::State(const std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
+State::State(const std::map<std::string, int>* supportedKeys, std::stack<State*>* states, sf::RenderWindow* window)
+	: window(window)
 {
 	this->supportedKeys = supportedKeys;
 	this->states = states;
@@ -49,10 +50,9 @@ void State::unpauseState()
 }
 
 
-void State::updateMousePosition(sf::RenderTarget* target)
+void State::updateMousePosition()
 {
-	if (dynamic_cast<sf::Window*>(target))
-		this->mousePosWindow = sf::Mouse::getPosition(*dynamic_cast<sf::Window*>(target));
+	this->mousePosWindow = sf::Mouse::getPosition(*this->window);
 }
 
 void State::updateKeyTime(const float& dt)

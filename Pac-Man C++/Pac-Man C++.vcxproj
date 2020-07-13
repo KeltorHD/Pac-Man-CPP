@@ -164,6 +164,7 @@
     <ClCompile Include="inky.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
+    <ClCompile Include="menuState.cpp" />
     <ClCompile Include="pinky.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="state.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="HitboxComponent.h" />
     <ClInclude Include="inky.h" />
     <ClInclude Include="map.h" />
+    <ClInclude Include="menuState.h" />
     <ClInclude Include="pinky.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="state.h" />

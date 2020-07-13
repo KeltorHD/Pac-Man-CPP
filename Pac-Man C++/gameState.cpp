@@ -106,8 +106,8 @@ void GameState::updateText()
 }
 
 /*Constructor*/
-GameState::GameState(const std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	: State(supportedKeys, states)
+GameState::GameState(const std::map<std::string, int>* supportedKeys, std::stack<State*>* states, sf::RenderWindow* window)
+	: State(supportedKeys, states, window)
 {
 	this->initFont();
 	this->initScore();
@@ -280,14 +280,14 @@ void GameState::update(const float& dt)
 	}
 }
 
-void GameState::render(sf::RenderTarget* target)
+void GameState::render()
 {
 	/*render items*/
-	this->map->render(target);
-	this->renderText(target);
-	this->player->render(target);
+	this->map->render(this->window);
+	this->renderText(this->window);
+	this->player->render(this->window);
 	for (auto& i : this->enemy)
 	{
-		i->render(target);
+		i->render(this->window);
 	}
 }

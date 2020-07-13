@@ -8,6 +8,11 @@
 #define GAME_COL 28
 #define GAME_ROW 36
 
+#define PLAY "Play"
+#define RECORD "Record"
+#define SETTINGS "Settings"
+#define EXIT "Exit"
+
 #define TILE_WIDTH 16
 
 #define START_POS_X 212
@@ -59,6 +64,7 @@
 /*Core*/
 #include <iostream>
 #include <stack>
+#include <map>
 #include <vector>
 #include <string>
 #include <fstream>

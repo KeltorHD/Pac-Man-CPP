@@ -39,7 +39,7 @@ void Game::initKeys()
 
 void Game::initStates()
 {
-	this->states.push(new GameState(&this->supportedKeys, &this->states));
+	this->states.push(new MenuState(&this->supportedKeys, &this->states, this->window));
 }
 
 /*Constructor*/
@@ -110,7 +110,7 @@ void Game::render()
 	/*render items*/
 	if (!this->states.empty())
 	{
-		this->states.top()->render(this->window);
+		this->states.top()->render();
 	}
 
 	this->window->display();

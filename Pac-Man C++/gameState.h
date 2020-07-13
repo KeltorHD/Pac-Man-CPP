@@ -47,10 +47,10 @@ private:
 	/*func*/
 	void saveStats();
 public:
-	GameState(const std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
+	GameState(const std::map<std::string, int>* supportedKeys, std::stack<State*>* states, sf::RenderWindow* window);
 	virtual ~GameState();
 
 	/*func*/
-	void render(sf::RenderTarget* target);
+	void render();
 	void update(const float& dt);
 };

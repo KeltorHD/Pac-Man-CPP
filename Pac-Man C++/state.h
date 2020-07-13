@@ -3,6 +3,7 @@
 class State
 {
 protected:
+	sf::RenderWindow* window;
 	std::stack<State*>* states;
 
 	const std::map<std::string, int>* supportedKeys;
@@ -14,11 +15,10 @@ protected:
 
 	sf::Vector2i mousePosWindow;
 
-
 	/*func*/
 
 public:
-	State(const std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
+	State(const std::map<std::string, int>* supportedKeys, std::stack<State*>* states, sf::RenderWindow* window);
 	virtual ~State();
 
 	//accessors
@@ -30,8 +30,8 @@ public:
 	void pauseState();
 	void unpauseState();
 
-	virtual void updateMousePosition(sf::RenderTarget* target);
+	virtual void updateMousePosition();
 	virtual void updateKeyTime(const float& dt);
 	virtual void update(const float& dt) = 0;
-	virtual void render(sf::RenderTarget* target) = 0;
+	virtual void render() = 0;
 };
