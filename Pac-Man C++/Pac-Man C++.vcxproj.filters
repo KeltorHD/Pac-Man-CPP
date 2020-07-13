@@ -55,6 +55,9 @@
     <Filter Include="State\GameState">
       <UniqueIdentifier>{c20c6458-11bd-46fc-a41e-d1664c6b49ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{dfd84019-023f-4ea9-8ec9-bf8bb843c004}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -102,6 +105,9 @@
     <ClCompile Include="gameState.cpp">
       <Filter>State\GameState</Filter>
     </ClCompile>
+    <ClCompile Include="gui.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -145,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="gameState.h">
       <Filter>State\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="gui.h">
+      <Filter>GUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

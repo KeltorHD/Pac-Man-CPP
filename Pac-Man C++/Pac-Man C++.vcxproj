@@ -159,6 +159,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gameState.cpp" />
     <ClCompile Include="ghost.cpp" />
+    <ClCompile Include="gui.cpp" />
     <ClCompile Include="HitboxComponent.cpp" />
     <ClCompile Include="inky.cpp" />
     <ClCompile Include="main.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="gameState.h" />
     <ClInclude Include="ghost.h" />
+    <ClInclude Include="gui.h" />
     <ClInclude Include="HitboxComponent.h" />
     <ClInclude Include="inky.h" />
     <ClInclude Include="map.h" />
