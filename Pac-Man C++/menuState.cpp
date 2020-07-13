@@ -8,13 +8,12 @@ void MenuState::initVariables()
 
 void MenuState::initBackground()
 {
-	/*this->background.setSize(sf::Vector2f(static_cast<float>(this->window->getSize().x),
-		static_cast<float>(this->window->getSize().y)));
-	if (!this->backgroundTexture.loadFromFile("Resources/Images/Backgrounds/bg1.png"))
+	this->background.setSize(sf::Vector2f(GAME_WIDTH, GAME_HEIGHT));
+	if (!this->backgroundTexture.loadFromFile("Images/background.png"))
 	{
-		throw "ERROR::MenuState::FAILED_LOAD_BACKGROUND";
+		throw "NOT COULD LOAD BACKGROUND";
 	}
-	this->background.setTexture(&this->backgroundTexture);*/
+	this->background.setTexture(&this->backgroundTexture);
 }
 
 void MenuState::initFonts()
@@ -82,12 +81,6 @@ MenuState::~MenuState()
 	}
 }
 
-
-void MenuState::updateInput(const float& dt)
-{
-
-}
-
 void MenuState::updateButtons()
 {
 	/*Updates all the buttons in this state*/
@@ -114,7 +107,6 @@ void MenuState::updateButtons()
 void MenuState::update(const float& dt)
 {
 	this->updateMousePosition();
-	this->updateInput(dt);
 
 	this->updateButtons();
 }
@@ -129,6 +121,6 @@ void MenuState::renderButtons(sf::RenderTarget* target)
 
 void MenuState::render()
 {
-	//this->window->draw(this->background);
+	this->window->draw(this->background);
 	this->renderButtons(this->window);
 }

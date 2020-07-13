@@ -14,20 +14,20 @@ private:
 
 	std::map<std::string, gui::Button*>buttons;
 
-	/*Func*/
+	/*init*/
 	void initVariables();
 	void initBackground();
 	void initFonts();
 	void initButtons();
+
+	/*func*/
+	void updateButtons();
+	void renderButtons(sf::RenderTarget* target);
 public:
 	MenuState(const std::map<std::string, int>* supportedKeys, std::stack<State*>* states, sf::RenderWindow* window);
 	virtual ~MenuState();
 
-	//func
-
-	void updateInput(const float& dt);
-	void updateButtons();
+	/*func*/
 	void update(const float& dt);
-	void renderButtons(sf::RenderTarget* target);
 	void render();
 };
