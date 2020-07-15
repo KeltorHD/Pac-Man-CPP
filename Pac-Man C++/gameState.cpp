@@ -1,6 +1,20 @@
 #include "stdafx.h"
 #include "gameState.h"
 
+static bool chomp_count = true;
+
+void GameState::initSoundManager()
+{
+	this->soundManager = new SoundManager();
+	bool isLoad = true;
+	if (!this->soundManager->loadSound(CHOMP1))
+		isLoad = false;
+	if (!this->soundManager->loadSound(CHOMP2))
+		isLoad = false;
+	if (!isLoad)
+		throw "NOT COULD LOAD SOUNDS";
+}
+
 void GameState::initFont()
 {
 	if (!this->font.loadFromFile("Font/atari.ttf"))
@@ -109,6 +123,7 @@ void GameState::updateText()
 GameState::GameState(const std::map<std::string, int>* supportedKeys, std::stack<State*>* states, sf::RenderWindow* window)
 	: State(supportedKeys, states, window)
 {
+	this->initSoundManager();
 	this->initFont();
 	this->initScore();
 	this->initText();
@@ -118,6 +133,7 @@ GameState::GameState(const std::map<std::string, int>* supportedKeys, std::stack
 GameState::~GameState()
 {
 	this->saveStats();
+	delete this->soundManager;
 	delete this->map;
 	delete this->player;
 	for (auto& i : this->enemy)
@@ -226,6 +242,8 @@ void GameState::updateFood()
 	{
 		/*добавление очков*/
 		this->score += POINT_EAT;
+		this->soundManager->play(chomp_count ? CHOMP1 : CHOMP2);
+		chomp_count = !chomp_count;
 	}
 	else if (swtch == 2)
 	{

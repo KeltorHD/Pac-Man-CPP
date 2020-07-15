@@ -59,6 +59,11 @@
 /*Очков за привидение*/
 #define POINT_GHOST 200
 
+/*music*/
+/*чавканье*/
+#define CHOMP1 "chomp1"
+#define CHOMP2 "chomp2"
+
 #define GAME_TITLE "Pac-Man C++"
 
 /*Core*/

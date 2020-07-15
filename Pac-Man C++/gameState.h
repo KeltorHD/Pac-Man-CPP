@@ -1,6 +1,7 @@
 #pragma once
 
 #include "state.h"
+#include "soundManager.h"
 #include "map.h"
 #include "player.h"
 #include "blinky.h"
@@ -15,6 +16,7 @@ private:
 	sf::Font font; /*шрифт для вывода счета*/
 
 	/*map, player, enemy*/
+	SoundManager* soundManager;
 	Map* map;
 	Player* player;
 	std::vector<Ghost*> enemy;
@@ -27,6 +29,7 @@ private:
 	sf::Text* maxScoreText;
 
 	/*Initialization*/
+	void initSoundManager();
 	void initFont();
 	void initScore();
 	void initText();
