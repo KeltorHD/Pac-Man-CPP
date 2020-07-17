@@ -109,11 +109,6 @@ sf::Vector2f getNextCoordWidthDir(const sf::Vector2f& point, const dirType& dir,
 	return sf::Vector2f(point.x, point.y);
 }
 
-sf::Vector2f conversion(const sf::Vector2i& point)
-{
-	return sf::Vector2f(float(point.x), float(point.y));
-}
-
 std::ostream& operator<<(std::ostream& os, const dirType& dir)
 {
 	switch (dir)

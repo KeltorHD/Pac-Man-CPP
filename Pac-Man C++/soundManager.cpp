@@ -19,7 +19,7 @@ bool SoundManager::loadSound(std::string name)
 	return false;
 }
 
-void SoundManager::setVolume(float volume)
+void SoundManager::setAllVolume(float volume)
 {
 	for (auto& i : this->sound)
 	{
@@ -27,7 +27,23 @@ void SoundManager::setVolume(float volume)
 	}
 }
 
+void SoundManager::setVolume(std::string name, float volume)
+{
+	this->sound[name].setVolume(volume);
+}
+
+void SoundManager::stop(std::string name)
+{
+	this->sound[name].stop();
+}
+
+bool SoundManager::isPlaying(std::string name)
+{
+	return (this->sound[name].getStatus() == sf::Sound::Playing);
+}
+
 void SoundManager::play(std::string name)
 {
-	this->sound[name].play();
+	if (this->sound[name].getStatus() != sf::Sound::Playing)
+		this->sound[name].play();
 }

@@ -4,6 +4,7 @@
 void Player::initVar()
 {
 	this->lifes = 2;
+	this->current = dirType::left;
 }
 
 void Player::initComponents()
@@ -82,8 +83,8 @@ Player::Player()
 	this->initSprite();
 	this->initComponents();
 
-	this->animationComponent->addAnimation("horizontal", 15.f, 0, 0, 5, 0, 24, 24);
-	this->animationComponent->addAnimation("vertical", 15.f, 0, 1, 5, 1, 24, 24);
+	this->animationComponent->addAnimation("horizontal", 5.f, 0, 0, 5, 0, 24, 24);
+	this->animationComponent->addAnimation("vertical", 5.f, 0, 1, 5, 1, 24, 24);
 }
 
 Player::~Player()
@@ -97,6 +98,11 @@ void Player::decLifes()
 	this->lifes--;
 }
 
+void Player::setLifes(unsigned life)
+{
+	this->lifes = life;
+}
+
 const int& Player::getLives() const
 {
 	return this->lifes;
@@ -106,6 +112,49 @@ void Player::reload()
 {
 	this->hitboxComponent->setPosition(START_POS_X + 4, START_POS_Y + 4);
 	this->clearDir(dirType::none);
+}
+
+void Player::updateInput(const Map* map, const float& dt, const dirType dir)
+{
+	if (dir != dirType::none && dir != this->current)
+	{
+		/*нужно ли изменять направления прямо сейчас?*/
+		if (!map->isWall /*не в стену ли идем?*/
+		(
+			int(this->getNextPosition(dir, dt).x / TILE_WIDTH),
+			int(this->getNextPosition(dir, dt).y / TILE_WIDTH)
+		))
+		{
+			bool isChange = false;
+			switch (dir)
+			{
+			case dirType::left:
+			case dirType::right:
+				if (int(this->getPosition().y) % TILE_WIDTH == 0)
+					isChange = true;
+				break;
+			case dirType::up:
+			case dirType::down:
+				if (int(this->getPosition().x) % TILE_WIDTH == 0)
+					isChange = true;
+				break;
+			}
+			if (isChange) /*меняем направление, так как положение совпадает с клетками*/
+			{
+				if (isPerpendicularDir(dir, current))
+					this->moveToBorder();
+				this->clearDir(dir);
+			}
+			else /*запоминаем позицию, так как положение не совпадает с клетками*/
+			{
+				this->setDir(dir);
+			}
+		}
+		else /*запоминаем направление*/
+		{
+			this->setDir(dir);
+		}
+	}
 }
 
 void Player::update(const Map* map, const float& dt)

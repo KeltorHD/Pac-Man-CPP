@@ -4,6 +4,7 @@
 #include "soundManager.h"
 #include "map.h"
 #include "player.h"
+#include "pauseMenu.h"
 #include "blinky.h"
 #include "pinky.h"
 #include "inky.h"
@@ -23,6 +24,9 @@ private:
 	long long score; /*общий счет*/
 	long long maxScore; /*максимальный счет*/
 	int ghostScore = POINT_GHOST; /*счет за съедание призрака*/
+	PauseMenu* pmenu; /*меню паузы*/
+	sf::Texture loseTexture;
+	sf::Sprite loseSprite;
 
 	/*text*/
 	sf::Text* scoreText;
@@ -33,12 +37,15 @@ private:
 	void initFont();
 	void initScore();
 	void initText();
+	void initLoseSprite();
 	void initEssence();
+	void initPauseMenu();
 
 	/*update*/
+	void updatePauseMenuButtons(); /*обновление кнопок в меню паузы*/
 	void updatePlayerInput(const float& dt); /*обвновление пользовательского ввода*/
 	void updateEntity(const float& dt); /*обновление сущностей*/
-	void updateFrightened(); /*обновление таймеров*/
+	void updateFrightened(); /*обновление музыки и очков при страхе привидений*/
 	void updateFood(); /*обновление съеденной игроком пищи*/
 	void updateCollisionEnemies(); /*обновление коллизии*/
 	void updateLevel(); /*обновление уровня*/
@@ -49,6 +56,7 @@ private:
 
 	/*func*/
 	void saveStats();
+	void reloadGame();
 public:
 	GameState(const std::map<std::string, int>* supportedKeys, std::stack<State*>* states, sf::RenderWindow* window);
 	virtual ~GameState();

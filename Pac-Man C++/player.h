@@ -24,6 +24,7 @@ public:
 
 	/*modifier*/
 	void decLifes(); /*уменьшение числа жизней*/
+	void setLifes(unsigned life); /*установление числа жизней*/
 
 	/*accessors*/
 	const int& getLives() const; /*количество жизней*/
@@ -31,6 +32,7 @@ public:
 	/*func*/
 	void reload(); /*сброс героя после прохождения уровня*/
 
+	void updateInput(const Map* map, const float& dt, const dirType dir);
 	virtual void update(const Map* map, const float& dt);
 	virtual void render(sf::RenderTarget* target);
 };

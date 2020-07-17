@@ -165,6 +165,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="menuState.cpp" />
+    <ClCompile Include="pauseMenu.cpp" />
     <ClCompile Include="pinky.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="soundManager.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="inky.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="menuState.h" />
+    <ClInclude Include="pauseMenu.h" />
     <ClInclude Include="pinky.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="soundManager.h" />

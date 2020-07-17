@@ -11,8 +11,18 @@ void GameState::initSoundManager()
 		isLoad = false;
 	if (!this->soundManager->loadSound(CHOMP2))
 		isLoad = false;
+	if (!this->soundManager->loadSound(FRIGHTENED))
+		isLoad = false;
+	if (!this->soundManager->loadSound(SIREN))
+		isLoad = false;
+	if (!this->soundManager->loadSound(START_GAME))
+		isLoad = false;
 	if (!isLoad)
 		throw "NOT COULD LOAD SOUNDS";
+	this->soundManager->setAllVolume(30.f);
+	this->soundManager->setVolume(FRIGHTENED, 20.f);
+	this->soundManager->setVolume(SIREN, 20.f);
+	this->soundManager->play(START_GAME);
 }
 
 void GameState::initFont()
@@ -44,16 +54,30 @@ void GameState::initText()
 	this->maxScoreText->setPosition(336, 24);
 }
 
+void GameState::initLoseSprite()
+{
+	if (!this->loseTexture.loadFromFile("Images/lose.png"))
+		throw "COULD NOT LOAD LOSE IMAGE";
+	this->loseSprite.setTexture(this->loseTexture);
+	this->loseSprite.setPosition(0.f, 3 * 16.f);
+}
+
 
 void GameState::initEssence()
 {
 	this->map = new Map();
 	this->player = new Player();
-	Ghost::loadStaticVar(); /*загрузка статической текстуры*/
+	Ghost::loadStaticVar(); /*загрузка статических текстур*/
 	this->enemy.push_back(new Blinky());
 	this->enemy.push_back(new Pinky());
 	this->enemy.push_back(new Inky());
 	this->enemy.push_back(new Clyde());
+}
+
+void GameState::initPauseMenu()
+{
+	this->pmenu = new PauseMenu(this->font);
+	this->pmenu->addButton(GAME_HEIGHT / 2.f, GAME_WIDTH / 4.f, GAME_HEIGHT / 12.f, 18, "TO MENU");
 }
 
 void GameState::updateCollisionEnemies()
@@ -125,15 +149,18 @@ GameState::GameState(const std::map<std::string, int>* supportedKeys, std::stack
 {
 	this->initSoundManager();
 	this->initFont();
+	this->initLoseSprite();
 	this->initScore();
 	this->initText();
 	this->initEssence();
+	this->initPauseMenu();
 }
 
 GameState::~GameState()
 {
 	this->saveStats();
 	delete this->soundManager;
+	delete this->pmenu;
 	delete this->map;
 	delete this->player;
 	for (auto& i : this->enemy)
@@ -144,63 +171,46 @@ GameState::~GameState()
 	delete this->maxScoreText;
 }
 
+void GameState::updatePauseMenuButtons()
+{
+	if (this->pmenu->isButtonPressed(TO_MENU))
+		this->endState();
+}
+
 void GameState::updatePlayerInput(const float& dt)
 {
-	dirType dir = dirType::none;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->supportedKeys->at("W"))))
+	if (this->player->getLives())
 	{
-		dir = dirType::up;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->supportedKeys->at("S"))))
-	{
-		dir = dirType::down;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->supportedKeys->at("A"))))
-	{
-		dir = dirType::left;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->supportedKeys->at("D"))))
-	{
-		dir = dirType::right;
-	}
-
-	if (dir != dirType::none && dir != player->getCurDir())
-	{
-		/*нужно ли изменять направления прямо сейчас?*/
-		if (!this->map->isWall /*не в стену ли идем?*/
-		(
-			int(this->player->getNextPosition(dir, dt).x / TILE_WIDTH),
-			int(this->player->getNextPosition(dir, dt).y / TILE_WIDTH)
-		))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->supportedKeys->at("Escape"))) && this->getKeyTime())
 		{
-			bool isChange = false;
-			switch (dir)
-			{
-			case dirType::left:
-			case dirType::right:
-				if (int(this->player->getPosition().y) % TILE_WIDTH == 0)
-					isChange = true;
-				break;
-			case dirType::up:
-			case dirType::down:
-				if (int(this->player->getPosition().x) % TILE_WIDTH == 0)
-					isChange = true;
-				break;
-			}
-			if (isChange) /*меняем направление, так как положение совпадает с клетками*/
-			{
-				if (isPerpendicularDir(dir, this->player->getCurDir()))
-					this->player->moveToBorder();
-				this->player->clearDir(dir);
-			}
-			else /*запоминаем позицию, так как положение не совпадает с клетками*/
-			{
-				this->player->setDir(dir);
-			}
+			(!this->paused) ? this->pauseState() : this->unpauseState();
 		}
-		else /*запоминаем направление*/
+
+		dirType dir = dirType::none;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->supportedKeys->at("W"))))
 		{
-			this->player->setDir(dir);
+			dir = dirType::up;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->supportedKeys->at("S"))))
+		{
+			dir = dirType::down;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->supportedKeys->at("A"))))
+		{
+			dir = dirType::left;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->supportedKeys->at("D"))))
+		{
+			dir = dirType::right;
+		}
+
+		this->player->updateInput(this->map, dt, dir);
+	}
+	else
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->supportedKeys->at("S"))))
+		{
+			this->reloadGame();
 		}
 	}
 }
@@ -218,18 +228,25 @@ void GameState::updateEntity(const float& dt)
 
 void GameState::updateFrightened()
 {
-	bool tmp = false;
+	bool isFrightened = false;
 	for (auto& i : this->enemy)
 	{
 		if (i->isFrightened())
 		{
-			tmp = true;
+			isFrightened = true;
 			break;
 		}
 	}
 
-	if (!tmp)
+	if (isFrightened)
 	{
+		this->soundManager->stop(SIREN);
+		this->soundManager->play(FRIGHTENED);
+	}
+	else
+	{
+		this->soundManager->stop(FRIGHTENED);
+		this->soundManager->play(SIREN);
 		this->ghostScore = POINT_GHOST;
 	}
 }
@@ -266,6 +283,7 @@ void GameState::renderText(sf::RenderTarget* target)
 
 void GameState::saveStats()
 {
+	this->score = 0;
 	std::ofstream ofs;
 	ofs.open("Config/statistics.st");
 	if (!ofs.is_open())
@@ -274,27 +292,50 @@ void GameState::saveStats()
 	ofs.close();
 }
 
+void GameState::reloadGame()
+{
+	this->player->reload();
+	this->player->setLifes(2);
+	this->map->reload();
+	for (auto& i : this->enemy)
+	{
+		i->reload();
+	}
+	this->saveStats();
+	this->updateText();
+	this->soundManager->play(START_GAME);
+}
+
 void GameState::update(const float& dt)
 {
-	if (this->player->getLives())
+	this->updateMousePosition();
+	this->updateKeyTime(dt);
+	/*Input*/
+	this->updatePlayerInput(dt);
+
+	if (!this->paused)
 	{
-		/*Input*/
-		this->updatePlayerInput(dt);
+		if (!this->soundManager->isPlaying(START_GAME))
+		{
+			if (this->player->getLives())
+			{
+				/*update entity*/
+				this->updateEntity(dt);
 
-		/*update entity*/
-		this->updateEntity(dt);
+				/*collision*/
+				this->updateCollisionEnemies();
+				this->updateFrightened();
 
-		/*collision*/
-		this->updateCollisionEnemies();
-		this->updateFrightened();
-
-		this->updateFood();
-		this->updateLevel();
-		this->updateText();
+				this->updateFood();
+				this->updateLevel();
+				this->updateText();
+			}
+		}
 	}
 	else
 	{
-		this->quit = true;
+		this->pmenu->update(this->mousePosWindow);
+		this->updatePauseMenuButtons();
 	}
 }
 
@@ -307,5 +348,15 @@ void GameState::render()
 	for (auto& i : this->enemy)
 	{
 		i->render(this->window);
+	}
+
+	if (!this->player->getLives())
+	{
+		this->window->draw(this->loseSprite);
+	}
+
+	if (this->paused)
+	{
+		this->pmenu->render(this->window);
 	}
 }

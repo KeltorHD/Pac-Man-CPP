@@ -12,6 +12,7 @@
 #define RECORD "Record"
 #define SETTINGS "Settings"
 #define EXIT "Exit"
+#define TO_MENU "TO MENU"
 
 #define TILE_WIDTH 16
 
@@ -63,6 +64,12 @@
 /*чавканье*/
 #define CHOMP1 "chomp1"
 #define CHOMP2 "chomp2"
+/*сирена привидения*/
+#define SIREN "siren"
+/*привидения в страхе*/
+#define FRIGHTENED "frightened"
+/*начало игры*/
+#define START_GAME "opening"
 
 #define GAME_TITLE "Pac-Man C++"
 
@@ -107,9 +114,6 @@ sf::Vector2i getNextCoordWidthDir(const sf::Vector2i& point, const dirType& dir,
 
 /*получение координаты ячейки по направлению. Влево x-TILE_WIDTH, вверх y-TILE_WIDTH*/
 sf::Vector2f getNextCoordWidthDir(const sf::Vector2f& point, const dirType& dir, const int i = 1);
-
-/*преобразование sf::Vector2i к sf::Vector2f*/
-sf::Vector2f conversion(const sf::Vector2i& point);
 
 /*Debug output*/
 std::ostream& operator<<(std::ostream& os, const dirType& dir);

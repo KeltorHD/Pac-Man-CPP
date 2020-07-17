@@ -14,8 +14,15 @@ public:
 	bool loadSound(std::string name);
 
 	/*set Volume*/
-	void setVolume(float volume);
+	void setAllVolume(float volume);
+	void setVolume(std::string name, float volume);
 	
 	/*play*/
 	void play(std::string name);
+
+	/*stop*/
+	void stop(std::string name);
+
+	/*isPlyaing*/
+	bool isPlaying(std::string name);
 };

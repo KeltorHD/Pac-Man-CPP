@@ -266,7 +266,7 @@ void Ghost::updateDirBase(distanceType& distance, const Map* map, const float& d
 			tmpPos.y / TILE_WIDTH
 		))
 		{
-			distance.push_back({ cur, map->distance(conversion(tmpPos), this->targetCell) });
+			distance.push_back({ cur, map->distance(static_cast<sf::Vector2f>(tmpPos), this->targetCell) });
 		}
 
 		/*второе направление*/
@@ -279,7 +279,7 @@ void Ghost::updateDirBase(distanceType& distance, const Map* map, const float& d
 			tmpPos.y / TILE_WIDTH
 		))
 		{
-			distance.push_back({ cur, map->distance(conversion(tmpPos), this->targetCell) });
+			distance.push_back({ cur, map->distance(static_cast<sf::Vector2f>(tmpPos), this->targetCell) });
 		}
 
 		/*третье направление*/
@@ -292,7 +292,7 @@ void Ghost::updateDirBase(distanceType& distance, const Map* map, const float& d
 			tmpPos.y / TILE_WIDTH
 		))
 		{
-			distance.push_back({ cur, map->distance(conversion(tmpPos), this->targetCell) });
+			distance.push_back({ cur, map->distance(static_cast<sf::Vector2f>(tmpPos), this->targetCell) });
 		}
 
 	}
@@ -399,11 +399,6 @@ void Ghost::updateMoveGhost(const Map* map, const float& dt)
 		this->setMode(this->pattern[this->patternCounter].first);
 		this->current = dirType::left;
 	}
-	/*else if (this->mode == modeType::outHome && this->isMoveDone())
-	{
-		this->setMode(this->pattern[this->patternCounter].first);
-		this->current = dirType::left;
-	}*/
 }
 
 void Ghost::updateAnimation(const float& dt)
