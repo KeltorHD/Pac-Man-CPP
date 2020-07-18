@@ -6,9 +6,20 @@ int main()
     /*Задание сида для гпсч*/
     srand(unsigned(time(NULL)));
 
-    Game game;
+    try
+    {
+        Game game;
 
-    game.run();
+        game.run();
 
-    return 0;
+        return 1;
+    }
+    catch (const char * error)
+    {
+        std::ofstream ofs;
+        ofs.open("error.txt");
+        ofs << error;
+        ofs.close();
+        return 0;
+    }
 }

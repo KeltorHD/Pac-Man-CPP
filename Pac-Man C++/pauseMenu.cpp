@@ -14,7 +14,7 @@ PauseMenu::PauseMenu(sf::Font& font)
 	);
 	this->background.setFillColor(sf::Color(20, 20, 20, 100));
 
-	//Init container
+	/*Init container*/
 	this->container.setSize(
 		sf::Vector2f
 		(
@@ -27,7 +27,7 @@ PauseMenu::PauseMenu(sf::Font& font)
 		GAME_WIDTH / 2.f - this->container.getSize().x / 2.f,
 		0.f);
 
-	//init text
+	/*init text*/
 	this->menuText.setFont(font);
 	this->menuText.setFillColor(sf::Color(222, 222, 255));
 	this->menuText.setCharacterSize(18);
@@ -52,7 +52,6 @@ std::map<std::string, gui::Button*>& PauseMenu::getButton()
 }
 
 /*func*/
-
 const bool PauseMenu::isButtonPressed(const std::string key)
 {
 	return this->buttons[key]->isPressed();
@@ -69,7 +68,7 @@ void PauseMenu::addButton(
 	this->buttons[text] = new gui::Button(
 		x, y, width, height,
 		text, this->font, charSize,
-		0.f,
+		0,
 		sf::Color(222, 222, 255), sf::Color::White, sf::Color(222, 222, 255),
 		sf::Color::Black, sf::Color::Black, sf::Color::Black,
 		sf::Color(222, 222, 255), sf::Color::White, sf::Color(222, 222, 255));

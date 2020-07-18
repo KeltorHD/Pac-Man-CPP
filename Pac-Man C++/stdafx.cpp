@@ -4,33 +4,25 @@ bool isPerpendicularDir(const dirType& d1, const dirType& d2)
 {
 	if (d1 == dirType::left)
 	{
-		if (d2 == dirType::up)
-			return true;
-		if (d2 == dirType::down)
+		if (d2 == dirType::up || d2 == dirType::down)
 			return true;
 		return false;
 	}
 	if (d1 == dirType::right)
 	{
-		if (d2 == dirType::up)
-			return true;
-		if (d2 == dirType::down)
+		if (d2 == dirType::up || d2 == dirType::down)
 			return true;
 		return false;
 	}
 	if (d2 == dirType::left)
 	{
-		if (d1 == dirType::up)
-			return true;
-		if (d1 == dirType::down)
+		if (d1 == dirType::up || d1 == dirType::down)
 			return true;
 		return false;
 	}
 	if (d2 == dirType::right)
 	{
-		if (d1 == dirType::up)
-			return true;
-		if (d1 == dirType::down)
+		if (d1 == dirType::up || d1 == dirType::down)
 			return true;
 		return false;
 	}

@@ -208,9 +208,13 @@ void GameState::updatePlayerInput(const float& dt)
 	}
 	else
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->supportedKeys->at("S"))))
+		/*если нажата любая клавиша*/
+		for (int i = int(sf::Keyboard::Key::A); i < int(sf::Keyboard::Key::KeyCount); i++)
 		{
-			this->reloadGame();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(i)))
+			{
+				this->reloadGame();
+			}
 		}
 	}
 }
