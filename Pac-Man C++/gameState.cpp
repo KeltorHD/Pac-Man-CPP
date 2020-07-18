@@ -287,13 +287,14 @@ void GameState::renderText(sf::RenderTarget* target)
 
 void GameState::saveStats()
 {
-	this->score = 0;
 	std::ofstream ofs;
 	ofs.open("Config/statistics.st");
 	if (!ofs.is_open())
 		throw "COULD NOT SAVE STATISTICS";
 	ofs << ((this->score > this->maxScore) ? this->score : this->maxScore);
 	ofs.close();
+	this->maxScore = (this->score > this->maxScore) ? this->score : this->maxScore;
+	this->score = 0;
 }
 
 void GameState::reloadGame()
