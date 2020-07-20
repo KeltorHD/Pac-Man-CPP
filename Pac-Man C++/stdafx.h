@@ -36,10 +36,11 @@
 #define OUT_HOME_POS_X 216.f
 #define OUT_HOME_POS_Y 224.f
 
-#define BLINKY_SPEED 68.f /*скорость блинки*/
-#define PINKY_SPEED 60.f /*скорость пинки*/
-#define CLYDE_SPEED 68.f /*скорость клайда*/
-#define INKY_SPEED 68.f /*скорость инки*/
+#define PLAYER_SPEED 100.f /*скорость игрока*/
+#define BLINKY_SPEED 90.f /*скорость блинки*/
+#define PINKY_SPEED 82.f /*скорость пинки*/
+#define CLYDE_SPEED 90.f /*скорость клайда*/
+#define INKY_SPEED 90.f /*скорость инки*/
 
 #define BLINKY_POS_X 210.f /*начальная позиция блинки*/
 #define BLINKY_POS_Y 218.f
@@ -52,6 +53,8 @@
 
 /*время действия страха*/
 #define FRIGHTENED_TIME 5.f /*пять секунд*/
+/*время уменьшения скорости*/
+#define DECREASE_TIME 0.25f
 
 /*Очков за еду*/
 #define POINT_EAT 10

@@ -5,6 +5,8 @@ void Player::initVar()
 {
 	this->lifes = 2;
 	this->current = dirType::left;
+	this->timerDecrease = 0.f;
+	this->isDecrease = false;
 }
 
 void Player::initComponents()
@@ -22,6 +24,25 @@ void Player::initSprite()
 
 	this->lifeSprite.setTexture(this->baseTexture);
 	this->lifeSprite.setTextureRect(sf::IntRect(72, 0, -24, 24));
+}
+
+void Player::updateTimer(const float& dt)
+{
+	if (this->isDecrease)
+	{
+		this->timerDecrease += dt;
+
+		if (this->timerDecrease <= DECREASE_TIME)
+		{
+			this->speed = PLAYER_SPEED * 0.9f;
+		}
+		else
+		{
+			this->speed = PLAYER_SPEED;
+			this->timerDecrease = 0.f;
+			this->isDecrease = false;
+		}
+	}
 }
 
 void Player::updateAnimation(const float& dt)
@@ -77,7 +98,7 @@ void Player::renderLifes(sf::RenderTarget* target)
 }
 
 Player::Player()
-	: Entity(100.f, dirType::none, dirType::none)
+	: Entity(PLAYER_SPEED, dirType::none, dirType::none)
 {
 	this->initVar();
 	this->initSprite();
@@ -103,6 +124,12 @@ void Player::setLifes(unsigned life)
 	this->lifes = life;
 }
 
+void Player::setDecreaseSpeed()
+{
+	this->isDecrease = true;
+	this->timerDecrease = 0.f;
+}
+
 const int& Player::getLives() const
 {
 	return this->lifes;
@@ -110,6 +137,9 @@ const int& Player::getLives() const
 
 void Player::reload()
 {
+	this->speed = PLAYER_SPEED;
+	this->isDecrease = false;
+	this->timerDecrease = 0.f;
 	this->hitboxComponent->setPosition(START_POS_X + 4, START_POS_Y + 4);
 	this->clearDir(dirType::none);
 }
@@ -159,6 +189,7 @@ void Player::updateInput(const Map* map, const float& dt, const dirType dir)
 
 void Player::update(const Map* map, const float& dt)
 {
+	this->updateTimer(dt);
 	this->updateMove(map, dt); /*обновление позиции хитбокса*/
 	this->hitboxComponent->update(); /*обновление позиции спрайта вслед за хитбоксом*/
 	this->updateAnimation(dt);

@@ -9,6 +9,8 @@ private:
 	/*var*/
 	sf::Sprite lifeSprite; /*спрайт отрисовки жизней*/
 	int lifes; /*жизни игрока*/
+	float timerDecrease; /*время, когда скорость уменьшается на 10%*/
+	bool isDecrease; /*есть ли уменьшение скорости*/
 
 	/*init*/
 	void initVar();
@@ -16,6 +18,7 @@ private:
 	void initSprite();
 
 	/*func*/
+	void updateTimer(const float& dt);
 	void updateAnimation(const float& dt);
 	void renderLifes(sf::RenderTarget* target);
 public:
@@ -25,6 +28,7 @@ public:
 	/*modifier*/
 	void decLifes(); /*уменьшение числа жизней*/
 	void setLifes(unsigned life); /*установление числа жизней*/
+	void setDecreaseSpeed(); /*установление уменьшения скорости*/
 
 	/*accessors*/
 	const int& getLives() const; /*количество жизней*/

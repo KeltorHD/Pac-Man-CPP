@@ -271,6 +271,7 @@ void GameState::updateFood()
 	{
 		/*добавление очков*/
 		this->score += POINT_EAT;
+		this->player->setDecreaseSpeed();
 		this->soundManager->play(chomp_count ? CHOMP1 : CHOMP2);
 		chomp_count = !chomp_count;
 	}
