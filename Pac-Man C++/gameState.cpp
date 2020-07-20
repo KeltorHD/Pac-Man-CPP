@@ -57,6 +57,7 @@ void GameState::initText()
 	this->maxScoreText = new sf::Text(std::to_string(this->maxScore), font, 16);
 	this->maxScoreText->setFillColor(sf::Color(222, 222, 255));
 	this->maxScoreText->setPosition(336, 24);
+	this->updateText();
 }
 
 void GameState::initLoseSprite()

@@ -130,7 +130,7 @@ const sf::Vector2f Entity::getNextPosition(const dirType& dir, const float& dt) 
 	return sf::Vector2f();
 }
 
-void Entity::updateMove(const Map* map, const float& dt)
+void Entity::updateMove(const Map* map, const float& dt, float koef)
 {
 	int next_x = int(this->getNextPosition(this->next, dt).x);
 	int next_y = int(this->getNextPosition(this->next, dt).y);
@@ -187,7 +187,7 @@ void Entity::updateMove(const Map* map, const float& dt)
 				this->hitboxComponent->setPosition(-2 * TILE_WIDTH, TELEPORT_POS_Y * TILE_WIDTH);
 			}
 
-			this->move(dt);
+			this->move(dt, koef);
 		}
 		/*если следующая позиция игрока находится в стене*/
 		else if (map->isWall
@@ -201,28 +201,28 @@ void Entity::updateMove(const Map* map, const float& dt)
 		}
 		else
 		{
-			this->move(dt);
+			this->move(dt, koef);
 		}
 	}
 }
 
-void Entity::move(const float& dt)
+void Entity::move(const float& dt, float koef)
 {
 	if (this->current != dirType::none)
 	{
 		switch (this->current)
 		{
 		case dirType::left:
-			this->hitboxComponent->move(-dt * this->speed, 0);
+			this->hitboxComponent->move(-dt * koef * this->speed, 0);
 			break;
 		case dirType::right:
-			this->hitboxComponent->move(dt * this->speed, 0);
+			this->hitboxComponent->move(dt * koef * this->speed, 0);
 			break;
 		case dirType::up:
-			this->hitboxComponent->move(0, -dt * this->speed);
+			this->hitboxComponent->move(0, -dt * koef * this->speed);
 			break;
 		case dirType::down:
-			this->hitboxComponent->move(0, dt * this->speed);
+			this->hitboxComponent->move(0, dt * koef * this->speed);
 			break;
 		}
 	}

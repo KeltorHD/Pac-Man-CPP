@@ -37,8 +37,8 @@ public:
 	const sf::Vector2f getNextPosition(const dirType& dir, const float& dt) const; /*с учетом передаваемого направления*/
 
 	/*func*/
-	void updateMove(const Map* map, const float& dt); /*движение сущности по направлению*/
-	void move(const float& dt); /*двигаться по текущему направлению*/
+	void updateMove(const Map* map, const float& dt, float koef = 1.f); /*движение сущности по направлению*/
+	void move(const float& dt, float koef = 1.f); /*двигаться по текущему направлению*/
 	void moveToBorder(); /*подойти к границе кубика*/
 
 	virtual void render(sf::RenderTarget* target); /*отрисовка сущности*/

@@ -408,15 +408,24 @@ void Ghost::updateMoveGhost(const Map* map, const float& dt)
 	if (this->mode == modeType::outHome)
 		return;
 
+	float koef;
+
 	if (this->mode == modeType::frightened)
 	{
 		/*обновление движения в рандомную сторону*/
 		this->updateDirRand(map, dt);
+		koef = 0.7f;
 	}
 	else
 	{
 		/*обновление направления движения по целевой точке*/
 		this->updateDirMin(map, dt);
+		
+		/*если идем к домику - скорость в 1.5 раза больше*/
+		if (this->mode == modeType::toHome)
+			koef = 1.5f;
+		else
+			koef = 1.f;
 	}
 
 	if (this->current == dirType::none) /*если привидение немного встряло*/
@@ -424,8 +433,14 @@ void Ghost::updateMoveGhost(const Map* map, const float& dt)
 		this->setDir(dirType(rand() % 5));
 	}
 
+	if (int(this->getNextPosition(dt).y) / TILE_WIDTH == TELEPORT_POS_Y
+		&& ((int(this->getNextPosition(dt).x) / TILE_WIDTH <= 2) || (int(this->getNextPosition(dt).x) / TILE_WIDTH >= GAME_COL - 2)))
+	{
+		koef = 0.5f;
+	}
+
 	/*движение*/
-	this->updateMove(map, dt);
+	this->updateMove(map, dt, koef);
 
 	/*если дошли до домика*/
 	if (this->mode == modeType::toHome && this->isMoveDone())
