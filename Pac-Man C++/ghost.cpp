@@ -127,6 +127,22 @@ void Ghost::loadStaticVar()
 	ifs.close();
 }
 
+void Ghost::reloadPattern(const int& level)
+{
+	if (level == 2)
+	{
+		Ghost::pattern[5].second = 1033.f;
+		Ghost::pattern[6].second = 0.017f;
+	}
+	else if (level == 5)
+	{
+		Ghost::pattern[0].second = 5.f;
+		Ghost::pattern[2].second = 5.f;
+		Ghost::pattern[5].second = 1037.f;
+		Ghost::pattern[6].second = 0.017f;
+	}
+}
+
 void Ghost::update(const Map* map, const Player* player, const float& dt)
 {
 	this->updateTimers(dt); /*обновление таймеров*/

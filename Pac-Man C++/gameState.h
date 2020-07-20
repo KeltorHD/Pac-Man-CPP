@@ -27,12 +27,14 @@ private:
 	PauseMenu* pmenu; /*меню паузы*/
 	sf::Texture loseTexture;
 	sf::Sprite loseSprite;
+	int level; /*уровень в игре*/
 
 	/*text*/
 	sf::Text* scoreText;
 	sf::Text* maxScoreText;
 
 	/*Initialization*/
+	void initVar();
 	void initSoundManager();
 	void initFont();
 	void initScore();

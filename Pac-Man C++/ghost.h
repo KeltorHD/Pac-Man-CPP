@@ -40,7 +40,9 @@ public:
 
 	/*func*/
 	static void loadStaticVar(); /*загрузка текстуры страха*/
+	static void reloadPattern(const int& level); /*обновление паттерна поведения в зависисмости от уровня*/
 	virtual void reload() = 0; /*обновление привидения после прохождения уровня*/
+
 	void update(const Map* map, const Player* player, const float& dt);
 protected:
 	/*var*/

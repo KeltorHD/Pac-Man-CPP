@@ -3,6 +3,11 @@
 
 static bool chomp_count = true;
 
+void GameState::initVar()
+{
+	this->level = 1;
+}
+
 void GameState::initSoundManager()
 {
 	this->soundManager = new SoundManager();
@@ -117,8 +122,10 @@ void GameState::updateLevel()
 	if (!this->map->getCountEat())
 	{
 		/*reload, level++*/
+		this->level++;
 		this->map->reload();
 		this->player->reload();
+		Ghost::reloadPattern(this->level);
 		for (auto& i : this->enemy)
 		{
 			i->reload();
@@ -147,6 +154,7 @@ void GameState::updateText()
 GameState::GameState(const std::map<std::string, int>* supportedKeys, std::stack<State*>* states, sf::RenderWindow* window)
 	: State(supportedKeys, states, window)
 {
+	this->initVar();
 	this->initSoundManager();
 	this->initFont();
 	this->initLoseSprite();
