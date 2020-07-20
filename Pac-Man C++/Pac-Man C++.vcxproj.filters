@@ -55,6 +55,9 @@
     <Filter Include="PauseMenu">
       <UniqueIdentifier>{8a56a1cf-f6f8-4d63-bc5a-73266c9af9eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TextTag">
+      <UniqueIdentifier>{cf8a6eb6-46f5-49cd-bc35-fcc50f1c337d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp">
@@ -112,6 +115,9 @@
       <Filter>PauseMenu</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="textTag.cpp">
+      <Filter>TextTag</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -167,6 +173,9 @@
     </ClInclude>
     <ClInclude Include="pauseMenu.h">
       <Filter>PauseMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="textTag.h">
+      <Filter>TextTag</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,6 +5,7 @@
 #include "map.h"
 #include "player.h"
 #include "pauseMenu.h"
+#include "textTag.h"
 #include "blinky.h"
 #include "pinky.h"
 #include "inky.h"
@@ -18,6 +19,7 @@ private:
 
 	/*map, player, enemy*/
 	SoundManager* soundManager;
+	TextTag* textTag;
 	Map* map;
 	Player* player;
 	std::vector<Ghost*> enemy;
@@ -37,6 +39,7 @@ private:
 	void initVar();
 	void initSoundManager();
 	void initFont();
+	void initTextTag();
 	void initScore();
 	void initText();
 	void initLoseSprite();

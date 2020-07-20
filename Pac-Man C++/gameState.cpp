@@ -36,6 +36,11 @@ void GameState::initFont()
 		throw "NOT COULD LOAD FONT";
 }
 
+void GameState::initTextTag()
+{
+	this->textTag = new TextTag(this->font, 14, sf::Color(51, 255, 255));
+}
+
 void GameState::initScore()
 {
 	this->score = 0;
@@ -96,6 +101,7 @@ void GameState::updateCollisionEnemies()
 			{
 				/*добавление очков за съеденное привидение*/
 				this->score += this->ghostScore;
+				this->textTag->setNewTag(std::to_string(this->ghostScore), i->getCenterPosition());
 				this->ghostScore *= 2;
 				i->setModeToHome();
 			}
@@ -158,6 +164,7 @@ GameState::GameState(const std::map<std::string, int>* supportedKeys, std::stack
 	this->initVar();
 	this->initSoundManager();
 	this->initFont();
+	this->initTextTag();
 	this->initLoseSprite();
 	this->initScore();
 	this->initText();
@@ -169,6 +176,7 @@ GameState::~GameState()
 {
 	this->saveStats();
 	delete this->soundManager;
+	delete this->textTag;
 	delete this->pmenu;
 	delete this->map;
 	delete this->player;
@@ -345,6 +353,7 @@ void GameState::update(const float& dt)
 				this->updateFood();
 				this->updateLevel();
 				this->updateText();
+				this->textTag->update(dt);
 			}
 		}
 	}
@@ -365,6 +374,7 @@ void GameState::render()
 	{
 		i->render(this->window);
 	}
+	this->textTag->render(this->window);
 
 	if (!this->player->getLives())
 	{

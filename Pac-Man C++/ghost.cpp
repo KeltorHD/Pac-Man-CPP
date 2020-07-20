@@ -432,7 +432,7 @@ void Ghost::updateMoveGhost(const Map* map, const float& dt)
 	{
 		this->setDir(dirType(rand() % 5));
 	}
-
+ 
 	if (int(this->getNextPosition(dt).y) / TILE_WIDTH == TELEPORT_POS_Y
 		&& ((int(this->getNextPosition(dt).x) / TILE_WIDTH <= 2) || (int(this->getNextPosition(dt).x) / TILE_WIDTH >= GAME_COL - 2)))
 	{

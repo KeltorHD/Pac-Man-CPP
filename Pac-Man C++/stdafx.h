@@ -57,6 +57,8 @@
 #define FRIGHTENED_TIME 5.f /*пять секунд*/
 /*время уменьшения скорости*/
 #define DECREASE_TIME 0.25f
+/*время видимости тега с количеством очков*/
+#define TAG_TIME 1.5f
 
 /*Очков за еду*/
 #define POINT_EAT 10
