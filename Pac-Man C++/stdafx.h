@@ -8,6 +8,8 @@
 #define GAME_COL 28
 #define GAME_ROW 36
 
+#define TELEPORT_POS_Y 17
+
 #define PLAY "Play"
 #define RECORD "Record"
 #define SETTINGS "Settings"

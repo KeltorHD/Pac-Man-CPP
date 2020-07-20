@@ -16,12 +16,7 @@ void Pinky::reload(const int& level)
 	Ghost::reload(level);
 
 	this->hitboxComponent->setPosition(PINKY_POS_X + 6, PINKY_POS_Y + 6);
-	this->current = dirType::none;
-	this->next = dirType::none;
 	this->mode = modeType::inHome;
-	this->animationComponent->setTextureSheet(this->baseTexture);
-	this->patternCounter = 0;
-	this->patternTimer = 0.f;
 
 	if (level == 1)
 	{

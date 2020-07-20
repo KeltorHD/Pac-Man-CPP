@@ -141,6 +141,7 @@ void Player::reload()
 	this->isDecrease = false;
 	this->timerDecrease = 0.f;
 	this->hitboxComponent->setPosition(START_POS_X + 4, START_POS_Y + 4);
+	this->sprite.setTextureRect(sf::IntRect(0, 0, 24, 24));
 	this->clearDir(dirType::none);
 }
 
@@ -148,6 +149,8 @@ void Player::updateInput(const Map* map, const float& dt, const dirType dir)
 {
 	if (dir != dirType::none && dir != this->current)
 	{
+		int next_x = int(this->getNextPosition(dt).x);
+		int next_y = int(this->getNextPosition(dt).y);
 		/*нужно ли изменять направления прямо сейчас?*/
 		if (!map->isWall /*не в стену ли идем?*/
 		(
@@ -179,6 +182,21 @@ void Player::updateInput(const Map* map, const float& dt, const dirType dir)
 			{
 				this->setDir(dir);
 			}
+		}
+		/*телепорт*/
+		else if (next_y / TILE_WIDTH == TELEPORT_POS_Y
+				&& ((next_x / TILE_WIDTH <= 2) || (next_x / TILE_WIDTH >= GAME_COL - 2)))
+		{
+			if (next_x / TILE_WIDTH <= -2)
+			{
+				this->hitboxComponent->setPosition((GAME_COL + 2) * TILE_WIDTH, TELEPORT_POS_Y * TILE_WIDTH);
+			}
+			else if (next_x / TILE_WIDTH >= GAME_COL + 2)
+			{
+				this->hitboxComponent->setPosition(-2 * TILE_WIDTH, TELEPORT_POS_Y * TILE_WIDTH);
+			}
+
+			this->move(dt);
 		}
 		else /*запоминаем направление*/
 		{

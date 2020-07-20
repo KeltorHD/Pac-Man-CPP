@@ -168,14 +168,32 @@ void Entity::updateMove(const Map* map, const float& dt)
 		}
 	}
 
+	next_x = int(this->getNextPosition(dt).x);
+	next_y = int(this->getNextPosition(dt).y);
+
 	/*проверка: можно ли продолжать движение в текущую сторону*/
 	if (this->current != dirType::none)
 	{
+		/*телепорт*/
+		if (next_y / TILE_WIDTH == TELEPORT_POS_Y
+			&& ((next_x / TILE_WIDTH <= 2) || (next_x / TILE_WIDTH >= GAME_COL - 2)))
+		{
+			if (next_x / TILE_WIDTH <= -2)
+			{
+				this->hitboxComponent->setPosition((GAME_COL + 2) * TILE_WIDTH, TELEPORT_POS_Y * TILE_WIDTH);
+			}
+			else if (next_x / TILE_WIDTH >= GAME_COL + 2)
+			{
+				this->hitboxComponent->setPosition(-2 * TILE_WIDTH, TELEPORT_POS_Y * TILE_WIDTH);
+			}
+
+			this->move(dt);
+		}
 		/*если следующая позиция игрока находится в стене*/
-		if (map->isWall
+		else if (map->isWall
 		(
-			int(this->getNextPosition(dt).x / TILE_WIDTH),
-			int(this->getNextPosition(dt).y / TILE_WIDTH)
+			next_x / TILE_WIDTH,
+			next_y / TILE_WIDTH
 		))
 		{
 			this->moveToBorder(); /*сдвигаемся к границе плитки*/

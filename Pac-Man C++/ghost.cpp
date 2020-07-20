@@ -132,6 +132,12 @@ void Ghost::reloadPattern(const int& level)
 
 void Ghost::reload(const int& level)
 {
+	this->current = dirType::none;
+	this->next = dirType::none;
+	this->animationComponent->setTextureSheet(this->baseTexture);
+	this->patternCounter = 0;
+	this->patternTimer = 0.f;
+
 	if (level <= 21)
 		this->speed += 0.5f;
 }
