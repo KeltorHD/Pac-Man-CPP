@@ -11,14 +11,22 @@ Blinky::~Blinky()
 {
 }
 
-void Blinky::reload()
+void Blinky::reload(const int& level)
 {
+	Ghost::reload(level);
+
 	this->hitboxComponent->setPosition(BLINKY_POS_X + 6, BLINKY_POS_Y + 6);
 	this->setDir(dirType::left);
 	this->mode = this->pattern[0].first;
 	this->animationComponent->setTextureSheet(this->baseTexture);
 	this->patternCounter = 0;
 	this->patternTimer = 0.f;
+
+	if (level == 1)
+	{
+		this->speed = BLINKY_SPEED;
+		this->loadPatternFromFile();
+	}
 }
 
 void Blinky::initVar()

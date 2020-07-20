@@ -108,7 +108,7 @@ void GameState::updateCollisionEnemies()
 				this->player->reload();
 				for (auto& i : this->enemy)
 				{
-					i->reload();
+					i->reload(this->level);
 				}
 				this->player->decLifes(); /*уменьшение жизней*/
 				break;
@@ -128,7 +128,7 @@ void GameState::updateLevel()
 		Ghost::reloadPattern(this->level);
 		for (auto& i : this->enemy)
 		{
-			i->reload();
+			i->reload(this->level);
 		}
 	}
 }
@@ -307,12 +307,13 @@ void GameState::saveStats()
 
 void GameState::reloadGame()
 {
+	this->level = 1;
 	this->player->reload();
 	this->player->setLifes(2);
 	this->map->reload();
 	for (auto& i : this->enemy)
 	{
-		i->reload();
+		i->reload(this->level);
 	}
 	this->saveStats();
 	this->updateText();

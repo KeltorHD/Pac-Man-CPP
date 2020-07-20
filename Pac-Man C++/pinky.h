@@ -10,7 +10,7 @@ public:
 	virtual ~Pinky();
 
 	/*func*/
-	virtual void reload();
+	virtual void reload(const int& level);
 private:
 	/*var*/
 

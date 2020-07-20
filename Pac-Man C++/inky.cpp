@@ -22,8 +22,10 @@ void Inky::updateTargetCell(const Player* player, const Ghost* ghost)
 	}
 }
 
-void Inky::reload()
+void Inky::reload(const int& level)
 {
+	Ghost::reload(level);
+
 	this->hitboxComponent->setPosition(INKY_POS_X + 6, INKY_POS_Y + 6);
 	this->current = dirType::none;
 	this->next = dirType::none;
@@ -31,6 +33,12 @@ void Inky::reload()
 	this->animationComponent->setTextureSheet(this->baseTexture);
 	this->patternCounter = 0;
 	this->patternTimer = 0.f;
+
+	if (level == 1)
+	{
+		this->speed = INKY_SPEED;
+		this->loadPatternFromFile();
+	}
 }
 
 void Inky::initVar()

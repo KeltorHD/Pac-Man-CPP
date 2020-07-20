@@ -11,7 +11,7 @@ public:
 
 	/*func*/
 	void updateTargetCell(const Player* player, const Ghost* ghost);
-	virtual void reload();
+	virtual void reload(const int& level);
 private:
 	/*var*/
 

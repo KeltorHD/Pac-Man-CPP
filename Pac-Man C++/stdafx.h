@@ -36,10 +36,10 @@
 #define OUT_HOME_POS_X 216.f
 #define OUT_HOME_POS_Y 224.f
 
-#define BLINKY_SPEED 75.f /*скорость блинки*/
-#define PINKY_SPEED 65.f /*скорость пинки*/
-#define CLYDE_SPEED 75.f /*скорость клайда*/
-#define INKY_SPEED 75.f /*скорость инки*/
+#define BLINKY_SPEED 68.f /*скорость блинки*/
+#define PINKY_SPEED 60.f /*скорость пинки*/
+#define CLYDE_SPEED 68.f /*скорость клайда*/
+#define INKY_SPEED 68.f /*скорость инки*/
 
 #define BLINKY_POS_X 210.f /*начальная позиция блинки*/
 #define BLINKY_POS_Y 218.f

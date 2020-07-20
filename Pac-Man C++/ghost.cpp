@@ -111,20 +111,7 @@ void Ghost::loadStaticVar()
 	if (!Ghost::toHomeTexture.loadFromFile("Images/to_home.png"))
 		throw "NOT COULD LOAD TOHOME IMAGE";
 
-	std::ifstream ifs;
-	ifs.open("Config/patternMode.ini");
-	if (!ifs.is_open())
-		throw "NOT COULD LOAD PATTERNMODE.ini";
-
-	for (size_t i = 0; i < 8; i++)
-	{
-		int tmp;
-		Ghost::pattern.push_back(std::pair<modeType, float>());
-		ifs >> tmp;
-		Ghost::pattern[i].first = modeType(tmp);
-		ifs >> Ghost::pattern[i].second;
-	}
-	ifs.close();
+	Ghost::loadPatternFromFile();
 }
 
 void Ghost::reloadPattern(const int& level)
@@ -143,6 +130,12 @@ void Ghost::reloadPattern(const int& level)
 	}
 }
 
+void Ghost::reload(const int& level)
+{
+	if (level <= 21)
+		this->speed += 0.5f;
+}
+
 void Ghost::update(const Map* map, const Player* player, const float& dt)
 {
 	this->updateTimers(dt); /*обновление таймеров*/
@@ -151,6 +144,25 @@ void Ghost::update(const Map* map, const Player* player, const float& dt)
 	this->updateHouseMove(map, dt); /*обновление движения выход из домика*/
 	this->hitboxComponent->update(); /*перемещение спрайта вслед за хитбоксом*/
 	this->updateAnimation(dt); /*обновление анимации*/
+}
+
+void Ghost::loadPatternFromFile()
+{
+	std::ifstream ifs;
+	ifs.open("Config/patternMode.ini");
+	if (!ifs.is_open())
+		throw "NOT COULD LOAD PATTERNMODE.ini";
+
+	Ghost::pattern.clear();
+	for (size_t i = 0; i < 8; i++)
+	{
+		int tmp;
+		Ghost::pattern.push_back(std::pair<modeType, float>());
+		ifs >> tmp;
+		Ghost::pattern[i].first = modeType(tmp);
+		ifs >> Ghost::pattern[i].second;
+	}
+	ifs.close();
 }
 
 void Ghost::updateHouseMove(const Map* map, const float& dt)

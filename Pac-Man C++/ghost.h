@@ -41,7 +41,7 @@ public:
 	/*func*/
 	static void loadStaticVar(); /*загрузка текстуры страха*/
 	static void reloadPattern(const int& level); /*обновление паттерна поведения в зависисмости от уровня*/
-	virtual void reload() = 0; /*обновление привидения после прохождения уровня*/
+	virtual void reload(const int& level); /*обновление привидения после прохождения уровня*/
 
 	void update(const Map* map, const Player* player, const float& dt);
 protected:
@@ -56,6 +56,7 @@ protected:
 	virtual void initVar() = 0;
 
 	/*func*/
+	static void loadPatternFromFile(); /*загрузка паттерна*/
 	void setMode(modeType mode); /*обновление режима с проверками*/
 
 	virtual void updateTargetcell(const Player* player, const Map* map) = 0;
