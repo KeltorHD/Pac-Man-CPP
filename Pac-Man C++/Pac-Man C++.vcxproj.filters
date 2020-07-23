@@ -58,6 +58,12 @@
     <Filter Include="TextTag">
       <UniqueIdentifier>{cf8a6eb6-46f5-49cd-bc35-fcc50f1c337d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="States\RecordState">
+      <UniqueIdentifier>{f66c31a3-b7b5-474c-89bf-e97b9806aa34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\SettingsState">
+      <UniqueIdentifier>{8cc31f9b-18d2-4978-9675-6105a9f62ee7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp">
@@ -118,6 +124,12 @@
     <ClCompile Include="textTag.cpp">
       <Filter>TextTag</Filter>
     </ClCompile>
+    <ClCompile Include="recordState.cpp">
+      <Filter>States\RecordState</Filter>
+    </ClCompile>
+    <ClCompile Include="settingsState.cpp">
+      <Filter>States\SettingsState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -176,6 +188,12 @@
     </ClInclude>
     <ClInclude Include="textTag.h">
       <Filter>TextTag</Filter>
+    </ClInclude>
+    <ClInclude Include="recordState.h">
+      <Filter>States\RecordState</Filter>
+    </ClInclude>
+    <ClInclude Include="settingsState.h">
+      <Filter>States\SettingsState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

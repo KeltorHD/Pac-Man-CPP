@@ -11,6 +11,8 @@ private:
 	int lifes; /*жизни игрока*/
 	float timerDecrease; /*время, когда скорость уменьшается на 10%*/
 	bool isDecrease; /*есть ли уменьшение скорости*/
+	bool isDeath; /*производится ли анимация смерти*/
+	bool isReload; /*нужно ли сбрасывать героя*/
 
 	/*init*/
 	void initVar();
@@ -18,6 +20,9 @@ private:
 	void initSprite();
 
 	/*func*/
+	void reloadPrivate();
+
+	void updateReload();
 	void updateTimer(const float& dt);
 	void updateAnimation(const float& dt);
 	void renderLifes(sf::RenderTarget* target);
@@ -32,6 +37,7 @@ public:
 
 	/*accessors*/
 	const int& getLives() const; /*количество жизней*/
+	bool isDeathDone() const;
 
 	/*func*/
 	void reload(); /*сброс героя после прохождения уровня*/

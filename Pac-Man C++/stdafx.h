@@ -15,6 +15,7 @@
 #define SETTINGS "Settings"
 #define EXIT "Exit"
 #define TO_MENU "TO MENU"
+#define SAVE "Save"
 
 #define TILE_WIDTH 16
 
@@ -77,6 +78,8 @@
 #define FRIGHTENED "frightened"
 /*начало игры*/
 #define START_GAME "opening"
+/*смерть пакмана*/
+#define LOSE "lose"
 
 #define GAME_TITLE "Pac-Man C++"
 

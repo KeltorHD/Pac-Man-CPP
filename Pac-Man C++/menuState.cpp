@@ -91,14 +91,25 @@ void MenuState::updateButtons()
 	}
 
 	/*New game*/
-	if (this->buttons[PLAY]->isPressed())
+	if (this->buttons[PLAY]->isPressed() && this->getKeyTime())
 	{
 		this->states->push(new GameState(this->supportedKeys, this->states, this->window));
 	}
 
+	/*Record*/
+	if (this->buttons[RECORD]->isPressed() && this->getKeyTime())
+	{
+		this->states->push(new RecordState(this->supportedKeys, this->states, this->window));
+	}
+
+	/*Settings*/
+	if (this->buttons[SETTINGS]->isPressed() && this->getKeyTime())
+	{
+		this->states->push(new SettingsState(this->supportedKeys, this->states, this->window));
+	}
 
 	/*Quit the game*/
-	if (this->buttons[EXIT]->isPressed())
+	if (this->buttons[EXIT]->isPressed() && this->getKeyTime())
 	{
 		this->endState();
 	}
@@ -107,6 +118,7 @@ void MenuState::updateButtons()
 void MenuState::update(const float& dt)
 {
 	this->updateMousePosition();
+	this->updateKeyTime(dt);
 
 	this->updateButtons();
 }

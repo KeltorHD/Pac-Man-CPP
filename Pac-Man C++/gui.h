@@ -48,4 +48,38 @@ namespace gui
 		void update(const sf::Vector2i& mousePosWindow);
 		void render(sf::RenderTarget* target);
 	};
+
+	class Slider
+	{
+	private:
+		sf::RectangleShape slider;
+		sf::RectangleShape axis;
+
+		int xCoord;
+		int yCoord;
+		
+		int minValue;
+		int maxValue;
+		
+		int axisWidth;
+		int axisHeight;
+		int sliderWidth;
+		int sliderHeight;
+
+		float sliderValue;
+
+	public:
+		Slider(float x, float y, int min, int max, int axisWidth, int axisHeight, int sliderWidth, int sliderHeight);
+		~Slider();
+
+		/*accessors*/
+		float getSliderValue();
+
+		/*modifier*/
+		void setSliderPercentValue(float value);
+
+		/*func*/
+		void update(sf::RenderWindow* target);
+		void render(sf::RenderTarget* target);
+	};
 }

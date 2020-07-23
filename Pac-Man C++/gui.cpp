@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "gui.h"
 
+//BUTTON
 gui::Button::Button(const float pos_x, const float pos_y, 
 	const float width, const float heigth, 
 	const std::string text, const sf::Font& font, 
@@ -101,4 +102,67 @@ void gui::Button::render(sf::RenderTarget* target)
 	target->draw(this->border);
 	target->draw(this->front);
 	target->draw(this->text);
+}
+
+
+//SLIDER
+gui::Slider::Slider(float x, float y, int min, int max, int axisWidth, int axisHeight, int sliderWidth, int sliderHeight)
+{
+	this->axisWidth = axisWidth;
+	this->axisHeight = axisHeight;
+	this->sliderWidth = sliderWidth;
+	this->sliderHeight = sliderHeight;
+
+	this->xCoord = x;
+	this->yCoord = y;
+
+	axis.setPosition(x, y);
+	axis.setOrigin(0, axisHeight / 2);
+	axis.setSize(sf::Vector2f(axisWidth, axisHeight));
+	axis.setFillColor(sf::Color(63, 63, 63));
+	slider.setPosition(x, y);
+	slider.setOrigin(sliderWidth / 2, sliderHeight / 2);
+	slider.setSize(sf::Vector2f(sliderWidth, sliderHeight));
+	slider.setFillColor(sf::Color(192, 192, 192));
+
+	this->sliderValue = max;
+	this->minValue = min;
+	this->maxValue = max;
+}
+
+gui::Slider::~Slider()
+{
+}
+
+float gui::Slider::getSliderValue()
+{
+	return this->sliderValue;
+}
+
+void gui::Slider::setSliderPercentValue(float value)
+{
+	if (value >= 0 && value <= 100)
+	{
+		sliderValue = value / 100 * maxValue;
+		slider.setPosition(xCoord + (axisWidth * value / 100), yCoord);
+	}
+}
+
+void gui::Slider::update(sf::RenderWindow* target)
+{
+	if (this->slider.getGlobalBounds().contains(sf::Mouse::getPosition(*target).x, sf::Mouse::getPosition(*target).y)
+		&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+	{
+		if (sf::Mouse::getPosition(*target).x >= this->xCoord && sf::Mouse::getPosition(*target).x <= this->xCoord + this->axisWidth)
+		{
+			this->slider.setPosition(sf::Mouse::getPosition(*target).x, this->yCoord);
+			this->sliderValue = (this->minValue + ((this->slider.getPosition().x - this->xCoord) / this->axisWidth * (this->maxValue - this->minValue)));
+		}
+	}
+}
+
+void gui::Slider::render(sf::RenderTarget* target)
+{
+	target->draw(this->axis);
+	target->draw(this->slider);
 }

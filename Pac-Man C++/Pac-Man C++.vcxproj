@@ -168,6 +168,8 @@
     <ClCompile Include="pauseMenu.cpp" />
     <ClCompile Include="pinky.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="recordState.cpp" />
+    <ClCompile Include="settingsState.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="state.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -192,6 +194,8 @@
     <ClInclude Include="pauseMenu.h" />
     <ClInclude Include="pinky.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="recordState.h" />
+    <ClInclude Include="settingsState.h" />
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="state.h" />
     <ClInclude Include="stdafx.h" />

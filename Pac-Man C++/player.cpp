@@ -7,6 +7,8 @@ void Player::initVar()
 	this->current = dirType::left;
 	this->timerDecrease = 0.f;
 	this->isDecrease = false;
+	this->isDeath = false;
+	this->isReload = false;
 }
 
 void Player::initComponents()
@@ -24,6 +26,29 @@ void Player::initSprite()
 
 	this->lifeSprite.setTexture(this->baseTexture);
 	this->lifeSprite.setTextureRect(sf::IntRect(72, 0, -24, 24));
+}
+
+void Player::reloadPrivate()
+{
+	this->speed = PLAYER_SPEED;
+	this->isDecrease = false;
+	this->isDeath = false;
+	this->isReload = false;
+	this->timerDecrease = 0.f;
+	this->hitboxComponent->setPosition(START_POS_X + 4, START_POS_Y + 4);
+	this->sprite.setTextureRect(sf::IntRect(0, 0, 24, 24));
+	if (this->lifes)
+		this->clearDir(dirType::none);
+	else
+		this->clearDir(dirType::left);
+}
+
+void Player::updateReload()
+{
+	if (this->isReload && !isDeath)
+	{
+		this->reloadPrivate();
+	}
 }
 
 void Player::updateTimer(const float& dt)
@@ -47,42 +72,59 @@ void Player::updateTimer(const float& dt)
 
 void Player::updateAnimation(const float& dt)
 {
+	std::string variant = isDeath ? "-death" : "-move";
 	switch (this->current)
 	{
 	case dirType::left:
-		this->animationComponent->play("horizontal", dt);
+		this->animationComponent->play("horizontal" + variant, dt);
 		if (this->sprite.getScale().x > 0.f)
 		{
 			this->sprite.setOrigin(24.f, 0.f);
 			this->sprite.setScale(-1.f, 1.f);
 		}
+		if (this->isDeath)
+			this->isDeath = !this->animationComponent->isDone("horizontal" + variant);
 		break;
 	case dirType::right:
-		this->animationComponent->play("horizontal", dt);
+		this->animationComponent->play("horizontal" + variant, dt);
 		if (this->sprite.getScale().x < 0.f)
 		{
 			this->sprite.setOrigin(0.f, 0.f);
 			this->sprite.setScale(1.f, 1.f);
 		}
+		if (this->isDeath)
+			this->isDeath = !this->animationComponent->isDone("horizontal" + variant);
 		break;
 	case dirType::up:
-		this->animationComponent->play("vertical", dt);
+		this->animationComponent->play("vertical" + variant, dt);
 		if (this->sprite.getScale().y < 0.f)
 		{
 			this->sprite.setOrigin(0.f, 0.f);
 			this->sprite.setScale(1.f, 1.f);
 		}
+		if (this->isDeath)
+			this->isDeath = !this->animationComponent->isDone("vertical" + variant);
 		break;
 	case dirType::down:
-		this->animationComponent->play("vertical", dt); 
+		this->animationComponent->play("vertical" + variant, dt);
 		if (this->sprite.getScale().y > 0.f)
 		{
 			this->sprite.setOrigin(0.f, 24.f);
 			this->sprite.setScale(1.f, -1.f);
 		}
+		if (this->isDeath)
+			this->isDeath = !this->animationComponent->isDone("vertical" + variant);
 		break;
 	case dirType::none:
-		this->sprite.setTextureRect(sf::IntRect(0, 0, 24, 24));
+		if (!this->isDeath)
+		{
+			this->sprite.setTextureRect(sf::IntRect(0, 0, 24, 24));
+		}
+		else
+		{
+			this->animationComponent->play("horizontal" + variant, dt);
+			this->isDeath = !this->animationComponent->isDone("horizontal" + variant);
+		}
 		break;
 	}
 }
@@ -98,14 +140,16 @@ void Player::renderLifes(sf::RenderTarget* target)
 }
 
 Player::Player()
-	: Entity(PLAYER_SPEED, dirType::none, dirType::none)
+	: Entity(PLAYER_SPEED, dirType::left, dirType::none)
 {
 	this->initVar();
 	this->initSprite();
 	this->initComponents();
 
-	this->animationComponent->addAnimation("horizontal", 5.f, 0, 0, 5, 0, 24, 24);
-	this->animationComponent->addAnimation("vertical", 5.f, 0, 1, 5, 1, 24, 24);
+	this->animationComponent->addAnimation("horizontal-move", 5.f, 0, 0, 5, 0, 24, 24);
+	this->animationComponent->addAnimation("vertical-move", 5.f, 0, 1, 5, 1, 24, 24);
+	this->animationComponent->addAnimation("horizontal-death", 15.f, 0, 2, 5, 2, 24, 24);
+	this->animationComponent->addAnimation("vertical-death", 15.f, 0, 3, 5, 3, 24, 24);
 }
 
 Player::~Player()
@@ -117,6 +161,7 @@ Player::~Player()
 void Player::decLifes()
 {
 	this->lifes--;
+	this->isDeath = true;
 }
 
 void Player::setLifes(unsigned life)
@@ -135,14 +180,14 @@ const int& Player::getLives() const
 	return this->lifes;
 }
 
+bool Player::isDeathDone() const
+{
+	return !this->isDeath;
+}
+
 void Player::reload()
 {
-	this->speed = PLAYER_SPEED;
-	this->isDecrease = false;
-	this->timerDecrease = 0.f;
-	this->hitboxComponent->setPosition(START_POS_X + 4, START_POS_Y + 4);
-	this->sprite.setTextureRect(sf::IntRect(0, 0, 24, 24));
-	this->clearDir(dirType::none);
+	this->isReload = true;
 }
 
 void Player::updateInput(const Map* map, const float& dt, const dirType dir)
@@ -208,9 +253,11 @@ void Player::updateInput(const Map* map, const float& dt, const dirType dir)
 void Player::update(const Map* map, const float& dt)
 {
 	this->updateTimer(dt);
-	this->updateMove(map, dt); /*обновление позиции хитбокса*/
+	if (this->isDeathDone())
+		this->updateMove(map, dt); /*обновление позиции хитбокса*/
 	this->hitboxComponent->update(); /*обновление позиции спрайта вслед за хитбоксом*/
 	this->updateAnimation(dt);
+	this->updateReload();
 }
 
 void Player::render(sf::RenderTarget* target)

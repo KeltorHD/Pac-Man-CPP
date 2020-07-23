@@ -10,6 +10,14 @@ void GameState::initVar()
 
 void GameState::initSoundManager()
 {
+	float volume = 0.f;
+	std::ifstream ifs;
+	ifs.open("Config/settings.ini");
+	if (!ifs.is_open())
+		throw "COULD NOT LOAD SETTINGS";
+	ifs >> volume;
+	ifs.close();
+
 	this->soundManager = new SoundManager();
 	bool isLoad = true;
 	if (!this->soundManager->loadSound(CHOMP1))
@@ -22,11 +30,13 @@ void GameState::initSoundManager()
 		isLoad = false;
 	if (!this->soundManager->loadSound(START_GAME))
 		isLoad = false;
+	if (!this->soundManager->loadSound(LOSE))
+		isLoad = false;
 	if (!isLoad)
 		throw "NOT COULD LOAD SOUNDS";
-	this->soundManager->setAllVolume(30.f);
-	this->soundManager->setVolume(FRIGHTENED, 20.f);
-	this->soundManager->setVolume(SIREN, 20.f);
+	this->soundManager->setAllVolume(volume * 50.f / 100.f);
+	this->soundManager->setVolume(FRIGHTENED, volume * 30.f / 100.f);
+	this->soundManager->setVolume(SIREN, volume * 30.f / 100.f);
 	this->soundManager->play(START_GAME);
 }
 
@@ -118,6 +128,9 @@ void GameState::updateCollisionEnemies()
 					i->reload(this->level);
 				}
 				this->player->decLifes(); /*уменьшение жизней*/
+				this->soundManager->stop(SIREN);
+				this->soundManager->stop(FRIGHTENED);
+				this->soundManager->play(LOSE);
 				break;
 			}
 		}
@@ -239,11 +252,14 @@ void GameState::updatePlayerInput(const float& dt)
 void GameState::updateEntity(const float& dt)
 {
 	this->player->update(this->map, dt);
-	if (dynamic_cast<Inky*>(this->enemy[2]))
-		dynamic_cast<Inky*>(this->enemy[2])->updateTargetCell(this->player, this->enemy[0]);
-	for (auto& i : this->enemy)
+	if (this->player->isDeathDone())
 	{
-		i->update(this->map, this->player, dt);
+		if (dynamic_cast<Inky*>(this->enemy[2]))
+			dynamic_cast<Inky*>(this->enemy[2])->updateTargetCell(this->player, this->enemy[0]);
+		for (auto& i : this->enemy)
+		{
+			i->update(this->map, this->player, dt);
+		}
 	}
 }
 
@@ -335,20 +351,22 @@ void GameState::update(const float& dt)
 	this->updateMousePosition();
 	this->updateKeyTime(dt);
 	/*Input*/
-	this->updatePlayerInput(dt);
+	if (this->player->isDeathDone())
+		this->updatePlayerInput(dt);
 
 	if (!this->paused)
 	{
 		if (!this->soundManager->isPlaying(START_GAME))
 		{
-			if (this->player->getLives())
+			if (this->player->getLives() || !this->player->isDeathDone())
 			{
 				/*update entity*/
 				this->updateEntity(dt);
 
 				/*collision*/
 				this->updateCollisionEnemies();
-				this->updateFrightened();
+				if (this->player->isDeathDone())
+					this->updateFrightened();
 
 				this->updateFood();
 				this->updateLevel();
@@ -370,9 +388,12 @@ void GameState::render()
 	this->map->render(this->window);
 	this->renderText(this->window);
 	this->player->render(this->window);
-	for (auto& i : this->enemy)
+	if (this->player->isDeathDone())
 	{
-		i->render(this->window);
+		for (auto& i : this->enemy)
+		{
+			i->render(this->window);
+		}
 	}
 	this->textTag->render(this->window);
 
