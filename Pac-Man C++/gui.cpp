@@ -113,19 +113,19 @@ gui::Slider::Slider(float x, float y, int min, int max, int axisWidth, int axisH
 	this->sliderWidth = sliderWidth;
 	this->sliderHeight = sliderHeight;
 
-	this->xCoord = x;
-	this->yCoord = y;
+	this->xCoord = int(x);
+	this->yCoord = int(y);
 
 	axis.setPosition(x, y);
-	axis.setOrigin(0, axisHeight / 2);
-	axis.setSize(sf::Vector2f(axisWidth, axisHeight));
+	axis.setOrigin(0.f, axisHeight / 2.f);
+	axis.setSize(sf::Vector2f(float(axisWidth), float(axisHeight)));
 	axis.setFillColor(sf::Color(63, 63, 63));
 	slider.setPosition(x, y);
-	slider.setOrigin(sliderWidth / 2, sliderHeight / 2);
-	slider.setSize(sf::Vector2f(sliderWidth, sliderHeight));
+	slider.setOrigin(sliderWidth / 2.f, sliderHeight / 2.f);
+	slider.setSize(sf::Vector2f(float(sliderWidth), float(sliderHeight)));
 	slider.setFillColor(sf::Color(192, 192, 192));
 
-	this->sliderValue = max;
+	this->sliderValue = float(max);
 	this->minValue = min;
 	this->maxValue = max;
 }
@@ -144,18 +144,18 @@ void gui::Slider::setSliderPercentValue(float value)
 	if (value >= 0 && value <= 100)
 	{
 		sliderValue = value / 100 * maxValue;
-		slider.setPosition(xCoord + (axisWidth * value / 100), yCoord);
+		slider.setPosition(xCoord + (axisWidth * value / 100.f), float(yCoord));
 	}
 }
 
 void gui::Slider::update(sf::RenderWindow* target)
 {
-	if (this->slider.getGlobalBounds().contains(sf::Mouse::getPosition(*target).x, sf::Mouse::getPosition(*target).y)
+	if (this->slider.getGlobalBounds().contains(float(sf::Mouse::getPosition(*target).x), float(sf::Mouse::getPosition(*target).y))
 		&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
 	{
 		if (sf::Mouse::getPosition(*target).x >= this->xCoord && sf::Mouse::getPosition(*target).x <= this->xCoord + this->axisWidth)
 		{
-			this->slider.setPosition(sf::Mouse::getPosition(*target).x, this->yCoord);
+			this->slider.setPosition(float(sf::Mouse::getPosition(*target).x), float(this->yCoord));
 			this->sliderValue = (this->minValue + ((this->slider.getPosition().x - this->xCoord) / this->axisWidth * (this->maxValue - this->minValue)));
 		}
 	}
