@@ -195,11 +195,18 @@
     <ClInclude Include="pinky.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="recordState.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="settingsState.h" />
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="state.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="textTag.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Pac-Man C++.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

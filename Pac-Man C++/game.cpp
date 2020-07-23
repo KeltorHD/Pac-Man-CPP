@@ -12,6 +12,12 @@ void Game::initVariables()
 void Game::initWindow()
 {
 	this->window = new sf::RenderWindow(sf::VideoMode(GAME_WIDTH, GAME_HEIGHT), GAME_TITLE);
+	sf::Image icon;
+	if (!icon.loadFromFile("Images/icon.png"))
+	{
+		throw "COULD NOT LOAD ICON";
+	}
+	this->window->setIcon(28, 28, icon.getPixelsPtr());
 }
 
 void Game::initKeys()

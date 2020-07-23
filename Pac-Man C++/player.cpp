@@ -150,6 +150,7 @@ Player::Player()
 	this->animationComponent->addAnimation("vertical-move", 5.f, 0, 1, 5, 1, 24, 24);
 	this->animationComponent->addAnimation("horizontal-death", 15.f, 0, 2, 5, 2, 24, 24);
 	this->animationComponent->addAnimation("vertical-death", 15.f, 0, 3, 5, 3, 24, 24);
+	this->sprite.setTextureRect(sf::IntRect(0, 0, 24, 24));
 }
 
 Player::~Player()
